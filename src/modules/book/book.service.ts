@@ -12,7 +12,7 @@ export class BookService {
   ) {}
 
   findAll() {
-    // return this.bookRepository.findAllWithFilter({ rela });
+    return this.bookRepository.findAll();
   }
 
   findOne(id: number) {
@@ -23,8 +23,8 @@ export class BookService {
     const { authorId } = createBookDto;
     const findAuthorExisted = await this.authorService.findOne(authorId);
 
-    if (findAuthorExisted) {
-      return this.bookRepository.createOne(createBookDto);
-    }
+    // if (findAuthorExisted) {
+    //   return this.bookRepository.createOne(createBookDto);
+    // }
   }
 }

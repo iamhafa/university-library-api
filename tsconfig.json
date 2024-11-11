@@ -22,7 +22,8 @@
       "@/libs/*": ["src/libs/*"],
       "@/modules/*": ["src/modules/*"],
       "@/common/*": ["src/common/*"],
-      "@/core/*": ["src/core/*"]
+      "@/core/*": ["src/core/*"],
+      "@/graphql/*": ["src/graphql/*"]
     }
   }
 }

@@ -12,18 +12,19 @@ export class FormatDateResponseInterceptor implements NestInterceptor {
     );
   }
 
-  private formatDates(data: unknown): any {
-    if (Array.isArray(data)) {
-      return data.map((item) => this.formatDates(item));
-    } else if (data !== null && typeof data === 'object') {
-      Object.keys(data).forEach((key) => {
-        if (data[key] instanceof Date) {
-          data[key] = format(data[key], 'dd-MM-yyyy HH:mm'); // Desired format
-        } else if (typeof data[key] === 'object') {
-          data[key] = this.formatDates(data[key]);
+  private formatDates(response: unknown): any {
+    if (Array.isArray(response)) {
+      // continue format date
+      return response.map((item) => this.formatDates(item));
+    } else if (response !== null && typeof response === 'object') {
+      Object.keys(response).forEach((key: string) => {
+        if (response[key] instanceof Date) {
+          response[key] = format(response[key], 'dd-MM-yyyy HH:mm'); // Desired format
+        } else if (typeof response[key] === 'object') {
+          response[key] = this.formatDates(response[key]);
         }
       });
     }
-    return data;
+    return response;
   }
 }
