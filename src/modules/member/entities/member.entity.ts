@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, OneToMany, Relation } from 'typeorm';
 import { BaseEntity } from '@/libs/database/base.entity';
 import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
-import { EMemberType } from '@/common/constants';
+import { MEMBER_TYPE } from '@/common/constants';
 
 // Thành viên của thư viện (sinh viên của trường có thể mượn sách)
 @Entity()
@@ -28,8 +28,8 @@ export class Member extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: EMemberType,
-    default: EMemberType.UNDERGRADUATE_STUDENT,
+    enum: MEMBER_TYPE,
+    default: MEMBER_TYPE.UNDERGRADUATE_STUDENT,
   })
   memberType: string;
 

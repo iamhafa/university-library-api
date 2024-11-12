@@ -12,6 +12,8 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
+    // không cho phép re-export module tại 1 file khác
+    "isolatedModules": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
@@ -22,8 +24,7 @@
       "@/libs/*": ["src/libs/*"],
       "@/modules/*": ["src/modules/*"],
       "@/common/*": ["src/common/*"],
-      "@/core/*": ["src/core/*"],
-      "@/graphql/*": ["src/graphql/*"]
+      "@/core/*": ["src/core/*"]
     }
   }
 }

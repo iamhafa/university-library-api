@@ -19,4 +19,8 @@ export class AuthorService {
   createOne(createAuthorDto: CreateAuthorDto): Promise<Author> {
     return this.authorRepository.createOne(createAuthorDto);
   }
+
+  updateOne(id: number, updateAuthorDto: UpdateAuthorDto): Promise<Author> {
+    return this.authorRepository.findOneAndUpdate({ id }, updateAuthorDto);
+  }
 }

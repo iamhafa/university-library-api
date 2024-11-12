@@ -5,7 +5,9 @@ export abstract class BaseDto<T = any> {
 
   id: number;
 
-  createdAt: Date;
+  created_at: Date;
 
-  updatedAt: Date;
+  updated_at: Date;
+
+  deleted_at: Date;
 }

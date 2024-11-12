@@ -1,15 +1,15 @@
-import { EMemberType } from '@/common/constants';
-import { BaseEntity } from '@/libs/database/base.entity';
 import { Column, Entity } from 'typeorm';
+import { BaseEntity } from '@/libs/database/base.entity';
+import { MEMBER_TYPE } from '@/common/constants';
 
 // Lưu các quy định về thời gian mượn và số sách tối đa cho từng loại thành viên.
 @Entity()
 export class Rule extends BaseEntity {
   @Column({
     type: 'enum',
-    enum: EMemberType,
+    enum: MEMBER_TYPE,
   })
-  memberType: EMemberType;
+  memberType: MEMBER_TYPE;
 
   @Column()
   maxBorrowBooks: number;

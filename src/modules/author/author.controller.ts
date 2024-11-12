@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
 import { AuthorService } from './author.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
@@ -23,5 +23,13 @@ export class AuthorController {
   @Post()
   createOne(@Body() createAuthorDto: CreateAuthorDto): Promise<Author> {
     return this.authorService.createOne(createAuthorDto);
+  }
+
+  @Put(':id')
+  updateOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateAuthorDto: UpdateAuthorDto,
+  ): Promise<Author> {
+    return this.authorService.updateOne(id, updateAuthorDto);
   }
 }

@@ -18,8 +18,10 @@ export class FormatDateResponseInterceptor implements NestInterceptor {
       return response.map((item) => this.formatDates(item));
     } else if (response !== null && typeof response === 'object') {
       Object.keys(response).forEach((key: string) => {
+        // nếu property nào của 1 object thuộc kiểu Date
         if (response[key] instanceof Date) {
           response[key] = format(response[key], 'dd-MM-yyyy HH:mm'); // Desired format
+          // nếu property vẫn là object thì tiếp tục run format
         } else if (typeof response[key] === 'object') {
           response[key] = this.formatDates(response[key]);
         }

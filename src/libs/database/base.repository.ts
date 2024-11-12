@@ -5,11 +5,14 @@ import { BaseEntity } from './base.entity';
 
 // Repository layer (define all methods about CRUD for all modules)
 export abstract class BaseRepository<T extends BaseEntity<T>> {
-  constructor(private readonly entityRepository: Repository<T>) {}
-
   protected readonly logger: Logger;
 
+  constructor(private readonly entityRepository: Repository<T>) {}
+
   createOne(entity: T): Promise<T> {
+    this.logger.verbose(
+      `Create entity for ${JSON.stringify(entity)} at ${JSON.stringify(this.logger.localInstance['context'])}`,
+    );
     return this.entityRepository.save(entity);
   }
 
@@ -17,17 +20,19 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
     const entity = await this.entityRepository.findOne({ where });
 
     if (!entity) {
-      this.logger.warn(`Entity not found with where ${JSON.stringify(where)}`);
+      this.logger.warn(
+        `Entity not found with where ${JSON.stringify(where)} at ${JSON.stringify(this.logger.localInstance['context'])}`,
+      );
       throw new NotFoundException('Entity not found');
     }
     return entity;
   }
 
-  async findOneAndUpdate(where: FindOptionsWhere<T>, partialEntity: QueryDeepPartialEntity<T>) {
+  async findOneAndUpdate(where: FindOptionsWhere<T>, partialEntity: QueryDeepPartialEntity<T>): Promise<T> {
     const updateResult = await this.entityRepository.update(where, partialEntity);
 
     if (!updateResult.affected) {
-      this.logger.warn('Entity not found with where', where);
+      this.logger.warn(`Entity not found with where ${JSON.stringify(where)}`);
       throw new NotFoundException('Entity not found');
     }
     return this.findOne(where);

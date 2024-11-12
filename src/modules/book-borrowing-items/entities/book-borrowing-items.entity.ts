@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
 import { BaseEntity } from '@/libs/database/base.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
-import { EBorrowingStatus } from '@/common/constants';
+import { BORROWING_STATUS } from '@/common/constants';
 
 // Ghi dấu từng cuốn sách cho mỗi lần mượn sách của sinh viên
 // Bảng trung gian của Book và BookBorrowing (many to many)
@@ -20,10 +20,10 @@ export class BookBorrowingItems extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: EBorrowingStatus,
-    default: EBorrowingStatus.BORROWING,
+    enum: BORROWING_STATUS,
+    default: BORROWING_STATUS.BORROWING,
   })
-  status: EBorrowingStatus;
+  status: BORROWING_STATUS;
 
   // PK for Book (many to many with Borrow Borrowing)
   @PrimaryColumn()
