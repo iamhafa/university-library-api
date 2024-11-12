@@ -39,11 +39,19 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
   }
 
   findAll(): Promise<T[]> {
+    this.logger.log('Find all internal entities');
     return this.entityRepository.find();
   }
 
-  findAllWithRelations(relations: FindOptions<T>): Promise<T[]> {
-    return this.entityRepository.find({});
+  /**
+   * include thêm với các bảng có quan hệ
+   * @example Author ==> AuthorBook <== Book
+   * @param relations { author: true, book: true }
+   * @returns tất cả items cùng với relations tương ứng
+   */
+  findAllWithRelations(relations: FindOptionsRelations<T>): Promise<T[]> {
+    this.logger.log(`Find all external with relations ${JSON.stringify(relations)}`);
+    return this.entityRepository.find({ relations });
   }
 
   findAllWithFilter(where: FindOptionsWhere<T>): Promise<T[]> {

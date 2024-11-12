@@ -11,12 +11,12 @@ export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Author> {
+  getOne(@Param('id', ParseIntPipe) id: number): Promise<Author> {
     return this.authorService.findOne(id);
   }
 
   @Get()
-  findAll(): Promise<Author[]> {
+  getAll(): Promise<Author[]> {
     return this.authorService.findAll();
   }
 

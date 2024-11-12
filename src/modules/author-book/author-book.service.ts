@@ -9,6 +9,10 @@ export class AuthorBookService {
   constructor(private readonly authorBookRepository: AuthorBookRepository) {}
 
   getAll(): Promise<AuthorBook[]> {
-    return this.authorBookRepository.findAll();
+    return this.authorBookRepository.findAllWithRelations({ book: true, author: true });
+  }
+
+  getOne(id: number): Promise<AuthorBook> {
+    return this.authorBookRepository.findOne({ id });
   }
 }

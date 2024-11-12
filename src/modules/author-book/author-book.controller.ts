@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { AuthorBookService } from './author-book.service';
 import { CreateAuthorBookDto } from './dto/create-author-book.dto';
 import { UpdateAuthorBookDto } from './dto/update-author-book.dto';
@@ -13,5 +13,10 @@ export class AuthorBookController {
   @Get()
   getAll(): Promise<AuthorBook[]> {
     return this.authorBookService.getAll();
+  }
+
+  @Get(':id')
+  getOne(@Param('id', ParseIntPipe) id: number): Promise<AuthorBook> {
+    return this.authorBookService.getOne(id);
   }
 }
