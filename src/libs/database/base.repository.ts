@@ -45,7 +45,7 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
 
   /**
    * include thêm với các bảng có quan hệ
-   * @example Author ==> AuthorBook <== Book
+   * @example Author ==> AuthorBookItems <== Book
    * @param relations { author: true, book: true }
    * @returns tất cả items cùng với relations tương ứng
    */

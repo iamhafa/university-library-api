@@ -7,10 +7,10 @@ import { MEMBER_TYPE } from '@/common/constants';
 @Entity()
 export class Member extends BaseEntity {
   @Column()
-  firstName: string;
+  first_name: string;
 
   @Column()
-  lastName: string;
+  last_name: string;
 
   @Column({ unique: true })
   email: string;
@@ -24,22 +24,22 @@ export class Member extends BaseEntity {
   password: string;
 
   @Column({ nullable: true })
-  phoneNumber: number;
+  phone_number: number;
 
   @Column({
     type: 'enum',
     enum: MEMBER_TYPE,
     default: MEMBER_TYPE.UNDERGRADUATE_STUDENT,
   })
-  memberType: string;
+  member_type: string;
 
   @Column({ nullable: true })
   address: string;
 
   // ngày trở thành member
   @CreateDateColumn()
-  enrollmentDate: Date;
+  enrollment_date: Date;
 
-  @OneToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.memberId)
+  @OneToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.member_id)
   bookBorrowings?: Relation<BookBorrowing[]>;
 }

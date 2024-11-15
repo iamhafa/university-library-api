@@ -4,7 +4,7 @@ import { DatabaseModule } from '@/libs/database/database.module';
 import { AuthorModule } from '@/modules/author/author.module';
 import { BookModule } from '@/modules/book/book.module';
 import { GenreModule } from '@/modules/genre/genre.module';
-import { AuthorBookModule } from '@/modules/author-book/author-book.module';
+import { AuthorBookItemsModule } from '@/modules/author-book-items/author-book-items.module';
 import { PublisherModule } from '@/modules/publisher/publisher.module';
 import { BookBorrowingModule } from '@/modules/book-borrowing/book-borrowing.module';
 import { MemberModule } from '@/modules/member/member.module';
@@ -21,7 +21,7 @@ import { RuleModule } from '@/modules/rule/rule.module';
      * list other modules (like table)
      */
     AuthorModule,
-    AuthorBookModule,
+    AuthorBookItemsModule,
     MemberModule,
     GenreModule,
     PublisherModule,

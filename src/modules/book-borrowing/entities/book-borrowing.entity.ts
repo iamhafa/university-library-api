@@ -8,25 +8,24 @@ import { Punish } from '@/modules/punish/entities/punish.entity';
 @Entity()
 export class BookBorrowing extends BaseEntity {
   // ngày mượn sách mặc định là thời điểm khởi tạo record
-  @CreateDateColumn({ type: 'timestamp' })
-  borrowingDate: Date;
+  @CreateDateColumn()
+  borrowing_date: Date;
 
   // ngày phải trả sách
   @Column({
-    type: 'timestamp',
     // mặc định ngày cần trả sách + 2 tháng so với ngày mượn sách
     default: () => `CURRENT_TIMESTAMP + INTERVAL '2 months'`,
   })
-  dueDate: Date;
+  due_date: Date;
 
   @ManyToOne(() => Member, (member) => member.bookBorrowings)
-  memberId: number;
+  member_id: number;
 
   // Thể hiện quan hệ many to many với Book
   @ManyToMany(() => Book, (book) => book.bookBorrowings)
   books?: Relation<Book[]>;
 
   // 1 lần mượn sách (có thể gồm nhiều sách) thì có thể có nhiều vé phạt nếu trễ hạn trả
-  @OneToMany(() => Punish, (punish) => punish.bookBorrowingId)
+  @OneToMany(() => Punish, (punish) => punish.book_borrowing_id)
   punishs: Relation<Punish[]>;
 }

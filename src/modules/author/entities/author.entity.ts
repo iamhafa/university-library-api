@@ -5,15 +5,14 @@ import { Book } from '@/modules/book/entities/book.entity';
 @Entity()
 export class Author extends BaseEntity {
   @Column()
-  firstName: string;
+  first_name: string;
 
   @Column()
-  lastName: string;
+  last_name: string;
 
   @Column({ type: 'text', nullable: true })
   bio: string;
 
   @ManyToMany(() => Book, (book) => book.authors, { cascade: true })
-  @JoinTable({ name: 'author_book' })
   books?: Relation<Book[]>;
 }

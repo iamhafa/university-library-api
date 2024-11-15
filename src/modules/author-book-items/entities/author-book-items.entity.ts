@@ -4,19 +4,19 @@ import { Author } from '@/modules/author/entities/author.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 
 // Bảng trung gian của Author và Book (many to many)
-@Entity({ name: 'author_book' })
-export class AuthorBook extends BaseEntity {
+@Entity()
+export class AuthorBookItems extends BaseEntity {
   @PrimaryColumn()
-  authorId: number;
+  author_id: number;
 
   @ManyToOne(() => Author, (author) => author.books)
-  @JoinColumn([{ name: 'authorId' }])
+  @JoinColumn([{ name: 'author_id' }])
   author: Relation<Author>;
 
   @PrimaryColumn()
-  bookId: number;
+  book_id: number;
 
   @ManyToOne(() => Book, (book) => book.authors)
-  @JoinColumn([{ name: 'bookId' }])
+  @JoinColumn([{ name: 'book_id' }])
   book: Relation<Book>;
 }

@@ -7,18 +7,18 @@ import { BORROWING_STATUS } from '@/common/constants';
 @Entity()
 export class Punish extends BaseEntity {
   @Column()
-  amountMoney: number;
+  amount_money: number;
 
   @Column({
     type: 'enum',
     enum: BORROWING_STATUS,
     default: BORROWING_STATUS.OVERDUE,
   })
-  returnStatus: BORROWING_STATUS;
+  return_status: BORROWING_STATUS;
 
   // FK of Book Borrowing
   @Column()
-  bookBorrowingId: number;
+  book_borrowing_id: number;
 
   // 1 lần mượn sách (có thể gồm nhiều sách) thì có thể có nhiều vé phạt nếu trễ hạn trả
   @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.punishs)

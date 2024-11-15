@@ -6,17 +6,17 @@ import { BORROWING_STATUS } from '@/common/constants';
 
 // Ghi dấu từng cuốn sách cho mỗi lần mượn sách của sinh viên
 // Bảng trung gian của Book và BookBorrowing (many to many)
-@Entity({ name: 'book_borrowing_items' })
+@Entity()
 export class BookBorrowingItems extends BaseEntity {
   // số lượng mượn của 1 cuốn sách (ex: mượn 10 cuốn 'Nhập môn lập trình')
   @Column({ default: 1 })
   quantity: number;
 
   @Column()
-  totalPrice: number; // tổng giá trị của 1 cuốn sách = số lượng * giá 1 cuốn
+  total_price: number; // tổng giá trị của 1 cuốn sách = số lượng * giá 1 cuốn
 
   @Column()
-  returnedDate: Date;
+  returned_date: Date;
 
   @Column({
     type: 'enum',
@@ -27,14 +27,14 @@ export class BookBorrowingItems extends BaseEntity {
 
   // PK for Book (many to many with Borrow Borrowing)
   @PrimaryColumn()
-  bookId: number;
+  book_id: number;
 
   @ManyToOne(() => Book, (book) => book.bookBorrowings)
   book: Relation<Book>;
 
   // PK for BookBorrowing (many to many with Book)
   @PrimaryColumn()
-  bookBorrowingId: number;
+  book_borrowing_id: number;
 
   @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books)
   bookBorrowing: Relation<BookBorrowing>;

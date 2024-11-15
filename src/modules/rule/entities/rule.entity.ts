@@ -9,11 +9,11 @@ export class Rule extends BaseEntity {
     type: 'enum',
     enum: MEMBER_TYPE,
   })
-  memberType: MEMBER_TYPE;
+  member_type: MEMBER_TYPE;
 
   @Column()
-  maxBorrowBooks: number;
+  max_borrowed_book: number;
 
   @Column()
-  maxBorrowDays: number;
+  max_borrowed_day: number;
 }

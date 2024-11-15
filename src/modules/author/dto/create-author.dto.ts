@@ -5,11 +5,11 @@ import { IsString } from 'class-validator';
 export class CreateAuthorDto extends BaseDto {
   @ApiProperty()
   @IsString()
-  firstName: string;
+  first_name: string;
 
   @ApiProperty()
   @IsString()
-  lastName: string;
+  last_name: string;
 
   @ApiProperty({ default: null })
   @IsString()

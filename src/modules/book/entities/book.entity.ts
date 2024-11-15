@@ -17,13 +17,13 @@ export class Book extends BaseEntity {
   price: number;
 
   @Column({ nullable: true })
-  totalPage: number;
+  total_page: number;
 
   @Column()
   quantity: number;
 
   @Column()
-  publishedDate: string;
+  publish_date: Date;
 
   @Column({ nullable: true })
   description: string;
@@ -37,20 +37,19 @@ export class Book extends BaseEntity {
 
   // FK of Genre
   @Column()
-  genreId: number;
+  genre_id: number;
 
   @ManyToOne(() => Genre, (genre) => genre.books)
   genre?: Relation<Genre>;
 
   // FK of Publisher
   @Column()
-  publisherId: number;
+  publisher_id: number;
 
   @ManyToOne(() => Publisher, (publisher) => publisher.book)
   publisher: Relation<Publisher>;
 
   // Thể hiện quan hệ many to many với BookBorrowing
   @ManyToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books)
-  @JoinTable({ name: 'book_borrowing_items' })
   bookBorrowings?: Relation<BookBorrowing[]>;
 }
