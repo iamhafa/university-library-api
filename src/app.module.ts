@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import { DatabaseModule } from '@/libs/database/database.module';
 import { AuthorModule } from '@/modules/author/author.module';
 import { BookModule } from '@/modules/book/book.module';
@@ -9,12 +10,13 @@ import { PublisherModule } from '@/modules/publisher/publisher.module';
 import { BookBorrowingModule } from '@/modules/book-borrowing/book-borrowing.module';
 import { MemberModule } from '@/modules/member/member.module';
 import { BookBorrowingItemsModule } from '@/modules/book-borrowing-items/book-borrowing-items.module';
-import { PunishModule } from '@/modules/punish/punish.module';
+import { FineModule } from '@/modules/fine/fine.module';
 import { RuleModule } from '@/modules/rule/rule.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
     /* custom database module */
     DatabaseModule,
     /**
@@ -28,7 +30,7 @@ import { RuleModule } from '@/modules/rule/rule.module';
     BookModule,
     BookBorrowingModule,
     BookBorrowingItemsModule,
-    PunishModule,
+    FineModule,
     RuleModule,
   ],
   controllers: [],

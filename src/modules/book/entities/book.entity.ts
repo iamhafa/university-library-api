@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, Relation } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, Relation } from 'typeorm';
 import { BaseEntity } from '@/libs/database/base.entity';
 import { Author } from '@/modules/author/entities/author.entity';
 import { Genre } from '@/modules/genre/entities/genre.entity';
@@ -27,10 +27,6 @@ export class Book extends BaseEntity {
 
   @Column({ nullable: true })
   description: string;
-
-  // FK of Author
-  @Column()
-  authorId: number;
 
   @ManyToMany(() => Author, (author) => author.books)
   authors?: Relation<Author[]>;

@@ -3,9 +3,9 @@ import { BaseEntity } from '@/libs/database/base.entity';
 import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
 import { BORROWING_STATUS } from '@/common/constants';
 
-// Theo dõi các khoản phạt nếu sách không trả đúng hạn.
+// Quản lý các khoản phạt nếu sách không được trả đúng hạn.
 @Entity()
-export class Punish extends BaseEntity {
+export class Fine extends BaseEntity {
   @Column()
   amount_money: number;
 
@@ -21,6 +21,6 @@ export class Punish extends BaseEntity {
   book_borrowing_id: number;
 
   // 1 lần mượn sách (có thể gồm nhiều sách) thì có thể có nhiều vé phạt nếu trễ hạn trả
-  @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.punishs)
+  @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.fines)
   bookBorrowing: Relation<BookBorrowing>;
 }

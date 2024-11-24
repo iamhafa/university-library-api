@@ -1,17 +1,17 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PunishService } from './punish.service';
-import { CreatePunishDto } from './dto/create-punish.dto';
-import { UpdatePunishDto } from './dto/update-punish.dto';
+import { FineService } from './fine.service';
+import { CreateFineDto } from './dto/create-fine.dto';
+import { UpdateFineDto } from './dto/update-fine.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Quản lý phạt khi sinh viên trễ trả sách')
 @Controller('punish')
-export class PunishController {
-  constructor(private readonly punishService: PunishService) {}
+export class FineController {
+  constructor(private readonly punishService: FineService) {}
 
   @Post()
-  create(@Body() createPunishDto: CreatePunishDto) {
-    return this.punishService.create(createPunishDto);
+  create(@Body() createFineDto: CreateFineDto) {
+    return this.punishService.create(createFineDto);
   }
 
   @Get()
@@ -25,8 +25,8 @@ export class PunishController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePunishDto: UpdatePunishDto) {
-    return this.punishService.update(+id, updatePunishDto);
+  update(@Param('id') id: string, @Body() updateFineDto: UpdateFineDto) {
+    return this.punishService.update(+id, updateFineDto);
   }
 
   @Delete(':id')
