@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMemberDto } from './dto/create-customer.dto';
 import { UpdateMemberDto } from './dto/update-customer.dto';
+import { MemberRepository } from './member.repository';
+import { Member } from './entities/member.entity';
 
 @Injectable()
 export class MemberService {
-  create(createMemberDto: CreateMemberDto) {
-    return 'This action adds a new customer';
+  constructor(private readonly memberRepository: MemberRepository) {}
+
+  create(createMemberDto: CreateMemberDto): Promise<Member> {
+    return this.memberRepository.createOne(createMemberDto);
   }
 
   findAll() {

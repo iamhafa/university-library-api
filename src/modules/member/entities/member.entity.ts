@@ -24,7 +24,7 @@ export class Member extends BaseEntity {
   password: string;
 
   @Column({ nullable: true })
-  phone_number: number;
+  phone_number: string;
 
   @Column({
     type: 'enum',

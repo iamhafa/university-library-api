@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, Relation } from 'typeorm';
+import { Column, Entity, ManyToMany, Relation } from 'typeorm';
 import { BaseEntity } from '@/libs/database/base.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 

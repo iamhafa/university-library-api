@@ -1,18 +1,20 @@
-import { RESPONSE_RESULT, STATUS_CODE } from '@/common/constants';
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
 import { Response } from 'express';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
+import { RESPONSE_RESULT, STATUS_CODE } from '@/common/constants';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost): Response {
     const ctx = host.switchToHttp();
     const response: Response = ctx.getResponse<Response>();
-    const errorMessage: string = exception.message;
+    const error: string = exception.message;
+    const errorMessage = exception.getResponse();
 
     // Format custom response
-    const errorResponse = {
+    const errorResponse: Record<string, string | string[]> = {
       result: RESPONSE_RESULT.NG,
-      errorMessage,
+      error,
+      errorMessage: errorMessage['message'],
     };
 
     // Send custom response
