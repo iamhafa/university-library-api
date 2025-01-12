@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, ManyToOne, Relation } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, Relation } from 'typeorm';
 import { BaseEntity } from '@/libs/database/base.entity';
 import { Author } from '@/modules/author/entities/author.entity';
 import { Genre } from '@/modules/genre/entities/genre.entity';
@@ -28,24 +28,25 @@ export class Book extends BaseEntity {
   @Column({ nullable: true })
   description: string;
 
-  @ManyToMany(() => Author, (author) => author.books)
-  authors?: Relation<Author[]>;
-
   // FK of Genre
   @Column()
   genre_id: number;
-
   @ManyToOne(() => Genre, (genre) => genre.books)
-  genre?: Relation<Genre>;
+  @JoinColumn([{ name: 'genre_id' }])
+  genre: Relation<Genre>;
 
   // FK of Publisher
   @Column()
   publisher_id: number;
-
   @ManyToOne(() => Publisher, (publisher) => publisher.book)
+  @JoinColumn([{ name: 'publisher_id' }])
   publisher: Relation<Publisher>;
 
+  // Thể hiện quan hệ many to many với Author
+  @ManyToMany(() => Author, (author) => author.books)
+  authors?: Relation<Author[]>;
+
   // Thể hiện quan hệ many to many với BookBorrowing
-  @ManyToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books)
-  bookBorrowings?: Relation<BookBorrowing[]>;
+  @ManyToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books, { cascade: true })
+  bookBorrowings: Relation<BookBorrowing[]>;
 }

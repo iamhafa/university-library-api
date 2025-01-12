@@ -1,4 +1,4 @@
-import { DeleteResult, FindOptions, FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
+import { DeleteResult, FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
 import { Logger, NotFoundException } from '@nestjs/common';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { BaseEntity } from './base.entity';
@@ -58,7 +58,14 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
     return this.entityRepository.findBy(where);
   }
 
-  findOneAndDelete(where: FindOptionsWhere<T>): Promise<DeleteResult> {
-    return this.entityRepository.delete(where);
+  async findOneAndDelete(where: FindOptionsWhere<T>) {
+    const deleteResult: DeleteResult = await this.entityRepository.delete(where);
+
+    if (deleteResult.affected === 1) {
+      this.logger.warn(`Deleted ${JSON.stringify(where)}`);
+      return deleteResult;
+    } else {
+      this.logger.log(`Can't delete ${JSON.stringify(where)}`);
+    }
   }
 }

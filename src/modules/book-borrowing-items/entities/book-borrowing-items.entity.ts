@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
 import { BaseEntity } from '@/libs/database/base.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
@@ -30,6 +30,7 @@ export class BookBorrowingItems extends BaseEntity {
   book_id: number;
 
   @ManyToOne(() => Book, (book) => book.bookBorrowings)
+  @JoinColumn([{ name: 'book_borrowing_id' }])
   book: Relation<Book>;
 
   // PK for BookBorrowing (many to many with Book)
@@ -37,5 +38,6 @@ export class BookBorrowingItems extends BaseEntity {
   book_borrowing_id: number;
 
   @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books)
+  @JoinColumn([{ name: 'book_id' }])
   bookBorrowing: Relation<BookBorrowing>;
 }

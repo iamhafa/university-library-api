@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
 import { RESPONSE_RESULT, STATUS_CODE } from '@/common/constants';
 
+// catch all http exceptions (ex: BadRequest....)
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost): Response {

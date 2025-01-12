@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
 import { AuthorService } from './author.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
@@ -10,11 +10,6 @@ import { ApiTags } from '@nestjs/swagger';
 export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}
 
-  @Get(':id')
-  getOne(@Param('id', ParseIntPipe) id: number): Promise<Author> {
-    return this.authorService.findOne(id);
-  }
-
   @Get()
   getAll(): Promise<Author[]> {
     return this.authorService.findAll();
@@ -25,11 +20,21 @@ export class AuthorController {
     return this.authorService.createOne(createAuthorDto);
   }
 
+  @Get(':id')
+  getOne(@Param('id', ParseIntPipe) id: number): Promise<Author> {
+    return this.authorService.findOne(id);
+  }
+
   @Put(':id')
   updateOne(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateAuthorDto: UpdateAuthorDto,
   ): Promise<Author> {
     return this.authorService.updateOne(id, updateAuthorDto);
+  }
+
+  @Delete(':id')
+  deleteOne(@Param('id', ParseIntPipe) id: number) {
+    return this.authorService.deleteOne(id);
   }
 }

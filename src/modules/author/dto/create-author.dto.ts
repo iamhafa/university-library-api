@@ -1,6 +1,6 @@
 import { BaseDto } from '@/libs/database/base.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class CreateAuthorDto extends BaseDto {
   @ApiProperty()
@@ -11,7 +11,11 @@ export class CreateAuthorDto extends BaseDto {
   @IsString()
   last_name: string;
 
-  @ApiProperty({ default: null })
+  @ApiProperty({
+    nullable: true,
+    default: null,
+  })
   @IsString()
+  @IsOptional()
   bio: string;
 }

@@ -40,6 +40,6 @@ export class Member extends BaseEntity {
   @CreateDateColumn()
   enrollment_date: Date;
 
-  @OneToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.member_id)
+  @OneToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.member)
   bookBorrowings?: Relation<BookBorrowing[]>;
 }

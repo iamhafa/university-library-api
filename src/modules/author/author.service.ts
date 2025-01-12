@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { DeleteResult } from 'typeorm';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { AuthorRepository } from './author.repository';
@@ -22,5 +23,9 @@ export class AuthorService {
 
   updateOne(id: number, updateAuthorDto: UpdateAuthorDto): Promise<Author> {
     return this.authorRepository.findOneAndUpdate({ id }, updateAuthorDto);
+  }
+
+  deleteOne(id: number): Promise<DeleteResult> {
+    return this.authorRepository.findOneAndDelete({ id });
   }
 }

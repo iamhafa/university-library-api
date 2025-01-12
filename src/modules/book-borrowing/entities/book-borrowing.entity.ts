@@ -1,4 +1,13 @@
-import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, Relation } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  Relation,
+} from 'typeorm';
 import { BaseEntity } from '@/libs/database/base.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 import { Member } from '@/modules/member/entities/member.entity';
@@ -18,14 +27,18 @@ export class BookBorrowing extends BaseEntity {
   })
   due_date: Date;
 
-  @ManyToOne(() => Member, (member) => member.bookBorrowings)
+  // FK of Member
+  @Column()
   member_id: number;
+  @ManyToOne(() => Member, (member) => member.bookBorrowings)
+  @JoinColumn([{ name: 'member_id' }])
+  member: Relation<Member>;
 
   // Thể hiện quan hệ many to many với Book
   @ManyToMany(() => Book, (book) => book.bookBorrowings)
   books?: Relation<Book[]>;
 
   // 1 lần mượn sách (có thể gồm nhiều sách) thì có thể có nhiều vé phạt nếu trễ hạn trả
-  @OneToMany(() => Fine, (fine) => fine.book_borrowing_id)
+  @OneToMany(() => Fine, (fine) => fine.bookBorrowing)
   fines: Relation<Fine[]>;
 }

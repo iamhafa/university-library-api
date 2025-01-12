@@ -13,6 +13,6 @@ export class Publisher extends BaseEntity {
   @Column({ nullable: true })
   contact_number: number;
 
-  @OneToMany(() => Book, (book) => book.publisher_id)
+  @OneToMany(() => Book, (book) => book.publisher)
   book?: Relation<Book[]>;
 }

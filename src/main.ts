@@ -10,6 +10,7 @@ import { HttpExceptionFilter } from '@/core/filters/http-exception.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService: ConfigService = app.get(ConfigService);
+  const appPort: number = configService.get<number>('APP_PORT');
   app.enableCors();
 
   // Enable for validation (when use DTO)
@@ -24,9 +25,9 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup(configService.get<string>('APP_SWAGGER_PATH'), app, documentFactory);
 
-  await app.listen(process.env.APP_PORT, () => {
+  await app.listen(appPort, () => {
     const logger: Logger = new Logger('Bootstrap');
-    logger.verbose(`The app running on http://localhost:${configService.get<string>('APP_PORT')}`);
+    logger.verbose(`The app running on http://localhost:${appPort}`);
   });
 }
 bootstrap();

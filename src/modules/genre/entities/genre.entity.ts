@@ -8,6 +8,6 @@ export class Genre extends BaseEntity {
   @Column()
   name: string;
 
-  @OneToMany(() => Book, (book) => book.genre_id)
+  @OneToMany(() => Book, (book) => book.genre)
   books: Relation<Book[]>;
 }

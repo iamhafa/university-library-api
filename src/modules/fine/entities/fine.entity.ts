@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, Relation } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, Relation } from 'typeorm';
 import { BaseEntity } from '@/libs/database/base.entity';
 import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
 import { BORROWING_STATUS } from '@/common/constants';
@@ -19,8 +19,7 @@ export class Fine extends BaseEntity {
   // FK of Book Borrowing
   @Column()
   book_borrowing_id: number;
-
-  // 1 lần mượn sách (có thể gồm nhiều sách) thì có thể có nhiều vé phạt nếu trễ hạn trả
   @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.fines)
+  @JoinColumn([{ name: 'book_borrowing_id' }]) // naming for join table
   bookBorrowing: Relation<BookBorrowing>;
 }
