@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRuleDto } from './dto/create-rule.dto';
 import { UpdateRuleDto } from './dto/update-rule.dto';
+import { RuleRepository } from './rule.repository';
+import { Rule } from './entities/rule.entity';
+import { DeleteResult } from 'typeorm';
 
 @Injectable()
 export class RuleService {
-  create(createRuleDto: CreateRuleDto) {
-    return 'This action adds a new rule';
+  constructor(private readonly ruleRepository: RuleRepository) {}
+
+  findOne(id: number): Promise<Rule> {
+    return this.ruleRepository.findOne({ id });
   }
 
-  findAll() {
-    return `This action returns all rule`;
+  findAll(): Promise<Rule[]> {
+    return this.ruleRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} rule`;
+  createOne(createRuleDto: CreateRuleDto): Promise<Rule> {
+    return this.ruleRepository.createOne(createRuleDto);
   }
 
-  update(id: number, updateRuleDto: UpdateRuleDto) {
-    return `This action updates a #${id} rule`;
+  updateOne(id: number, updateRuleDto: UpdateRuleDto): Promise<Rule> {
+    return this.ruleRepository.findOneAndUpdate({ id }, updateRuleDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} rule`;
+  deleteOne(id: number): Promise<DeleteResult> {
+    return this.ruleRepository.findOneAndDelete({ id });
   }
 }

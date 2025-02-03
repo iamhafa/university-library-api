@@ -1,36 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
 import { RuleService } from './rule.service';
 import { CreateRuleDto } from './dto/create-rule.dto';
 import { UpdateRuleDto } from './dto/update-rule.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { Rule } from './entities/rule.entity';
 
 @ApiTags('Quản lý quy định mượn sách')
 @Controller('rule')
 export class RuleController {
   constructor(private readonly ruleService: RuleService) {}
 
-  @Post()
-  create(@Body() createRuleDto: CreateRuleDto) {
-    return this.ruleService.create(createRuleDto);
-  }
-
   @Get()
-  findAll() {
+  getAll(): Promise<Rule[]> {
     return this.ruleService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ruleService.findOne(+id);
+  @Post()
+  createOne(@Body() createRuleDto: CreateRuleDto): Promise<Rule> {
+    return this.ruleService.createOne(createRuleDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRuleDto: UpdateRuleDto) {
-    return this.ruleService.update(+id, updateRuleDto);
+  @Get(':id')
+  getOne(@Param('id', ParseIntPipe) id: number): Promise<Rule> {
+    return this.ruleService.findOne(id);
+  }
+
+  @Put(':id')
+  updateOne(@Param('id', ParseIntPipe) id: number, @Body() updateRuleDto: UpdateRuleDto): Promise<Rule> {
+    return this.ruleService.updateOne(id, updateRuleDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ruleService.remove(+id);
+  deleteOne(@Param('id', ParseIntPipe) id: number) {
+    return this.ruleService.deleteOne(id);
   }
 }

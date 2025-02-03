@@ -1,36 +1,40 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
 import { MemberService } from './member.service';
 import { CreateMemberDto } from './dto/create-customer.dto';
 import { UpdateMemberDto } from './dto/update-customer.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { Member } from './entities/member.entity';
 
 @ApiTags('Quản lý thành viên (sinh viên)')
 @Controller('member')
 export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
-  @Post()
-  create(@Body() createMemberDto: CreateMemberDto) {
-    return this.memberService.create(createMemberDto);
-  }
-
   @Get()
-  findAll() {
+  getAll(): Promise<Member[]> {
     return this.memberService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.memberService.findOne(+id);
+  @Post()
+  createOne(@Body() createMemberDto: CreateMemberDto): Promise<Member> {
+    return this.memberService.createOne(createMemberDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMemberDto: UpdateMemberDto) {
-    return this.memberService.update(+id, updateMemberDto);
+  @Get(':id')
+  getOne(@Param('id', ParseIntPipe) id: number): Promise<Member> {
+    return this.memberService.findOne(id);
+  }
+
+  @Put(':id')
+  updateOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateMemberDto: UpdateMemberDto,
+  ): Promise<Member> {
+    return this.memberService.updateOne(id, updateMemberDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.memberService.remove(+id);
+  deleteOne(@Param('id', ParseIntPipe) id: number) {
+    return this.memberService.deleteOne(id);
   }
 }

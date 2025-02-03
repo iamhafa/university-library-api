@@ -1,36 +1,40 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
 import { PublisherService } from './publisher.service';
 import { CreatePublisherDto } from './dto/create-publisher.dto';
 import { UpdatePublisherDto } from './dto/update-publisher.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { Publisher } from './entities/publisher.entity';
 
 @ApiTags('Quản lý nhà xuất bản')
 @Controller('publisher')
 export class PublisherController {
   constructor(private readonly publisherService: PublisherService) {}
 
-  @Post()
-  create(@Body() createPublisherDto: CreatePublisherDto) {
-    return this.publisherService.create(createPublisherDto);
-  }
-
   @Get()
-  findAll() {
+  getAll(): Promise<Publisher[]> {
     return this.publisherService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.publisherService.findOne(+id);
+  @Post()
+  createOne(@Body() createPublisherDto: CreatePublisherDto): Promise<Publisher> {
+    return this.publisherService.createOne(createPublisherDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePublisherDto: UpdatePublisherDto) {
-    return this.publisherService.update(+id, updatePublisherDto);
+  @Get(':id')
+  getOne(@Param('id', ParseIntPipe) id: number): Promise<Publisher> {
+    return this.publisherService.findOne(id);
+  }
+
+  @Put(':id')
+  updateOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updatePublisherDto: UpdatePublisherDto,
+  ): Promise<Publisher> {
+    return this.publisherService.updateOne(id, updatePublisherDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.publisherService.remove(+id);
+  deleteOne(@Param('id', ParseIntPipe) id: number) {
+    return this.publisherService.deleteOne(id);
   }
 }

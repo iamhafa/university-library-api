@@ -1,36 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
 import { FineService } from './fine.service';
 import { CreateFineDto } from './dto/create-fine.dto';
 import { UpdateFineDto } from './dto/update-fine.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { Fine } from './entities/fine.entity';
 
 @ApiTags('Quản lý phạt khi sinh viên trễ trả sách')
 @Controller('punish')
 export class FineController {
-  constructor(private readonly punishService: FineService) {}
-
-  @Post()
-  create(@Body() createFineDto: CreateFineDto) {
-    return this.punishService.create(createFineDto);
-  }
+  constructor(private readonly fineService: FineService) {}
 
   @Get()
-  findAll() {
-    return this.punishService.findAll();
+  getAll(): Promise<Fine[]> {
+    return this.fineService.findAll();
+  }
+
+  @Post()
+  createOne(@Body() createFineDto: CreateFineDto): Promise<Fine> {
+    return this.fineService.createOne(createFineDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.punishService.findOne(+id);
+  getOne(@Param('id', ParseIntPipe) id: number): Promise<Fine> {
+    return this.fineService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFineDto: UpdateFineDto) {
-    return this.punishService.update(+id, updateFineDto);
+  @Put(':id')
+  updateOne(@Param('id', ParseIntPipe) id: number, @Body() updateFineDto: UpdateFineDto): Promise<Fine> {
+    return this.fineService.updateOne(id, updateFineDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.punishService.remove(+id);
+  deleteOne(@Param('id', ParseIntPipe) id: number) {
+    return this.fineService.deleteOne(id);
   }
 }

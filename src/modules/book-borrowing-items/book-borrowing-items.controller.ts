@@ -1,7 +1,7 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
 import { BookBorrowingItemsService } from './book-borrowing-items.service';
-import { CreateBookBookBorrowingDto } from './dto/create-book-borrowing-items.dto';
+import { CreateBookBorrowingItemsDto } from './dto/create-book-borrowing-items.dto';
 import { UpdateBookBookBorrowingDto } from './dto/update-book-borrowing-items.dto';
 import { BookBorrowingItems } from './entities/book-borrowing-items.entity';
 
@@ -16,8 +16,8 @@ export class BookBorrowingItemsController {
   }
 
   @Post()
-  createOne(@Body() createAuthorDto: CreateBookBookBorrowingDto): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsService.createOne(createAuthorDto);
+  createOne(@Body() createBookBorrowingDto: CreateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
+    return this.bookBorrowingItemsService.createOne(createBookBorrowingDto);
   }
 
   @Get(':id')
