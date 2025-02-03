@@ -1,7 +1,7 @@
+import { IsEmail, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 import { MEMBER_TYPE } from '@/common/constants';
 import { BaseDto } from '@/libs/database/base.dto';
-import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsEmail, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
 
 export class CreateMemberDto extends BaseDto {
   @ApiProperty()

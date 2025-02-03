@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { BookBorrowingService } from './book-borrowing.service';
-import { CreateBookBorrowingDto } from './dto/create-order.dto';
-import { UpdateBookBorrowingDto } from './dto/update-order.dto';
+import { CreateBookBorrowingDto } from './dto/create-book-borrowing.dto';
+import { UpdateBookBorrowingDto } from './dto/update-book-borrowing.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Quản lý mỗi lượt mượn sách (có thể gồm nhiều cuốn)')
@@ -11,7 +11,7 @@ export class BookBorrowingController {
 
   @Post()
   create(@Body() createBookBorrowingDto: CreateBookBorrowingDto) {
-    return this.orderService.create(createBookBorrowingDto);
+    return this.orderService.createOne(createBookBorrowingDto);
   }
 
   @Get()
@@ -26,11 +26,11 @@ export class BookBorrowingController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBookBorrowingDto: UpdateBookBorrowingDto) {
-    return this.orderService.update(+id, updateBookBorrowingDto);
+    return this.orderService.updateOne(+id, updateBookBorrowingDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.orderService.remove(+id);
+    return this.orderService.deleteOne(+id);
   }
 }

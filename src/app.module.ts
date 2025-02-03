@@ -16,7 +16,7 @@ import { RuleModule } from '@/modules/rule/rule.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    ScheduleModule.forRoot({ cronJobs: false }),
+    ScheduleModule.forRoot({ cronJobs: true }),
     /* custom database module */
     DatabaseModule,
     /**

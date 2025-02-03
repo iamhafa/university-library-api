@@ -1,26 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { CreateBookBorrowingDto } from './dto/create-order.dto';
-import { UpdateBookBorrowingDto } from './dto/update-order.dto';
+import { DeleteResult } from 'typeorm';
+import { Injectable, Logger } from '@nestjs/common';
+import { CreateBookBorrowingDto } from './dto/create-book-borrowing.dto';
+import { UpdateBookBorrowingDto } from './dto/update-book-borrowing.dto';
+import { BookBorrowing } from './entities/book-borrowing.entity';
+import { BookBorrowingRepository } from './book-borrowing.repository';
 
 @Injectable()
 export class BookBorrowingService {
-  create(createBookBorrowingDto: CreateBookBorrowingDto) {
-    return 'This action adds a new order';
+  constructor(private readonly bookBorrowingRepository: BookBorrowingRepository) {}
+
+  findOne(id: number): Promise<BookBorrowing> {
+    return this.bookBorrowingRepository.findOne({ id });
   }
 
-  findAll() {
-    return `This action returns all order`;
+  findAll(): Promise<BookBorrowing[]> {
+    return this.bookBorrowingRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  createOne(createBookBorrowingDto: CreateBookBorrowingDto): Promise<BookBorrowing> {
+    return this.bookBorrowingRepository.createOne(createBookBorrowingDto);
   }
 
-  update(id: number, updateBookBorrowingDto: UpdateBookBorrowingDto) {
-    return `This action updates a #${id} order`;
+  updateOne(id: number, updateBookBorrowingDto: UpdateBookBorrowingDto): Promise<BookBorrowing> {
+    return this.bookBorrowingRepository.findOneAndUpdate({ id }, updateBookBorrowingDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+  deleteOne(id: number): Promise<DeleteResult> {
+    return this.bookBorrowingRepository.findOneAndDelete({ id });
   }
 }

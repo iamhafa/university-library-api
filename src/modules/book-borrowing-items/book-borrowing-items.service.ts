@@ -1,26 +1,34 @@
+import { DeleteResult } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { CreateBookBookBorrowingDto } from './dto/create-book-order.dto';
-import { UpdateBookBookBorrowingDto } from './dto/update-book-order.dto';
+import { CreateBookBorrowingItemsDto } from './dto/create-book-borrowing-items.dto';
+import { UpdateBookBookBorrowingDto } from './dto/update-book-borrowing-items.dto';
+import { BookBorrowingItems } from './entities/book-borrowing-items.entity';
+import { BookBorrowingItemsRepository } from './book-borrowing-items.repository';
 
 @Injectable()
 export class BookBorrowingItemsService {
-  create(createBookBookBorrowingDto: CreateBookBookBorrowingDto) {
-    return 'This action adds a new bookBookBorrowing';
+  constructor(private readonly bookBorrowingItemsRepository: BookBorrowingItemsRepository) {}
+
+  findOne(id: number): Promise<BookBorrowingItems> {
+    return this.bookBorrowingItemsRepository.findOne({ id });
   }
 
-  findAll() {
-    return `This action returns all bookBookBorrowing`;
+  findAll(): Promise<BookBorrowingItems[]> {
+    return this.bookBorrowingItemsRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} bookBookBorrowing`;
+  createOne(createBookBorrowingItemsDto: CreateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
+    return this.bookBorrowingItemsRepository.createOne(createBookBorrowingItemsDto);
   }
 
-  update(id: number, updateBookBookBorrowingDto: UpdateBookBookBorrowingDto) {
-    return `This action updates a #${id} bookBookBorrowing`;
+  updateOne(
+    id: number,
+    updateBookBorrowingItemsDto: UpdateBookBookBorrowingDto,
+  ): Promise<BookBorrowingItems> {
+    return this.bookBorrowingItemsRepository.findOneAndUpdate({ id }, updateBookBorrowingItemsDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} bookBookBorrowing`;
+  deleteOne(id: number): Promise<DeleteResult> {
+    return this.bookBorrowingItemsRepository.findOneAndDelete({ id });
   }
 }

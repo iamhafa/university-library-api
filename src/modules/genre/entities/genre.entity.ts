@@ -9,5 +9,5 @@ export class Genre extends BaseEntity {
   name: string;
 
   @OneToMany(() => Book, (book) => book.genre)
-  books: Relation<Book[]>;
+  books?: Relation<Book[]>;
 }

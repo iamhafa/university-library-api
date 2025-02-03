@@ -19,3 +19,7 @@ export enum MEMBER_TYPE {
   UNDERGRADUATE_STUDENT, // sinh viên đang còn học
   GRADUATE_STUDENT, // sinh viên đã tốt nghiệp
 }
+
+export enum EJOB_NAME {
+  FINE = 'fine',
+}

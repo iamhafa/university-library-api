@@ -29,10 +29,10 @@ export class BookBorrowing extends BaseEntity {
 
   // FK of Member
   @Column()
-  member_id: number;
+  member_id?: number;
   @ManyToOne(() => Member, (member) => member.bookBorrowings)
   @JoinColumn([{ name: 'member_id' }])
-  member: Relation<Member>;
+  member?: Relation<Member>;
 
   // Thể hiện quan hệ many to many với Book
   @ManyToMany(() => Book, (book) => book.bookBorrowings)
@@ -40,5 +40,5 @@ export class BookBorrowing extends BaseEntity {
 
   // 1 lần mượn sách (có thể gồm nhiều sách) thì có thể có nhiều vé phạt nếu trễ hạn trả
   @OneToMany(() => Fine, (fine) => fine.bookBorrowing)
-  fines: Relation<Fine[]>;
+  fines?: Relation<Fine[]>;
 }

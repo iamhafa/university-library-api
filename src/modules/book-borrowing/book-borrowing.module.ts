@@ -9,5 +9,6 @@ import { BookBorrowingRepository } from './book-borrowing.repository';
   imports: [DatabaseModule.forFeature([BookBorrowing])],
   controllers: [BookBorrowingController],
   providers: [BookBorrowingService, BookBorrowingRepository],
+  exports: [BookBorrowingService],
 })
 export class BookBorrowingModule {}

@@ -11,12 +11,12 @@ export class AuthorBookItems extends BaseEntity {
 
   @ManyToOne(() => Author, (author) => author.books)
   @JoinColumn([{ name: 'author_id' }])
-  author: Relation<Author>;
+  author?: Relation<Author>;
 
   @PrimaryColumn()
   book_id: number;
 
   @ManyToOne(() => Book, (book) => book.authors)
   @JoinColumn([{ name: 'book_id' }])
-  book: Relation<Book>;
+  book?: Relation<Book>;
 }

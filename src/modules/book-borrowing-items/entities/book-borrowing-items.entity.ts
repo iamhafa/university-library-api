@@ -31,7 +31,7 @@ export class BookBorrowingItems extends BaseEntity {
 
   @ManyToOne(() => Book, (book) => book.bookBorrowings)
   @JoinColumn([{ name: 'book_borrowing_id' }])
-  book: Relation<Book>;
+  book?: Relation<Book>;
 
   // PK for BookBorrowing (many to many with Book)
   @PrimaryColumn()
@@ -39,5 +39,5 @@ export class BookBorrowingItems extends BaseEntity {
 
   @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books)
   @JoinColumn([{ name: 'book_id' }])
-  bookBorrowing: Relation<BookBorrowing>;
+  bookBorrowing?: Relation<BookBorrowing>;
 }

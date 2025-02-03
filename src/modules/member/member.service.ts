@@ -3,28 +3,29 @@ import { CreateMemberDto } from './dto/create-customer.dto';
 import { UpdateMemberDto } from './dto/update-customer.dto';
 import { MemberRepository } from './member.repository';
 import { Member } from './entities/member.entity';
+import { DeleteResult } from 'typeorm';
 
 @Injectable()
 export class MemberService {
   constructor(private readonly memberRepository: MemberRepository) {}
 
-  create(createMemberDto: CreateMemberDto): Promise<Member> {
+  findOne(id: number): Promise<Member> {
+    return this.memberRepository.findOne({ id });
+  }
+
+  findAll(): Promise<Member[]> {
+    return this.memberRepository.findAll();
+  }
+
+  createOne(createMemberDto: CreateMemberDto): Promise<Member> {
     return this.memberRepository.createOne(createMemberDto);
   }
 
-  findAll() {
-    return `This action returns all customer`;
+  updateOne(id: number, updateMemberDto: UpdateMemberDto): Promise<Member> {
+    return this.memberRepository.findOneAndUpdate({ id }, updateMemberDto);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
-  }
-
-  update(id: number, updateMemberDto: UpdateMemberDto) {
-    return `This action updates a #${id} customer`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
+  deleteOne(id: number): Promise<DeleteResult> {
+    return this.memberRepository.findOneAndDelete({ id });
   }
 }

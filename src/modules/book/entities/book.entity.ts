@@ -33,14 +33,14 @@ export class Book extends BaseEntity {
   genre_id: number;
   @ManyToOne(() => Genre, (genre) => genre.books)
   @JoinColumn([{ name: 'genre_id' }])
-  genre: Relation<Genre>;
+  genre?: Relation<Genre>;
 
   // FK of Publisher
   @Column()
   publisher_id: number;
   @ManyToOne(() => Publisher, (publisher) => publisher.book)
   @JoinColumn([{ name: 'publisher_id' }])
-  publisher: Relation<Publisher>;
+  publisher?: Relation<Publisher>;
 
   // Thể hiện quan hệ many to many với Author
   @ManyToMany(() => Author, (author) => author.books)
@@ -48,5 +48,5 @@ export class Book extends BaseEntity {
 
   // Thể hiện quan hệ many to many với BookBorrowing
   @ManyToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books, { cascade: true })
-  bookBorrowings: Relation<BookBorrowing[]>;
+  bookBorrowings?: Relation<BookBorrowing[]>;
 }
