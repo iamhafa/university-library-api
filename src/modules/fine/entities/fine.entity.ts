@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, Relation } from 'typeorm';
 import { BaseEntity } from '@/libs/database/base.entity';
 import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
-import { BORROWING_STATUS } from '@/common/constants';
+import { BORROWING_STATUS } from '@/common/constants/enum';
 
 // Quản lý các khoản phạt nếu sách không được trả đúng hạn.
 @Entity()

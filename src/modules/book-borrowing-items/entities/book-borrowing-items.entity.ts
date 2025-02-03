@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, Relation } from '
 import { BaseEntity } from '@/libs/database/base.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
-import { BORROWING_STATUS } from '@/common/constants';
+import { BORROWING_STATUS } from '@/common/constants/enum';
 
 // Ghi dấu từng cuốn sách cho mỗi lần mượn sách của sinh viên
 // Bảng trung gian của Book và BookBorrowing (many to many)

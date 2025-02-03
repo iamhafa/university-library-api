@@ -5,6 +5,8 @@ import { UpdateBookDto } from './dto/update-book.dto';
 import { BookRepository } from './book.repository';
 import { AuthorService } from '../author/author.service';
 import { Book } from './entities/book.entity';
+import { TPagination } from '@/common/constants/type';
+import { PaginationDto } from '@/libs/database/pagination.dto';
 
 @Injectable()
 export class BookService {
@@ -14,11 +16,11 @@ export class BookService {
   ) {}
 
   findOne(id: number): Promise<Book> {
-    return this.bookRepository.findOne({ id });
+    return this.bookRepository.findOneById({ id });
   }
 
-  findAll(): Promise<Book[]> {
-    return this.bookRepository.findAll();
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Book>> {
+    return this.bookRepository.findAll(paginationDto);
   }
 
   createOne(createBookDto: CreateBookDto): Promise<Book> {
@@ -26,7 +28,7 @@ export class BookService {
   }
 
   updateOne(id: number, updateAuthorDto: UpdateBookDto): Promise<Book> {
-    return this.bookRepository.findOneAndUpdate({ id }, updateAuthorDto);
+    return this.bookRepository.findOneByIdAndUpdate({ id }, updateAuthorDto);
   }
 
   deleteOne(id: number): Promise<DeleteResult> {

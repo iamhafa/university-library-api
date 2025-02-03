@@ -1,20 +1,22 @@
+import { DeleteResult } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { CreateRuleDto } from './dto/create-rule.dto';
 import { UpdateRuleDto } from './dto/update-rule.dto';
 import { RuleRepository } from './rule.repository';
 import { Rule } from './entities/rule.entity';
-import { DeleteResult } from 'typeorm';
+import { TPagination } from '@/common/constants/type';
+import { PaginationDto } from '@/libs/database/pagination.dto';
 
 @Injectable()
 export class RuleService {
   constructor(private readonly ruleRepository: RuleRepository) {}
 
   findOne(id: number): Promise<Rule> {
-    return this.ruleRepository.findOne({ id });
+    return this.ruleRepository.findOneById({ id });
   }
 
-  findAll(): Promise<Rule[]> {
-    return this.ruleRepository.findAll();
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Rule>> {
+    return this.ruleRepository.findAll(paginationDto);
   }
 
   createOne(createRuleDto: CreateRuleDto): Promise<Rule> {
@@ -22,7 +24,7 @@ export class RuleService {
   }
 
   updateOne(id: number, updateRuleDto: UpdateRuleDto): Promise<Rule> {
-    return this.ruleRepository.findOneAndUpdate({ id }, updateRuleDto);
+    return this.ruleRepository.findOneByIdAndUpdate({ id }, updateRuleDto);
   }
 
   deleteOne(id: number): Promise<DeleteResult> {

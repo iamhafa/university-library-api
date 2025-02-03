@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { swaggerConfig } from '@/config/swagger.config';
-import { FormatDateResponseInterceptor } from '@/core/interceptors/format-date-response.interceptor';
 import { HttpExceptionFilter } from '@/core/filters/http-exception.filter';
+import { ResponseInterceptor } from '@/core/interceptors/response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,13 +14,18 @@ async function bootstrap() {
   app.enableCors();
 
   // Enable for validation (when use DTO)
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true })); // use `true` for class-validator
   // Interceptor to format date in each response
-  app.useGlobalInterceptors(new FormatDateResponseInterceptor());
+  app.useGlobalInterceptors(new ResponseInterceptor());
   // Filter to format error response
   app.useGlobalFilters(new HttpExceptionFilter());
   // Prefix
   app.setGlobalPrefix(configService.get<string>('APP_PREFIX_API'));
+  // Versioning
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: configService.get<string>('APP_VERSION_API'), // default is "v1"
+  });
 
   const documentFactory = () => SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup(configService.get<string>('APP_SWAGGER_PATH'), app, documentFactory);

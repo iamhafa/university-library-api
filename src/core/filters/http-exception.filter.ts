@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
-import { RESPONSE_RESULT, STATUS_CODE } from '@/common/constants';
+import { RESPONSE_RESULT, STATUS_CODE } from '@/common/constants/enum';
 
 // catch all http exceptions (ex: BadRequest....)
 @Catch(HttpException)

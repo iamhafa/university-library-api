@@ -1,12 +1,14 @@
 import { DeleteResult } from 'typeorm';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { EJOB_NAME } from '@/common/constants';
+import { EJOB_NAME } from '@/common/constants/enum';
 import { FineRepository } from './fine.repository';
 import { CreateFineDto } from './dto/create-fine.dto';
 import { UpdateFineDto } from './dto/update-fine.dto';
 import { Fine } from './entities/fine.entity';
 import { BookBorrowingService } from '../book-borrowing/book-borrowing.service';
+import { TPagination } from '@/common/constants/type';
+import { PaginationDto } from '@/libs/database/pagination.dto';
 
 @Injectable()
 export class FineService {
@@ -24,11 +26,11 @@ export class FineService {
   }
 
   findOne(id: number): Promise<Fine> {
-    return this.fineRepository.findOne({ id });
+    return this.fineRepository.findOneById({ id });
   }
 
-  findAll(): Promise<Fine[]> {
-    return this.fineRepository.findAll();
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Fine>> {
+    return this.fineRepository.findAll(paginationDto);
   }
 
   createOne(createFineDto: CreateFineDto): Promise<Fine> {
@@ -36,7 +38,7 @@ export class FineService {
   }
 
   updateOne(id: number, updateFineDto: UpdateFineDto): Promise<Fine> {
-    return this.fineRepository.findOneAndUpdate({ id }, updateFineDto);
+    return this.fineRepository.findOneByIdAndUpdate({ id }, updateFineDto);
   }
 
   deleteOne(id: number): Promise<DeleteResult> {

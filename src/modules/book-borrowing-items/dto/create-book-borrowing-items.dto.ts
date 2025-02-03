@@ -1,4 +1,4 @@
-import { BORROWING_STATUS } from '@/common/constants';
+import { BORROWING_STATUS } from '@/common/constants/enum';
 import { BaseDto } from '@/libs/database/base.dto';
 import { IsDate, IsEnum, IsNumber } from 'class-validator';
 

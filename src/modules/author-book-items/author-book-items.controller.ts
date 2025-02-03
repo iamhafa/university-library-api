@@ -1,28 +1,30 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthorBookItemsService } from './author-book-items.service';
 import { AuthorBookItems } from './entities/author-book-items.entity';
 import { CreateAuthorBookItemsDto } from './dto/create-author-book-items.dto';
 import { UpdateAuthorBookItemsDto } from './dto/update-author-book-items.dto';
+import { TPagination } from '@/common/constants/type';
+import { PaginationDto } from '@/libs/database/pagination.dto';
 
 @ApiTags('Author Book Items')
 @Controller('author-book-items')
 export class AuthorBookItemsController {
-  constructor(private readonly authorBookService: AuthorBookItemsService) {}
+  constructor(private readonly authorBookItemsService: AuthorBookItemsService) {}
 
   @Get()
-  getAll(): Promise<AuthorBookItems[]> {
-    return this.authorBookService.findAll();
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<AuthorBookItems>> {
+    return this.authorBookItemsService.findAll(paginationDto);
   }
 
   @Post()
   createOne(@Body() createAuthorBookItemsDto: CreateAuthorBookItemsDto): Promise<AuthorBookItems> {
-    return this.authorBookService.createOne(createAuthorBookItemsDto);
+    return this.authorBookItemsService.createOne(createAuthorBookItemsDto);
   }
 
   @Get(':id')
   getOne(@Param('id', ParseIntPipe) id: number): Promise<AuthorBookItems> {
-    return this.authorBookService.findOne(id);
+    return this.authorBookItemsService.findOne(id);
   }
 
   @Put(':id')
@@ -30,11 +32,11 @@ export class AuthorBookItemsController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateAuthorBookItemsDto: UpdateAuthorBookItemsDto,
   ): Promise<AuthorBookItems> {
-    return this.authorBookService.updateOne(id, updateAuthorBookItemsDto);
+    return this.authorBookItemsService.updateOne(id, updateAuthorBookItemsDto);
   }
 
   @Delete(':id')
   deleteOne(@Param('id', ParseIntPipe) id: number) {
-    return this.authorBookService.deleteOne(id);
+    return this.authorBookItemsService.deleteOne(id);
   }
 }

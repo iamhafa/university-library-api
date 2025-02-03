@@ -4,17 +4,19 @@ import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { AuthorRepository } from './author.repository';
 import { Author } from './entities/author.entity';
+import { PaginationDto } from '@/libs/database/pagination.dto';
+import { TPagination } from '@/common/constants/type';
 
 @Injectable()
 export class AuthorService {
   constructor(private readonly authorRepository: AuthorRepository) {}
 
   findOne(id: number): Promise<Author> {
-    return this.authorRepository.findOne({ id });
+    return this.authorRepository.findOneById({ id });
   }
 
-  findAll(): Promise<Author[]> {
-    return this.authorRepository.findAll();
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Author>> {
+    return this.authorRepository.findAll(paginationDto);
   }
 
   createOne(createAuthorDto: CreateAuthorDto): Promise<Author> {
@@ -22,7 +24,7 @@ export class AuthorService {
   }
 
   updateOne(id: number, updateAuthorDto: UpdateAuthorDto): Promise<Author> {
-    return this.authorRepository.findOneAndUpdate({ id }, updateAuthorDto);
+    return this.authorRepository.findOneByIdAndUpdate({ id }, updateAuthorDto);
   }
 
   deleteOne(id: number): Promise<DeleteResult> {

@@ -1,9 +1,11 @@
 import { ApiTags } from '@nestjs/swagger';
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
 import { GenreService } from './genre.service';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
 import { Genre } from './entities/genre.entity';
+import { TPagination } from '@/common/constants/type';
+import { PaginationDto } from '@/libs/database/pagination.dto';
 
 @ApiTags('Quản lý thể loại sách')
 @Controller('genre')
@@ -11,8 +13,8 @@ export class GenreController {
   constructor(private readonly genreService: GenreService) {}
 
   @Get()
-  getAll(): Promise<Genre[]> {
-    return this.genreService.findAll();
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Genre>> {
+    return this.genreService.findAll(paginationDto);
   }
 
   @Post()

@@ -1,9 +1,11 @@
 import { ApiTags } from '@nestjs/swagger';
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
 import { FineService } from './fine.service';
 import { CreateFineDto } from './dto/create-fine.dto';
 import { UpdateFineDto } from './dto/update-fine.dto';
 import { Fine } from './entities/fine.entity';
+import { TPagination } from '@/common/constants/type';
+import { PaginationDto } from '@/libs/database/pagination.dto';
 
 @ApiTags('Quản lý phạt khi sinh viên trễ trả sách')
 @Controller('punish')
@@ -11,8 +13,8 @@ export class FineController {
   constructor(private readonly fineService: FineService) {}
 
   @Get()
-  getAll(): Promise<Fine[]> {
-    return this.fineService.findAll();
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Fine>> {
+    return this.fineService.findAll(paginationDto);
   }
 
   @Post()

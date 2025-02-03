@@ -4,17 +4,19 @@ import { UpdateMemberDto } from './dto/update-customer.dto';
 import { MemberRepository } from './member.repository';
 import { Member } from './entities/member.entity';
 import { DeleteResult } from 'typeorm';
+import { TPagination } from '@/common/constants/type';
+import { PaginationDto } from '@/libs/database/pagination.dto';
 
 @Injectable()
 export class MemberService {
   constructor(private readonly memberRepository: MemberRepository) {}
 
   findOne(id: number): Promise<Member> {
-    return this.memberRepository.findOne({ id });
+    return this.memberRepository.findOneById({ id });
   }
 
-  findAll(): Promise<Member[]> {
-    return this.memberRepository.findAll();
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Member>> {
+    return this.memberRepository.findAll(paginationDto);
   }
 
   createOne(createMemberDto: CreateMemberDto): Promise<Member> {
@@ -22,7 +24,7 @@ export class MemberService {
   }
 
   updateOne(id: number, updateMemberDto: UpdateMemberDto): Promise<Member> {
-    return this.memberRepository.findOneAndUpdate({ id }, updateMemberDto);
+    return this.memberRepository.findOneByIdAndUpdate({ id }, updateMemberDto);
   }
 
   deleteOne(id: number): Promise<DeleteResult> {

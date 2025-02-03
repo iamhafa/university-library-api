@@ -1,14 +1,18 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
-import { map, Observable } from 'rxjs';
 import { format } from 'date-fns';
+import { map, Observable } from 'rxjs';
 import { isNull, isObject } from 'lodash';
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import { RESPONSE_RESULT } from '@/common/constants/enum';
 
 @Injectable()
-export class FormatDateResponseInterceptor implements NestInterceptor {
+export class ResponseInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> {
     return next.handle().pipe(
       map((data: unknown) => {
-        return this.formatDates(data);
+        return {
+          results: RESPONSE_RESULT.OK,
+          dataPart: this.formatDates(data), // format date if existed
+        };
       }),
     );
   }

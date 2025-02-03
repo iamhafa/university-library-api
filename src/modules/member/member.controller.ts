@@ -1,9 +1,11 @@
 import { ApiTags } from '@nestjs/swagger';
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
 import { MemberService } from './member.service';
 import { CreateMemberDto } from './dto/create-customer.dto';
 import { UpdateMemberDto } from './dto/update-customer.dto';
 import { Member } from './entities/member.entity';
+import { TPagination } from '@/common/constants/type';
+import { PaginationDto } from '@/libs/database/pagination.dto';
 
 @ApiTags('Quản lý thành viên (sinh viên)')
 @Controller('member')
@@ -11,8 +13,8 @@ export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
   @Get()
-  getAll(): Promise<Member[]> {
-    return this.memberService.findAll();
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Member>> {
+    return this.memberService.findAll(paginationDto);
   }
 
   @Post()
@@ -26,10 +28,7 @@ export class MemberController {
   }
 
   @Put(':id')
-  updateOne(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateMemberDto: UpdateMemberDto,
-  ): Promise<Member> {
+  updateOne(@Param('id', ParseIntPipe) id: number, @Body() updateMemberDto: UpdateMemberDto): Promise<Member> {
     return this.memberService.updateOne(id, updateMemberDto);
   }
 

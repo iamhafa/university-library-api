@@ -1,9 +1,11 @@
 import { ApiTags } from '@nestjs/swagger';
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
 import { PublisherService } from './publisher.service';
 import { CreatePublisherDto } from './dto/create-publisher.dto';
 import { UpdatePublisherDto } from './dto/update-publisher.dto';
 import { Publisher } from './entities/publisher.entity';
+import { TPagination } from '@/common/constants/type';
+import { PaginationDto } from '@/libs/database/pagination.dto';
 
 @ApiTags('Quản lý nhà xuất bản')
 @Controller('publisher')
@@ -11,8 +13,8 @@ export class PublisherController {
   constructor(private readonly publisherService: PublisherService) {}
 
   @Get()
-  getAll(): Promise<Publisher[]> {
-    return this.publisherService.findAll();
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Publisher>> {
+    return this.publisherService.findAll(paginationDto);
   }
 
   @Post()
@@ -26,10 +28,7 @@ export class PublisherController {
   }
 
   @Put(':id')
-  updateOne(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updatePublisherDto: UpdatePublisherDto,
-  ): Promise<Publisher> {
+  updateOne(@Param('id', ParseIntPipe) id: number, @Body() updatePublisherDto: UpdatePublisherDto): Promise<Publisher> {
     return this.publisherService.updateOne(id, updatePublisherDto);
   }
 

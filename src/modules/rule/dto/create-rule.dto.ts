@@ -1,4 +1,4 @@
-import { MEMBER_TYPE } from '@/common/constants';
+import { MEMBER_TYPE } from '@/common/constants/enum';
 import { BaseDto } from '@/libs/database/base.dto';
 import { IsEnum, IsNumber } from 'class-validator';
 
