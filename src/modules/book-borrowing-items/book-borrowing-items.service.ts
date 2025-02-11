@@ -1,3 +1,4 @@
+import { isArray, isNull } from 'lodash';
 import { DeleteResult, In, IsNull } from 'typeorm';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
@@ -9,6 +10,7 @@ import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/pagination.dto';
 import { BORROWING_STATUS, JOB_NAME } from '@/common/constants/enum';
 import { BookBorrowingService } from '../book-borrowing/book-borrowing.service';
+import { BookBorrowing } from '../book-borrowing/entities/book-borrowing.entity';
 
 @Injectable()
 export class BookBorrowingItemsService {
@@ -20,21 +22,38 @@ export class BookBorrowingItemsService {
   private readonly logger = new Logger(BookBorrowingItemsService.name);
 
   @Cron(CronExpression.EVERY_10_SECONDS, { name: JOB_NAME.BOOK_BORROWING_ITEMS })
-  async syncUpStatus(): Promise<void> {
+  async cronSyncUpStatus(): Promise<void> {
     this.logger.fatal('[JOB] Sync up status');
 
-    const dueDateBorrowedBooks = await this.bookBorrowingService.findAllDueDateBorrowedBooks();
-    const dueDateBookBorrowingIds = dueDateBorrowedBooks.map(({ id }) => id);
+    // list all items borrowing
+    const listBookBorrowingItems = await this.findAll();
 
-    const data = await this.findAllDueDateBorrowedBooks(dueDateBookBorrowingIds);
-    // console.log(data.);
+    if (isArray(listBookBorrowingItems)) {
+      for (const item of listBookBorrowingItems) {
+        const currentDate = new Date();
+
+        if (isNull(item.returned_date)) {
+          const bookBorrowing: BookBorrowing = await this.bookBorrowingService.findOne(item.book_borrowing_id);
+
+          if (bookBorrowing.due_date < currentDate) {
+            this.updateOne(item.id, { status: BORROWING_STATUS.OVERDUE });
+          } else {
+            this.updateOne(item.id, { status: BORROWING_STATUS.BORROWING });
+          }
+        } else if (item.returned_date < currentDate) {
+          this.updateOne(item.id, { status: BORROWING_STATUS.RETURNED });
+        } else {
+          this.logger.error(`Conflict in ${JOB_NAME.BOOK_BORROWING_ITEMS}`);
+        }
+      }
+    }
   }
 
   findOne(id: number): Promise<BookBorrowingItems> {
     return this.bookBorrowingItemsRepository.findOneById({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<BookBorrowingItems> | BookBorrowingItems[]> {
+  findAll(paginationDto?: PaginationDto): Promise<TPagination<BookBorrowingItems> | BookBorrowingItems[]> {
     return this.bookBorrowingItemsRepository.findAll(paginationDto);
   }
 
@@ -56,12 +75,5 @@ export class BookBorrowingItemsService {
       returned_date: IsNull(),
       status: BORROWING_STATUS.OVERDUE,
     });
-  }
-
-  findAllDueDateBorrowedBooks(bookBorrowingIds: number[]) {
-    return this.bookBorrowingItemsRepository.findAllWithRelations(
-      { bookBorrowing: true },
-      { book_borrowing_id: In(bookBorrowingIds) },
-    );
   }
 }

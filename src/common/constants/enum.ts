@@ -21,7 +21,7 @@ export enum MEMBER_TYPE {
 }
 
 export enum JOB_NAME {
-  FINE = 'fine',
-  BOOK_BORROWING = 'book_borrowing',
-  BOOK_BORROWING_ITEMS = 'book_borrowing_items',
+  FINE = 'job-fine',
+  BOOK_BORROWING = 'job-book_borrowing',
+  BOOK_BORROWING_ITEMS = 'job-book_borrowing_items',
 }

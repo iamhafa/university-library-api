@@ -25,7 +25,7 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
    * Find all records
    * @returns all records of this entity
    */
-  async findAll(paginationDto: PaginationDto): Promise<TPagination<T> | T[]> {
+  async findAll(paginationDto?: PaginationDto): Promise<TPagination<T> | T[]> {
     this.logger.log('Find all internal entities for', this.entityRepository.target);
 
     if (paginationDto) {
@@ -77,8 +77,9 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
     if (!updateResult.affected) {
       this.logger.warn(`Entity not found with where: ${JSON.stringify(where)}`, this.entityRepository.target);
       throw new NotFoundException('Entity not found');
+    } else {
+      return this.findOneById(where);
     }
-    return this.findOneById(where);
   }
 
   /**

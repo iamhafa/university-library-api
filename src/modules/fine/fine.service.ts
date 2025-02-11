@@ -26,8 +26,8 @@ export class FineService {
 
   // tạo thẻ phạt với những hoạt động trả sách trễ hạn
   @Cron(CronExpression.EVERY_10_SECONDS, { name: JOB_NAME.FINE })
-  async cronFineLateBookReturn(): Promise<void> {
-    this.logger.fatal('Cron excute every 10s');
+  async cronFineBooksLateReturn(): Promise<void> {
+    this.logger.fatal('[JOB] Auto create fine ticket');
 
     const overdueBorrowedBooks: BookBorrowing[] = await this.bookBorrowingService.findAllOverdueBorrowedBooks();
     const overdueBorrowedBooksIds: number[] = overdueBorrowedBooks.map(({ id }) => id);
@@ -35,25 +35,18 @@ export class FineService {
     const overdueBorrowedBooksNotReturn: BookBorrowingItems[] =
       await this.bookBorrowingItemsService.findAllOverdueBorrowedBooksNotReturn(overdueBorrowedBooksIds);
 
-    console.log('overdueBorrowedBooksNotReturn', overdueBorrowedBooksNotReturn);
-
     for (const overdueReturn of overdueBorrowedBooksNotReturn) {
       const existedFine: Fine = await this.findOneByBookBorrowingId(overdueReturn.book_borrowing_id);
 
-      console.log('existedFine', existedFine);
-
-      // if(isEmpty(existedFine)) {
-      //   const createFineForOverdue: Fine = await this.createOne({
-      //     amount_money: overdueReturn.total_price,
-      //     book_borrowing_id: overdueReturn.book_borrowing_id,
-      //     return_status: BORROWING_STATUS.OVERDUE,
-      //   });
-      // } else {
-      //   if (overdueReturn.status )
-      //   const updateFine = await this.updateOne(overdueReturn.id, {
-      //     return_status: BORROWING_STATUS.RETURNED
-      //   })
-      // }
+      if (isEmpty(existedFine)) {
+        this.createOne({
+          amount_money: overdueReturn.total_price,
+          book_borrowing_id: overdueReturn.book_borrowing_id,
+          return_status: BORROWING_STATUS.OVERDUE,
+        });
+      } else {
+        this.updateOne(existedFine.id, { return_status: BORROWING_STATUS.RETURNED });
+      }
     }
   }
 
@@ -79,11 +72,5 @@ export class FineService {
 
   deleteOne(id: number): Promise<DeleteResult> {
     return this.fineRepository.findOneAndDelete({ id });
-  }
-
-  async findAllOverdueBookBorrowing() {
-    const data = await this.fineRepository.findAllWithRelations({ bookBorrowing: true });
-
-    console.log(data);
   }
 }
