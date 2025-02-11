@@ -1,10 +1,4 @@
-import {
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export abstract class BaseEntity<T = any> {
@@ -14,14 +8,14 @@ export abstract class BaseEntity<T = any> {
 
   // tự động tăng từ 1 => ...
   @PrimaryGeneratedColumn('increment')
-  id: number;
+  id?: number;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at?: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at?: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deleted_at?: Date;
 }

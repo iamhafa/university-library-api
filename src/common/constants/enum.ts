@@ -20,6 +20,8 @@ export enum MEMBER_TYPE {
   GRADUATE_STUDENT, // sinh viên đã tốt nghiệp
 }
 
-export enum EJOB_NAME {
+export enum JOB_NAME {
   FINE = 'fine',
+  BOOK_BORROWING = 'book_borrowing',
+  BOOK_BORROWING_ITEMS = 'book_borrowing_items',
 }

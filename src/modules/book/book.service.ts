@@ -19,7 +19,7 @@ export class BookService {
     return this.bookRepository.findOneById({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Book>> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Book> | Book[]> {
     return this.bookRepository.findAll(paginationDto);
   }
 

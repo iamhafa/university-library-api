@@ -15,7 +15,7 @@ export class AuthorService {
     return this.authorRepository.findOneById({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Author>> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Author> | Author[]> {
     return this.authorRepository.findAll(paginationDto);
   }
 

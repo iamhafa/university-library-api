@@ -13,7 +13,7 @@ export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}
 
   @Get()
-  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Author>> {
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Author> | Author[]> {
     return this.authorService.findAll(paginationDto);
   }
 

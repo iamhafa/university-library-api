@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DatabaseModule } from '@/libs/database/database.module';
@@ -16,7 +16,7 @@ import { RuleModule } from '@/modules/rule/rule.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    ScheduleModule.forRoot({ cronJobs: false }),
+    ScheduleModule.forRoot({ cronJobs: true }),
     /* custom database module */
     DatabaseModule,
     /**

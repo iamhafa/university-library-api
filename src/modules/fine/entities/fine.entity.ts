@@ -14,7 +14,7 @@ export class Fine extends BaseEntity {
     enum: BORROWING_STATUS,
     default: BORROWING_STATUS.OVERDUE,
   })
-  return_status: BORROWING_STATUS;
+  return_status?: BORROWING_STATUS;
 
   // FK of Book Borrowing
   @Column()

@@ -15,7 +15,7 @@ export class GenreService {
     return this.genreRepository.findOneById({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Genre>> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Genre> | Genre[]> {
     return this.genreRepository.findAll(paginationDto);
   }
 

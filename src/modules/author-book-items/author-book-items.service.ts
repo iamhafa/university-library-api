@@ -15,7 +15,7 @@ export class AuthorBookItemsService {
     return this.authorBookItemsRepository.findOneById({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<AuthorBookItems>> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<AuthorBookItems> | AuthorBookItems[]> {
     return this.authorBookItemsRepository.findAll(paginationDto);
   }
 

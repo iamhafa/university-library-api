@@ -10,7 +10,7 @@ export class CreateFineDto extends BaseDto {
 
   @IsEnum(BORROWING_STATUS)
   @ApiProperty({ enum: BORROWING_STATUS, default: BORROWING_STATUS.OVERDUE })
-  return_status: BORROWING_STATUS;
+  return_status?: BORROWING_STATUS;
 
   @IsNumber({ allowNaN: false, allowInfinity: false })
   @ApiProperty()

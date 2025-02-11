@@ -13,7 +13,7 @@ export class AuthorBookItemsController {
   constructor(private readonly authorBookItemsService: AuthorBookItemsService) {}
 
   @Get()
-  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<AuthorBookItems>> {
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<AuthorBookItems> | AuthorBookItems[]> {
     return this.authorBookItemsService.findAll(paginationDto);
   }
 

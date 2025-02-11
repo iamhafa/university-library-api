@@ -13,7 +13,7 @@ export class GenreController {
   constructor(private readonly genreService: GenreService) {}
 
   @Get()
-  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Genre>> {
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Genre> | Genre[]> {
     return this.genreService.findAll(paginationDto);
   }
 

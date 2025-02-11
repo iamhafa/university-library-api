@@ -1,9 +1,11 @@
 import { ApiTags } from '@nestjs/swagger';
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
 import { RuleService } from './rule.service';
 import { CreateRuleDto } from './dto/create-rule.dto';
 import { UpdateRuleDto } from './dto/update-rule.dto';
 import { Rule } from './entities/rule.entity';
+import { PaginationDto } from '@/libs/database/pagination.dto';
+import { TPagination } from '@/common/constants/type';
 
 @ApiTags('Quản lý quy định mượn sách')
 @Controller('rule')
@@ -11,8 +13,8 @@ export class RuleController {
   constructor(private readonly ruleService: RuleService) {}
 
   @Get()
-  getAll(): Promise<Rule[]> {
-    return this.ruleService.findAll();
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Rule> | Rule[]> {
+    return this.ruleService.findAll(paginationDto);
   }
 
   @Post()

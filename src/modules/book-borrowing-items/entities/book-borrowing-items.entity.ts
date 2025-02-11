@@ -15,7 +15,7 @@ export class BookBorrowingItems extends BaseEntity {
   @Column()
   total_price: number; // tổng giá trị của 1 cuốn sách = số lượng * giá 1 cuốn
 
-  @Column()
+  @Column({ nullable: true })
   returned_date: Date;
 
   @Column({

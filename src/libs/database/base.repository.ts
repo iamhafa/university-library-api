@@ -25,24 +25,25 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
    * Find all records
    * @returns all records of this entity
    */
-  async findAll(paginationDto: PaginationDto): Promise<TPagination<T>> {
+  async findAll(paginationDto: PaginationDto): Promise<TPagination<T> | T[]> {
     this.logger.log('Find all internal entities for', this.entityRepository.target);
 
-    const { limit, page } = paginationDto;
-    console.log(limit);
-    console.log(page);
+    if (paginationDto) {
+      const { limit, page } = paginationDto;
+      const [entities, total] = await this.entityRepository.findAndCount({
+        take: limit,
+        skip: (page - 1) * limit,
+      });
 
-    const [entities, total] = await this.entityRepository.findAndCount({
-      take: limit,
-      skip: (page - 1) * limit,
-    });
-
-    return {
-      data: entities,
-      page,
-      limit,
-      total,
-    };
+      return {
+        data: entities,
+        page,
+        limit,
+        total,
+      };
+    } else {
+      return this.entityRepository.find();
+    }
   }
 
   /**
@@ -59,6 +60,10 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
       this.logger.debug(`Find one entity with where: ${JSON.stringify(where)}`, this.entityRepository.target);
       return entity;
     }
+  }
+
+  async findOneByFilter(where: FindOptionsWhere<T>) {
+    return this.entityRepository.findOneBy(where);
   }
 
   /**
@@ -80,13 +85,19 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
    * include thêm với các bảng có quan hệ
    * @example Author ==> AuthorBookItems <== Book
    * @param relations { author: true, book: true }
+   * @param where
    * @returns tất cả items cùng với relations tương ứng
    */
-  findAllWithRelations(relations: FindOptionsRelations<T>): Promise<T[]> {
+  findAllWithRelations(relations: FindOptionsRelations<T>, where?: FindOptionsWhere<T>): Promise<T[]> {
     this.logger.log(`Find all external with relations ${JSON.stringify(relations)}`, this.entityRepository.target);
-    return this.entityRepository.find({ relations });
+    return this.entityRepository.find({ relations, where });
   }
 
+  /**
+   * Find all records matched with given conditions
+   * @param where - filter conditions
+   * @returns the data matched conditions
+   */
   findAllWithFilter(where: FindOptionsWhere<T>): Promise<T[]> {
     return this.entityRepository.findBy(where);
   }

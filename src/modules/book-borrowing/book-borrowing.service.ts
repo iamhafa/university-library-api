@@ -1,5 +1,5 @@
-import { DeleteResult } from 'typeorm';
-import { Injectable, Logger } from '@nestjs/common';
+import { DeleteResult, Equal, LessThan, MoreThan, Or } from 'typeorm';
+import { Injectable } from '@nestjs/common';
 import { CreateBookBorrowingDto } from './dto/create-book-borrowing.dto';
 import { UpdateBookBorrowingDto } from './dto/update-book-borrowing.dto';
 import { BookBorrowing } from './entities/book-borrowing.entity';
@@ -15,7 +15,7 @@ export class BookBorrowingService {
     return this.bookBorrowingRepository.findOneById({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<BookBorrowing>> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<BookBorrowing> | BookBorrowing[]> {
     return this.bookBorrowingRepository.findAll(paginationDto);
   }
 
@@ -29,5 +29,15 @@ export class BookBorrowingService {
 
   deleteOne(id: number): Promise<DeleteResult> {
     return this.bookBorrowingRepository.findOneAndDelete({ id });
+  }
+
+  findAllOverdueBorrowedBooks(): Promise<BookBorrowing[]> {
+    const currentDate = new Date();
+    return this.bookBorrowingRepository.findAllWithFilter({ due_date: LessThan(currentDate) });
+  }
+
+  findAllDueDateBorrowedBooks() {
+    const currentDate = new Date();
+    return this.bookBorrowingRepository.findAllWithFilter({ due_date: Or(Equal(currentDate), MoreThan(currentDate)) });
   }
 }
