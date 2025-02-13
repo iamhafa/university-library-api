@@ -21,6 +21,35 @@ export class BookBorrowingItemsService {
 
   private readonly logger = new Logger(BookBorrowingItemsService.name);
 
+  findOne(id: number): Promise<BookBorrowingItems> {
+    return this.bookBorrowingItemsRepository.findOneById({ id });
+  }
+
+  findAll(paginationDto?: PaginationDto): Promise<TPagination<BookBorrowingItems> | BookBorrowingItems[]> {
+    return this.bookBorrowingItemsRepository.findAll(paginationDto);
+  }
+
+  createOne(createBookBorrowingItemsDto: CreateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
+    return this.bookBorrowingItemsRepository.createOne(createBookBorrowingItemsDto);
+  }
+
+  updateOne(id: number, updateBookBorrowingItemsDto: UpdateBookBookBorrowingDto): Promise<BookBorrowingItems> {
+    return this.bookBorrowingItemsRepository.findOneByIdAndUpdate({ id }, updateBookBorrowingItemsDto);
+  }
+
+  deleteOne(id: number): Promise<DeleteResult> {
+    return this.bookBorrowingItemsRepository.findOneAndDelete({ id });
+  }
+
+  // used for cron job
+  findAllOverdueBorrowedBooksNotReturn(bookBorrowingIds: number[]): Promise<BookBorrowingItems[]> {
+    return this.bookBorrowingItemsRepository.findAllWithFilter({
+      book_borrowing_id: In(bookBorrowingIds),
+      returned_date: IsNull(),
+      status: BORROWING_STATUS.OVERDUE,
+    });
+  }
+
   @Cron(CronExpression.EVERY_10_SECONDS, { name: JOB_NAME.BOOK_BORROWING_ITEMS })
   async cronSyncUpStatus(): Promise<void> {
     this.logger.fatal('[JOB] Sync up status');
@@ -47,33 +76,5 @@ export class BookBorrowingItemsService {
         }
       }
     }
-  }
-
-  findOne(id: number): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsRepository.findOneById({ id });
-  }
-
-  findAll(paginationDto?: PaginationDto): Promise<TPagination<BookBorrowingItems> | BookBorrowingItems[]> {
-    return this.bookBorrowingItemsRepository.findAll(paginationDto);
-  }
-
-  createOne(createBookBorrowingItemsDto: CreateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsRepository.createOne(createBookBorrowingItemsDto);
-  }
-
-  updateOne(id: number, updateBookBorrowingItemsDto: UpdateBookBookBorrowingDto): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsRepository.findOneByIdAndUpdate({ id }, updateBookBorrowingItemsDto);
-  }
-
-  deleteOne(id: number): Promise<DeleteResult> {
-    return this.bookBorrowingItemsRepository.findOneAndDelete({ id });
-  }
-
-  findAllOverdueBorrowedBooksNotReturn(bookBorrowingIds: number[]): Promise<BookBorrowingItems[]> {
-    return this.bookBorrowingItemsRepository.findAllWithFilter({
-      book_borrowing_id: In(bookBorrowingIds),
-      returned_date: IsNull(),
-      status: BORROWING_STATUS.OVERDUE,
-    });
   }
 }

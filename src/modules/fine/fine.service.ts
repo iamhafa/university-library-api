@@ -24,6 +24,31 @@ export class FineService {
 
   private readonly logger = new Logger(FineService.name);
 
+  findOne(id: number): Promise<Fine> {
+    return this.fineRepository.findOneById({ id });
+  }
+
+  // used for cron job
+  findOneByBookBorrowingId(book_borrowing_id: number): Promise<Fine> {
+    return this.fineRepository.findOneByFilter({ book_borrowing_id });
+  }
+
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Fine> | Fine[]> {
+    return this.fineRepository.findAll(paginationDto);
+  }
+
+  createOne(createFineDto: CreateFineDto): Promise<Fine> {
+    return this.fineRepository.createOne(createFineDto);
+  }
+
+  updateOne(id: number, updateFineDto: UpdateFineDto): Promise<Fine> {
+    return this.fineRepository.findOneByIdAndUpdate({ id }, updateFineDto);
+  }
+
+  deleteOne(id: number): Promise<DeleteResult> {
+    return this.fineRepository.findOneAndDelete({ id });
+  }
+
   // tạo thẻ phạt với những hoạt động trả sách trễ hạn
   @Cron(CronExpression.EVERY_10_SECONDS, { name: JOB_NAME.FINE })
   async cronFineBooksLateReturn(): Promise<void> {
@@ -48,29 +73,5 @@ export class FineService {
         this.updateOne(existedFine.id, { return_status: BORROWING_STATUS.RETURNED });
       }
     }
-  }
-
-  findOne(id: number): Promise<Fine> {
-    return this.fineRepository.findOneById({ id });
-  }
-
-  findOneByBookBorrowingId(book_borrowing_id: number): Promise<Fine> {
-    return this.fineRepository.findOneByFilter({ book_borrowing_id });
-  }
-
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Fine> | Fine[]> {
-    return this.fineRepository.findAll(paginationDto);
-  }
-
-  createOne(createFineDto: CreateFineDto): Promise<Fine> {
-    return this.fineRepository.createOne(createFineDto);
-  }
-
-  updateOne(id: number, updateFineDto: UpdateFineDto): Promise<Fine> {
-    return this.fineRepository.findOneByIdAndUpdate({ id }, updateFineDto);
-  }
-
-  deleteOne(id: number): Promise<DeleteResult> {
-    return this.fineRepository.findOneAndDelete({ id });
   }
 }
