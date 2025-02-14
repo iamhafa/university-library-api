@@ -24,7 +24,9 @@
       "@/libs/*": ["src/libs/*"],
       "@/modules/*": ["src/modules/*"],
       "@/common/*": ["src/common/*"],
-      "@/core/*": ["src/core/*"]
+      "@/core/*": ["src/core/*"],
+      "@/decorators/*": ["src/decorators/*"],
+      "@/mail/*": ["src/mail/*"]
     }
   }
 }

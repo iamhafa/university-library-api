@@ -12,11 +12,13 @@ import { MemberModule } from '@/modules/member/member.module';
 import { BookBorrowingItemsModule } from '@/modules/book-borrowing-items/book-borrowing-items.module';
 import { FineModule } from '@/modules/fine/fine.module';
 import { RuleModule } from '@/modules/rule/rule.module';
+import { MailModule } from '@/mail/mail.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot({ cronJobs: process.env.CRON_JOBS === 'true' }),
+    MailModule,
     /* custom database module */
     DatabaseModule,
     /**

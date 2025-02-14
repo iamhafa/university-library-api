@@ -8,6 +8,8 @@
   },
   "compilerOptions": {
     "builder": "swc",
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "assets": ["mail/templates/**/*"],
+    "watchAssets": true
   }
 }
