@@ -1,8 +1,9 @@
 export type TPagination<T> = {
-  page: number;
-  limit: number;
-  total: number;
   data: T[];
+  current_page: number;
+  limit: number;
+  total_items: number;
+  total_pages: number;
 };
 
 export type TSentMessageInfo = {

@@ -19,6 +19,15 @@ export class AuthorService {
     return this.authorRepository.findAll(paginationDto);
   }
 
+  searchByQuery(query: string): Promise<Author[]> {
+    return this.authorRepository
+      .findByQueryBuilder('author')
+      .where('LOWER(author.first_name) LIKE LOWER(:query)', { query: `%${query}%` })
+      .orWhere('LOWER(author.last_name) LIKE LOWER(:query)', { query: `%${query}%` })
+      .take(10) // Limit results (optional)
+      .getMany();
+  }
+
   createOne(createAuthorDto: CreateAuthorDto): Promise<Author> {
     return this.authorRepository.createOne(createAuthorDto);
   }

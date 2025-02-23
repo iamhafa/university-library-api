@@ -37,13 +37,18 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
 
       return {
         data: entities,
-        page,
+        current_page: page,
         limit,
-        total,
+        total_items: total,
+        total_pages: Math.ceil(total / limit),
       };
     } else {
       return this.entityRepository.find();
     }
+  }
+
+  findByQueryBuilder(tableName: string) {
+    return this.entityRepository.createQueryBuilder(tableName);
   }
 
   /**

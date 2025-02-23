@@ -20,7 +20,7 @@ export class MailFactoryConfig implements MailerOptionsFactory {
     oAuth2Client.setCredentials({ refresh_token: this.configService.get<string>('MAIL_REFRESH_TOKEN') });
 
     const accessToken: GetAccessTokenResponse = await oAuth2Client.getAccessToken();
-    this.logger.verbose('Successful connect to send mail service via Gmail (OAuth2)');
+    this.logger.verbose('Connected to send mail service via Gmail (OAuth2)');
 
     return {
       transport: {

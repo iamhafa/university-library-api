@@ -17,6 +17,11 @@ export class AuthorController {
     return this.authorService.findAll(paginationDto);
   }
 
+  @Get('search')
+  search(@Query('q') query?: string): Promise<Author[]> {
+    return this.authorService.searchByQuery(query);
+  }
+
   @Post()
   createOne(@Body() createAuthorDto: CreateAuthorDto): Promise<Author> {
     return this.authorService.createOne(createAuthorDto);

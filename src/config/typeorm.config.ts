@@ -4,7 +4,7 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
 @Injectable()
 export class TypeOrmFactoryConfig implements TypeOrmOptionsFactory {
-  private readonly logger = new Logger();
+  private readonly logger = new Logger(TypeOrmFactoryConfig.name);
   constructor(private readonly configService: ConfigService) {}
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
