@@ -1,3 +1,6 @@
+import { Request } from 'express';
+import { ROLE } from './enum';
+
 export type TPagination<T> = {
   data: T[];
   current_page: number;
@@ -19,4 +22,11 @@ export type TSentMessageInfo = {
     to: string[];
   };
   messageId: string;
+};
+
+export type TRequestWithUser = Request & {
+  user: {
+    [key: string]: string | number;
+    role: ROLE;
+  };
 };

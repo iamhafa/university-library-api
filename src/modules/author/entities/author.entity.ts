@@ -5,10 +5,7 @@ import { Book } from '@/modules/book/entities/book.entity';
 @Entity()
 export class Author extends BaseEntity {
   @Column()
-  first_name: string;
-
-  @Column()
-  last_name: string;
+  name: string;
 
   @Column({ type: 'text', nullable: true })
   bio: string;

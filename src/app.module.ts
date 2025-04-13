@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DatabaseModule } from '@/libs/database/database.module';
@@ -13,12 +13,17 @@ import { BookBorrowingItemsModule } from '@/modules/book-borrowing-items/book-bo
 import { FineModule } from '@/modules/fine/fine.module';
 import { RuleModule } from '@/modules/rule/rule.module';
 import { MailModule } from '@/mail/mail.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RoleGuard } from './core/guards/role.guard';
+import { AuthMiddleware } from './core/middlewares/auth.middleware';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot({ cronJobs: process.env.CRON_JOBS === 'true' }),
-    MailModule,
+    JwtModule,
+    // MailModule,
     /* custom database module */
     DatabaseModule,
     /**
@@ -36,6 +41,15 @@ import { MailModule } from '@/mail/mail.module';
     RuleModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
+    },
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('*');
+  }
+}

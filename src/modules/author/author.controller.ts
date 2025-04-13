@@ -6,6 +6,8 @@ import { Author } from './entities/author.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { PaginationDto } from '@/libs/database/pagination.dto';
 import { TPagination } from '@/common/constants/type';
+import { Roles } from '@/decorators/roles.decorator';
+import { ROLE } from '@/common/constants/enum';
 
 @ApiTags('Quản lý tác giả')
 @Controller('author')
@@ -13,6 +15,7 @@ export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}
 
   @Get()
+  @Roles([ROLE.ADMIN, ROLE.USER])
   getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Author> | Author[]> {
     return this.authorService.findAll(paginationDto);
   }

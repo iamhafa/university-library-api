@@ -25,3 +25,9 @@ export enum JOB_NAME {
   BOOK_BORROWING = 'job-book_borrowing',
   BOOK_BORROWING_ITEMS = 'job-book_borrowing_items',
 }
+
+export enum ROLE {
+  ADMIN = 'admin',
+  MODERATOR = 'morderator',
+  USER = 'user',
+}
