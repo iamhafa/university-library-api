@@ -12,7 +12,7 @@ export class PublisherService {
   constructor(private readonly publisherRepository: PublisherRepository) {}
 
   findOne(id: number): Promise<Publisher> {
-    return this.publisherRepository.findOneById({ id });
+    return this.publisherRepository.findOneBy({ id });
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Publisher> | Publisher[]> {
@@ -24,10 +24,10 @@ export class PublisherService {
   }
 
   updateOne(id: number, updatePublisherDto: UpdatePublisherDto): Promise<Publisher> {
-    return this.publisherRepository.findOneByIdAndUpdate({ id }, updatePublisherDto);
+    return this.publisherRepository.updateOne({ id }, updatePublisherDto);
   }
 
-  deleteOne(id: number): Promise<DeleteResult> {
-    return this.publisherRepository.findOneAndDelete({ id });
+  deleteOne(id: number): Promise<Publisher> {
+    return this.publisherRepository.deleteOne({ id });
   }
 }

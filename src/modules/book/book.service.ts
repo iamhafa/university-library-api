@@ -16,7 +16,7 @@ export class BookService {
   ) {}
 
   findOne(id: number): Promise<Book> {
-    return this.bookRepository.findOneById({ id });
+    return this.bookRepository.findOneBy({ id });
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Book> | Book[]> {
@@ -28,10 +28,10 @@ export class BookService {
   }
 
   updateOne(id: number, updateAuthorDto: UpdateBookDto): Promise<Book> {
-    return this.bookRepository.findOneByIdAndUpdate({ id }, updateAuthorDto);
+    return this.bookRepository.updateOne({ id }, updateAuthorDto);
   }
 
-  deleteOne(id: number): Promise<DeleteResult> {
-    return this.bookRepository.findOneAndDelete({ id });
+  deleteOne(id: number): Promise<Book> {
+    return this.bookRepository.deleteOne({ id });
   }
 }

@@ -12,7 +12,7 @@ export class MemberService {
   constructor(private readonly memberRepository: MemberRepository) {}
 
   findOne(id: number): Promise<Member> {
-    return this.memberRepository.findOneById({ id });
+    return this.memberRepository.findOneBy({ id });
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Member> | Member[]> {
@@ -24,10 +24,10 @@ export class MemberService {
   }
 
   updateOne(id: number, updateMemberDto: UpdateMemberDto): Promise<Member> {
-    return this.memberRepository.findOneByIdAndUpdate({ id }, updateMemberDto);
+    return this.memberRepository.updateOne({ id }, updateMemberDto);
   }
 
-  deleteOne(id: number): Promise<DeleteResult> {
-    return this.memberRepository.findOneAndDelete({ id });
+  deleteOne(id: number): Promise<Member> {
+    return this.memberRepository.deleteOne({ id });
   }
 }

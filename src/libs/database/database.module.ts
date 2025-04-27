@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmConfig } from '@/config/typeorm.config';
 import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
-import { TypeOrmFactoryConfig } from '@/config/typeorm.config';
 
 @Module({
-  imports: [TypeOrmModule.forRootAsync({ useClass: TypeOrmFactoryConfig })],
+  imports: [TypeOrmModule.forRootAsync({ useClass: TypeOrmConfig })],
   providers: [],
   exports: [],
 })

@@ -3,24 +3,30 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
 @Injectable()
-export class TypeOrmFactoryConfig implements TypeOrmOptionsFactory {
-  private readonly logger = new Logger(TypeOrmFactoryConfig.name);
+export class TypeOrmConfig implements TypeOrmOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
+  private readonly logger = new Logger(TypeOrmConfig.name);
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    const database: string = this.configService.get<string>('DB_DATABASE_LOCAL');
-    this.logger.verbose(`Connected to database [${database}]`);
+    const database: string = this.configService.get<string>('DB_DATABASE');
+    const host: string = this.configService.get<string>('DB_HOST');
+    const port: number = this.configService.get<number>('DB_PORT');
+    const envMode: string = this.configService.get<string>('APP_ENV');
+    const isProduction: boolean = envMode === 'production';
+
+    isProduction && this.logger.verbose('Running on mode PRODUCTION');
+    this.logger.verbose(`Connecting to database [${database}] on host [${host}] via port [${port}]...`);
 
     return {
       type: 'postgres',
-      host: this.configService.get<string>('DB_HOST_LOCAL'),
-      username: this.configService.get<string>('DB_USERNAME_LOCAL'),
-      password: this.configService.get<string>('DB_PASSWORD_LOCAL'),
+      host: host,
       database: database,
-      port: this.configService.get<number>('DB_PORT_LOCAL'),
+      port: port,
+      username: this.configService.get<string>('DB_USERNAME'),
+      password: this.configService.get<string>('DB_PASSWORD'),
       autoLoadEntities: true,
-      // disable when production
-      synchronize: true,
+      synchronize: isProduction ? false : true, // disable when production
+      logging: ['schema'],
     };
   }
 }

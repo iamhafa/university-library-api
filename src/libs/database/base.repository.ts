@@ -1,4 +1,4 @@
-import { DeleteResult, FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 import { Logger, NotFoundException } from '@nestjs/common';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { BaseEntity } from './base.entity';
@@ -7,18 +7,24 @@ import { TPagination } from '@/common/constants/type';
 
 // Repository layer (define all methods about CRUD for all modules)
 export abstract class BaseRepository<T extends BaseEntity<T>> {
-  protected readonly logger = new Logger(BaseRepository.name);
-
   constructor(private readonly entityRepository: Repository<T>) {}
+
+  private readonly logger = new Logger(BaseRepository.name);
+  private readonly tableName: string = this.entityRepository.metadata.tableName.toUpperCase();
+
+  private stringify(value: object | any[]) {
+    return JSON.stringify(value);
+  }
 
   /**
    * Create new entity based on value
    * @param entity - values for new entity
    * @returns new entity
    */
-  createOne(entity: T): Promise<T> {
-    this.logger.verbose(`Create entity ${JSON.stringify(entity)} for`, this.entityRepository.target);
-    return this.entityRepository.save(entity);
+  async createOne(entity: T): Promise<T> {
+    const saved: T = await this.entityRepository.save(entity);
+    this.logger.fatal(`Create ${this.tableName} successfully: ${this.stringify(entity)}`);
+    return saved;
   }
 
   /**
@@ -26,9 +32,9 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
    * @returns all records of this entity
    */
   async findAll(paginationDto?: PaginationDto): Promise<TPagination<T> | T[]> {
-    this.logger.log('Find all internal entities for', this.entityRepository.target);
+    this.logger.fatal(`Find all ${this.tableName}`);
 
-    if (paginationDto) {
+    if (paginationDto instanceof PaginationDto) {
       const { limit, page } = paginationDto;
       const [entities, total] = await this.entityRepository.findAndCount({
         take: limit,
@@ -47,28 +53,24 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
     }
   }
 
-  findByQueryBuilder(tableName: string) {
-    return this.entityRepository.createQueryBuilder(tableName);
+  findByQueryBuilder(alias: string) {
+    return this.entityRepository.createQueryBuilder(alias);
   }
 
   /**
    * Find 1 entity with `where` conditions
    * @param where - must be pass { id } params
    */
-  async findOneById(where: FindOptionsWhere<T>): Promise<T> {
+  async findOneBy(where: FindOptionsWhere<T>): Promise<T> {
     const entity: T = await this.entityRepository.findOneBy(where);
 
-    if (!entity) {
-      this.logger.error(`Entity not found with where: ${JSON.stringify(where)}`, this.entityRepository.target);
-      throw new NotFoundException(`Entity not found for where: ${JSON.stringify(where)}`);
-    } else {
-      this.logger.debug(`Find one entity with where: ${JSON.stringify(where)}`, this.entityRepository.target);
+    if (entity instanceof BaseEntity) {
+      this.logger.debug(`Find one ${this.tableName} with where: ${this.stringify(where)}`);
       return entity;
+    } else {
+      this.logger.error(`Not found for ${this.tableName} with where: ${this.stringify(where)}`);
+      throw new NotFoundException(`Not found for ${this.tableName} where: ${this.stringify(where)}`);
     }
-  }
-
-  async findOneByFilter(where: FindOptionsWhere<T>) {
-    return this.entityRepository.findOneBy(where);
   }
 
   /**
@@ -76,27 +78,17 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
    * @param where - must be pass { id } params
    * @param partialEntity - new value for this entity
    */
-  async findOneByIdAndUpdate(where: FindOptionsWhere<T>, partialEntity: QueryDeepPartialEntity<T>): Promise<T> {
+  async updateOne(where: FindOptionsWhere<T>, partialEntity: QueryDeepPartialEntity<T>): Promise<T> {
+    await this.findOneBy(where);
+
     const updateResult = await this.entityRepository.update(where, partialEntity);
 
     if (!updateResult.affected) {
-      this.logger.warn(`Entity not found with where: ${JSON.stringify(where)}`, this.entityRepository.target);
+      this.logger.warn(`Entity not found with where: ${this.stringify(where)}`, this.entityRepository.target);
       throw new NotFoundException('Entity not found');
     } else {
-      return this.findOneById(where);
+      return this.findOneBy(where);
     }
-  }
-
-  /**
-   * include thêm với các bảng có quan hệ
-   * @example Author ==> AuthorBookItems <== Book
-   * @param relations { author: true, book: true }
-   * @param where
-   * @returns tất cả items cùng với relations tương ứng
-   */
-  findAllWithRelations(relations: FindOptionsRelations<T>, where?: FindOptionsWhere<T>): Promise<T[]> {
-    this.logger.log(`Find all external with relations ${JSON.stringify(relations)}`, this.entityRepository.target);
-    return this.entityRepository.find({ relations, where });
   }
 
   /**
@@ -104,7 +96,7 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
    * @param where - filter conditions
    * @returns the data matched conditions
    */
-  findAllWithFilter(where: FindOptionsWhere<T>): Promise<T[]> {
+  findAllBy(where: FindOptionsWhere<T>): Promise<T[]> {
     return this.entityRepository.findBy(where);
   }
 
@@ -113,14 +105,13 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
    * @param where - must be pass { id } params
    * @returns
    */
-  async findOneAndDelete(where: FindOptionsWhere<T>) {
-    const deleteResult: DeleteResult = await this.entityRepository.delete(where);
+  async deleteOne(where: FindOptionsWhere<T>): Promise<T> {
+    const entity: T = await this.findOneBy(where);
+    const deleted: T = await this.entityRepository.softRemove(entity);
 
-    if (deleteResult.affected === 1) {
-      this.logger.warn(`Deleted ${JSON.stringify(where)}`, this.entityRepository.target);
-      return deleteResult;
-    } else {
-      this.logger.log(`Can't delete ${JSON.stringify(where)}`, this.entityRepository.target);
+    if (deleted instanceof BaseEntity) {
+      this.logger.warn(`Deleted ${this.tableName} with ID ${where.id}`);
+      return deleted;
     }
   }
 }

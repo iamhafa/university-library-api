@@ -12,7 +12,7 @@ export class AuthorService {
   constructor(private readonly authorRepository: AuthorRepository) {}
 
   findOne(id: number): Promise<Author> {
-    return this.authorRepository.findOneById({ id });
+    return this.authorRepository.findOneBy({ id });
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Author> | Author[]> {
@@ -33,10 +33,10 @@ export class AuthorService {
   }
 
   updateOne(id: number, updateAuthorDto: UpdateAuthorDto): Promise<Author> {
-    return this.authorRepository.findOneByIdAndUpdate({ id }, updateAuthorDto);
+    return this.authorRepository.updateOne({ id }, updateAuthorDto);
   }
 
-  deleteOne(id: number): Promise<DeleteResult> {
-    return this.authorRepository.findOneAndDelete({ id });
+  deleteOne(id: number): Promise<Author> {
+    return this.authorRepository.deleteOne({ id });
   }
 }

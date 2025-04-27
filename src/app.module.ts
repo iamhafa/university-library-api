@@ -20,7 +20,11 @@ import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      cache: true,
+      isGlobal: true,
+      envFilePath: '.env.development', // Chỉ định tệp .env.development ở root scope
+    }),
     ScheduleModule.forRoot({ cronJobs: process.env.CRON_JOBS === 'true' }),
     JwtModule,
     // MailModule,
@@ -41,12 +45,12 @@ import { JwtModule } from '@nestjs/jwt';
     RuleModule,
   ],
   controllers: [],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: RoleGuard,
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: APP_GUARD, // auto inject reflector
+  //     useClass: RoleGuard,
+  //   },
+  // ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

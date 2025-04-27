@@ -1,0 +1,28 @@
+name: university-library
+
+services:
+  database-postgres:
+    image: postgres:17
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: university-library
+    ports:
+      - '5555:5432' # Cổng bên ngoài là 5555, cổng trong container là 5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  university-library:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    env_file: .env.production
+    image: university-library-api
+    ports:
+      - '3000:3000'
+
+volumes:
+  pgdata:
+    name: pgdata

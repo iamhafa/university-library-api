@@ -12,7 +12,7 @@ export class RuleService {
   constructor(private readonly ruleRepository: RuleRepository) {}
 
   findOne(id: number): Promise<Rule> {
-    return this.ruleRepository.findOneById({ id });
+    return this.ruleRepository.findOneBy({ id });
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Rule> | Rule[]> {
@@ -24,10 +24,10 @@ export class RuleService {
   }
 
   updateOne(id: number, updateRuleDto: UpdateRuleDto): Promise<Rule> {
-    return this.ruleRepository.findOneByIdAndUpdate({ id }, updateRuleDto);
+    return this.ruleRepository.updateOne({ id }, updateRuleDto);
   }
 
-  deleteOne(id: number): Promise<DeleteResult> {
-    return this.ruleRepository.findOneAndDelete({ id });
+  deleteOne(id: number): Promise<Rule> {
+    return this.ruleRepository.deleteOne({ id });
   }
 }

@@ -12,7 +12,7 @@ export class BookBorrowingService {
   constructor(private readonly bookBorrowingRepository: BookBorrowingRepository) {}
 
   findOne(id: number): Promise<BookBorrowing> {
-    return this.bookBorrowingRepository.findOneById({ id });
+    return this.bookBorrowingRepository.findOneBy({ id });
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<BookBorrowing> | BookBorrowing[]> {
@@ -24,20 +24,20 @@ export class BookBorrowingService {
   }
 
   updateOne(id: number, updateBookBorrowingDto: UpdateBookBorrowingDto): Promise<BookBorrowing> {
-    return this.bookBorrowingRepository.findOneByIdAndUpdate({ id }, updateBookBorrowingDto);
+    return this.bookBorrowingRepository.updateOne({ id }, updateBookBorrowingDto);
   }
 
-  deleteOne(id: number): Promise<DeleteResult> {
-    return this.bookBorrowingRepository.findOneAndDelete({ id });
+  deleteOne(id: number): Promise<BookBorrowing> {
+    return this.bookBorrowingRepository.deleteOne({ id });
   }
 
   findAllOverdueBorrowedBooks(): Promise<BookBorrowing[]> {
     const currentDate = new Date();
-    return this.bookBorrowingRepository.findAllWithFilter({ due_date: LessThan(currentDate) });
+    return this.bookBorrowingRepository.findAllBy({ due_date: LessThan(currentDate) });
   }
 
   findAllDueDateBorrowedBooks() {
     const currentDate = new Date();
-    return this.bookBorrowingRepository.findAllWithFilter({ due_date: Or(Equal(currentDate), MoreThan(currentDate)) });
+    return this.bookBorrowingRepository.findAllBy({ due_date: Or(Equal(currentDate), MoreThan(currentDate)) });
   }
 }

@@ -12,7 +12,7 @@ export class GenreService {
   constructor(private readonly genreRepository: GenreRepository) {}
 
   findOne(id: number): Promise<Genre> {
-    return this.genreRepository.findOneById({ id });
+    return this.genreRepository.findOneBy({ id });
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Genre> | Genre[]> {
@@ -24,10 +24,10 @@ export class GenreService {
   }
 
   updateOne(id: number, updateGenreDto: UpdateGenreDto): Promise<Genre> {
-    return this.genreRepository.findOneByIdAndUpdate({ id }, updateGenreDto);
+    return this.genreRepository.updateOne({ id }, updateGenreDto);
   }
 
-  deleteOne(id: number): Promise<DeleteResult> {
-    return this.genreRepository.findOneAndDelete({ id });
+  deleteOne(id: number): Promise<Genre> {
+    return this.genreRepository.deleteOne({ id });
   }
 }

@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 
-export function HandleMailerError() {
+export function HandleMailerError(): MethodDecorator {
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
     const logger = new Logger(target.constructor.name);

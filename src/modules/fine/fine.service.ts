@@ -25,12 +25,12 @@ export class FineService {
   private readonly logger = new Logger(FineService.name);
 
   findOne(id: number): Promise<Fine> {
-    return this.fineRepository.findOneById({ id });
+    return this.fineRepository.findOneBy({ id });
   }
 
   // used for cron job
   findOneByBookBorrowingId(book_borrowing_id: number): Promise<Fine> {
-    return this.fineRepository.findOneByFilter({ book_borrowing_id });
+    return this.fineRepository.findOneBy({ book_borrowing_id });
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Fine> | Fine[]> {
@@ -42,11 +42,11 @@ export class FineService {
   }
 
   updateOne(id: number, updateFineDto: UpdateFineDto): Promise<Fine> {
-    return this.fineRepository.findOneByIdAndUpdate({ id }, updateFineDto);
+    return this.fineRepository.updateOne({ id }, updateFineDto);
   }
 
-  deleteOne(id: number): Promise<DeleteResult> {
-    return this.fineRepository.findOneAndDelete({ id });
+  deleteOne(id: number): Promise<Fine> {
+    return this.fineRepository.deleteOne({ id });
   }
 
   // tạo thẻ phạt với những hoạt động trả sách trễ hạn

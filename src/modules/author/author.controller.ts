@@ -41,7 +41,7 @@ export class AuthorController {
   }
 
   @Delete(':id')
-  deleteOne(@Param('id', ParseIntPipe) id: number) {
+  deleteOne(@Param('id', ParseIntPipe) id: number): Promise<Author> {
     return this.authorService.deleteOne(id);
   }
 }
