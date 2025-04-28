@@ -6,7 +6,7 @@ import { Genre } from './entities/genre.entity';
 
 @Injectable()
 export class GenreRepository extends BaseRepository<Genre> {
-  constructor(@InjectRepository(Genre) private readonly genreRepository: Repository<Genre>) {
+  constructor(@InjectRepository(Genre) protected readonly genreRepository: Repository<Genre>) {
     super(genreRepository);
   }
 }

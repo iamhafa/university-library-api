@@ -1,5 +1,5 @@
 import { BaseDto } from '@/libs/database/base.dto';
-import { IsNumber, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class CreatePublisherDto extends BaseDto {
   @IsString()
@@ -8,6 +8,6 @@ export class CreatePublisherDto extends BaseDto {
   @IsString()
   address: string;
 
-  @IsNumber()
-  contact_number: number;
+  @IsString()
+  contact_number: string;
 }

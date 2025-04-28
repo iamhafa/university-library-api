@@ -3,7 +3,6 @@ import { CreateGenreDto } from './dto/create-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
 import { GenreRepository } from './genre.repository';
 import { Genre } from './entities/genre.entity';
-import { DeleteResult } from 'typeorm';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/pagination.dto';
 
@@ -15,7 +14,7 @@ export class GenreService {
     return this.genreRepository.findOneBy({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Genre> | Genre[]> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Genre[]>> {
     return this.genreRepository.findAll(paginationDto);
   }
 

@@ -1,4 +1,4 @@
-import { FindOptionsWhere, Repository } from 'typeorm';
+import { FindOptionsWhere, Repository, UpdateResult } from 'typeorm';
 import { Logger, NotFoundException } from '@nestjs/common';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { BaseEntity } from './base.entity';
@@ -6,13 +6,13 @@ import { PaginationDto } from './pagination.dto';
 import { TPagination } from '@/common/constants/type';
 
 // Repository layer (define all methods about CRUD for all modules)
-export abstract class BaseRepository<T extends BaseEntity<T>> {
-  constructor(private readonly entityRepository: Repository<T>) {}
+export abstract class BaseRepository<T extends BaseEntity> {
+  constructor(protected readonly entityRepository: Repository<T>) {}
 
   private readonly logger = new Logger(BaseRepository.name);
   private readonly tableName: string = this.entityRepository.metadata.tableName.toUpperCase();
 
-  private stringify(value: object | any[]) {
+  private stringify(value: object | any[]): string {
     return JSON.stringify(value);
   }
 
@@ -23,7 +23,7 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
    */
   async createOne(entity: T): Promise<T> {
     const saved: T = await this.entityRepository.save(entity);
-    this.logger.fatal(`Create ${this.tableName} successfully: ${this.stringify(entity)}`);
+    this.logger.log(`Create ${this.tableName} successfully: ${this.stringify(entity)}`);
     return saved;
   }
 
@@ -31,30 +31,22 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
    * Find all records
    * @returns all records of this entity
    */
-  async findAll(paginationDto?: PaginationDto): Promise<TPagination<T> | T[]> {
-    this.logger.fatal(`Find all ${this.tableName}`);
+  async findAll(paginationDto: PaginationDto): Promise<TPagination<T[]>> {
+    const { limit, page } = paginationDto;
+    const [entities, total] = await this.entityRepository.findAndCount({
+      take: limit,
+      skip: (page - 1) * limit,
+    });
 
-    if (paginationDto instanceof PaginationDto) {
-      const { limit, page } = paginationDto;
-      const [entities, total] = await this.entityRepository.findAndCount({
-        take: limit,
-        skip: (page - 1) * limit,
-      });
+    this.logger.log(`Find all ${this.tableName}`);
 
-      return {
-        data: entities,
-        current_page: page,
-        limit,
-        total_items: total,
-        total_pages: Math.ceil(total / limit),
-      };
-    } else {
-      return this.entityRepository.find();
-    }
-  }
-
-  findByQueryBuilder(alias: string) {
-    return this.entityRepository.createQueryBuilder(alias);
+    return {
+      data: entities,
+      current_page: page,
+      limit,
+      total_items: total,
+      total_pages: Math.ceil(total / limit),
+    };
   }
 
   /**
@@ -65,7 +57,7 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
     const entity: T = await this.entityRepository.findOneBy(where);
 
     if (entity instanceof BaseEntity) {
-      this.logger.debug(`Find one ${this.tableName} with where: ${this.stringify(where)}`);
+      this.logger.log(`Find one ${this.tableName} with where: ${this.stringify(where)}`);
       return entity;
     } else {
       this.logger.error(`Not found for ${this.tableName} with where: ${this.stringify(where)}`);
@@ -81,7 +73,7 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
   async updateOne(where: FindOptionsWhere<T>, partialEntity: QueryDeepPartialEntity<T>): Promise<T> {
     await this.findOneBy(where);
 
-    const updateResult = await this.entityRepository.update(where, partialEntity);
+    const updateResult: UpdateResult = await this.entityRepository.update(where, partialEntity);
 
     if (!updateResult.affected) {
       this.logger.warn(`Entity not found with where: ${this.stringify(where)}`, this.entityRepository.target);
@@ -89,15 +81,6 @@ export abstract class BaseRepository<T extends BaseEntity<T>> {
     } else {
       return this.findOneBy(where);
     }
-  }
-
-  /**
-   * Find all records matched with given conditions
-   * @param where - filter conditions
-   * @returns the data matched conditions
-   */
-  findAllBy(where: FindOptionsWhere<T>): Promise<T[]> {
-    return this.entityRepository.findBy(where);
   }
 
   /**

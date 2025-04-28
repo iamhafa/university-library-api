@@ -13,7 +13,7 @@ export class RuleController {
   constructor(private readonly ruleService: RuleService) {}
 
   @Get()
-  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Rule> | Rule[]> {
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Rule[]>> {
     return this.ruleService.findAll(paginationDto);
   }
 

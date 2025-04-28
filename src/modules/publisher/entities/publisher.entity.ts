@@ -7,11 +7,11 @@ export class Publisher extends BaseEntity {
   @Column()
   name: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: null })
   address: string;
 
-  @Column({ nullable: true })
-  contact_number: number;
+  @Column({ nullable: true, default: null })
+  contact_number: string;
 
   @OneToMany(() => Book, (book) => book.publisher)
   book?: Relation<Book[]>;

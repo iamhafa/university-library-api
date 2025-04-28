@@ -11,9 +11,9 @@ export class Rule extends BaseEntity {
   })
   member_type: MEMBER_TYPE;
 
-  @Column()
+  @Column({ type: 'integer' })
   max_borrowed_book: number;
 
-  @Column()
+  @Column({ type: 'integer' })
   max_borrowed_day: number;
 }

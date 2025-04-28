@@ -1,4 +1,3 @@
-import { DeleteResult } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { CreatePublisherDto } from './dto/create-publisher.dto';
 import { UpdatePublisherDto } from './dto/update-publisher.dto';
@@ -15,7 +14,7 @@ export class PublisherService {
     return this.publisherRepository.findOneBy({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Publisher> | Publisher[]> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Publisher[]>> {
     return this.publisherRepository.findAll(paginationDto);
   }
 

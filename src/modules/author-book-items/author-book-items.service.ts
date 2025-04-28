@@ -1,4 +1,3 @@
-import { DeleteResult } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { CreateAuthorBookItemsDto } from './dto/create-author-book-items.dto';
 import { UpdateAuthorBookItemsDto } from './dto/update-author-book-items.dto';
@@ -15,7 +14,7 @@ export class AuthorBookItemsService {
     return this.authorBookItemsRepository.findOneBy({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<AuthorBookItems> | AuthorBookItems[]> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<AuthorBookItems[]>> {
     return this.authorBookItemsRepository.findAll(paginationDto);
   }
 

@@ -6,7 +6,11 @@ import { Author } from './entities/author.entity';
 
 @Injectable()
 export class AuthorRepository extends BaseRepository<Author> {
-  constructor(@InjectRepository(Author) private readonly authorRepository: Repository<Author>) {
+  constructor(@InjectRepository(Author) protected readonly authorRepository: Repository<Author>) {
     super(authorRepository);
+  }
+
+  findByQueryBuilder(alias: string) {
+    return this.entityRepository.createQueryBuilder(alias);
   }
 }

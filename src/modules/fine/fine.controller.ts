@@ -13,7 +13,7 @@ export class FineController {
   constructor(private readonly fineService: FineService) {}
 
   @Get()
-  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Fine>> {
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Fine[]>> {
     return this.fineService.findAll(paginationDto);
   }
 

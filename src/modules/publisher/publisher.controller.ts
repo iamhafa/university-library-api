@@ -13,7 +13,7 @@ export class PublisherController {
   constructor(private readonly publisherService: PublisherService) {}
 
   @Get()
-  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Publisher> | Publisher[]> {
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Publisher[]>> {
     return this.publisherService.findAll(paginationDto);
   }
 

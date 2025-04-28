@@ -6,7 +6,7 @@ import { Member } from './entities/member.entity';
 
 @Injectable()
 export class MemberRepository extends BaseRepository<Member> {
-  constructor(@InjectRepository(Member) private readonly customerRepository: Repository<Member>) {
+  constructor(@InjectRepository(Member) protected readonly customerRepository: Repository<Member>) {
     super(customerRepository);
   }
 }

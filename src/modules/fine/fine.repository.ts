@@ -6,7 +6,7 @@ import { Fine } from './entities/fine.entity';
 
 @Injectable()
 export class FineRepository extends BaseRepository<Fine> {
-  constructor(@InjectRepository(Fine) private readonly punishRepository: Repository<Fine>) {
+  constructor(@InjectRepository(Fine) protected readonly punishRepository: Repository<Fine>) {
     super(punishRepository);
   }
 }

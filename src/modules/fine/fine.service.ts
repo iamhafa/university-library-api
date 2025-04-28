@@ -1,5 +1,4 @@
 import { isEmpty } from 'lodash';
-import { DeleteResult } from 'typeorm';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { BORROWING_STATUS, JOB_NAME } from '@/common/constants/enum';
@@ -33,7 +32,7 @@ export class FineService {
     return this.fineRepository.findOneBy({ book_borrowing_id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Fine> | Fine[]> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Fine[]>> {
     return this.fineRepository.findAll(paginationDto);
   }
 

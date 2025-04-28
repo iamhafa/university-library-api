@@ -3,7 +3,6 @@ import { CreateMemberDto } from './dto/create-customer.dto';
 import { UpdateMemberDto } from './dto/update-customer.dto';
 import { MemberRepository } from './member.repository';
 import { Member } from './entities/member.entity';
-import { DeleteResult } from 'typeorm';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/pagination.dto';
 
@@ -15,7 +14,7 @@ export class MemberService {
     return this.memberRepository.findOneBy({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Member> | Member[]> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Member[]>> {
     return this.memberRepository.findAll(paginationDto);
   }
 

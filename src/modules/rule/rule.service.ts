@@ -15,7 +15,7 @@ export class RuleService {
     return this.ruleRepository.findOneBy({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Rule> | Rule[]> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Rule[]>> {
     return this.ruleRepository.findAll(paginationDto);
   }
 

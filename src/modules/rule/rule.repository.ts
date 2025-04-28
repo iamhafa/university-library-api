@@ -6,7 +6,7 @@ import { Rule } from './entities/rule.entity';
 
 @Injectable()
 export class RuleRepository extends BaseRepository<Rule> {
-  constructor(@InjectRepository(Rule) private readonly ruleRepository: Repository<Rule>) {
+  constructor(@InjectRepository(Rule) protected readonly ruleRepository: Repository<Rule>) {
     super(ruleRepository);
   }
 }

@@ -15,7 +15,7 @@ export class BookBorrowingService {
     return this.bookBorrowingRepository.findOneBy({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<BookBorrowing> | BookBorrowing[]> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<BookBorrowing[]>> {
     return this.bookBorrowingRepository.findAll(paginationDto);
   }
 

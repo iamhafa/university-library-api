@@ -45,12 +45,12 @@ import { JwtModule } from '@nestjs/jwt';
     RuleModule,
   ],
   controllers: [],
-  // providers: [
-  //   {
-  //     provide: APP_GUARD, // auto inject reflector
-  //     useClass: RoleGuard,
-  //   },
-  // ],
+  providers: [
+    // {
+    //   provide: APP_GUARD, // auto inject reflector
+    //   useClass: RoleGuard,
+    // },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -8,7 +8,7 @@ import { AuthorBookItems } from './entities/author-book-items.entity';
 export class AuthorBookItemsRepository extends BaseRepository<AuthorBookItems> {
   constructor(
     @InjectRepository(AuthorBookItems)
-    private readonly authorBookItemsRepository: Repository<AuthorBookItems>,
+    protected readonly authorBookItemsRepository: Repository<AuthorBookItems>,
   ) {
     super(authorBookItemsRepository);
   }

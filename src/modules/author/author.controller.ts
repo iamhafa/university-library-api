@@ -15,8 +15,8 @@ export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}
 
   @Get()
-  @Roles([ROLE.ADMIN, ROLE.USER])
-  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Author> | Author[]> {
+  // @Roles([ROLE.ADMIN, ROLE.USER])
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Author[]>> {
     return this.authorService.findAll(paginationDto);
   }
 

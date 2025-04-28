@@ -1,5 +1,5 @@
 import { isArray, isNull } from 'lodash';
-import { DeleteResult, In, IsNull } from 'typeorm';
+import { In, IsNull } from 'typeorm';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { CreateBookBorrowingItemsDto } from './dto/create-book-borrowing-items.dto';
@@ -25,7 +25,7 @@ export class BookBorrowingItemsService {
     return this.bookBorrowingItemsRepository.findOneBy({ id });
   }
 
-  findAll(paginationDto?: PaginationDto): Promise<TPagination<BookBorrowingItems> | BookBorrowingItems[]> {
+  findAll(paginationDto?: PaginationDto): Promise<TPagination<BookBorrowingItems[]>> {
     return this.bookBorrowingItemsRepository.findAll(paginationDto);
   }
 
@@ -37,7 +37,7 @@ export class BookBorrowingItemsService {
     return this.bookBorrowingItemsRepository.updateOne({ id }, updateBookBorrowingItemsDto);
   }
 
-  deleteOne(id: number): Promise<DeleteResult> {
+  deleteOne(id: number): Promise<BookBorrowingItems> {
     return this.bookBorrowingItemsRepository.deleteOne({ id });
   }
 

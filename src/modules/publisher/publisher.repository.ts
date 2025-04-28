@@ -6,7 +6,7 @@ import { Publisher } from './entities/publisher.entity';
 
 @Injectable()
 export class PublisherRepository extends BaseRepository<Publisher> {
-  constructor(@InjectRepository(Publisher) private readonly publisherRepository: Repository<Publisher>) {
+  constructor(@InjectRepository(Publisher) protected readonly publisherRepository: Repository<Publisher>) {
     super(publisherRepository);
   }
 }

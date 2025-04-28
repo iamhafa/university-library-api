@@ -13,7 +13,7 @@ export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
   @Get()
-  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Member> | Member[]> {
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Member[]>> {
     return this.memberService.findAll(paginationDto);
   }
 
