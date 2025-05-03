@@ -20,9 +20,9 @@ export class AuthorService {
 
   searchByQuery(query: string): Promise<Author[]> {
     return this.authorRepository
-      .findByQueryBuilder('author')
-      .where('LOWER(author.first_name) LIKE LOWER(:query)', { query: `%${query}%` })
-      .orWhere('LOWER(author.last_name) LIKE LOWER(:query)', { query: `%${query}%` })
+      .findByQueryBuilder('a')
+      .where('LOWER(a.first_name) LIKE LOWER(:query)', { query: `%${query}%` })
+      .orWhere('LOWER(a.last_name) LIKE LOWER(:query)', { query: `%${query}%` })
       .take(10) // Limit results (optional)
       .getMany();
   }

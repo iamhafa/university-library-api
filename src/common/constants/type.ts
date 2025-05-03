@@ -1,5 +1,11 @@
-import { Request } from 'express';
 import { ROLE } from './enum';
+
+export type TUser = {
+  user: {
+    [key: string]: string | number;
+    role: ROLE;
+  };
+};
 
 export type TPagination<T> = {
   data: T;
@@ -22,11 +28,4 @@ export type TSentMessageInfo = {
     to: string[];
   };
   messageId: string;
-};
-
-export type TRequestWithUser = {
-  user: {
-    [key: string]: string | number;
-    role: ROLE;
-  };
 };

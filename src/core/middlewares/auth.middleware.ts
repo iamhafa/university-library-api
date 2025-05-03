@@ -1,4 +1,4 @@
-import { TRequestWithUser } from '@/common/constants/type';
+import { TUser } from '@/common/constants/type';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { NextFunction, Request, Response } from 'express';
@@ -8,7 +8,7 @@ import { isString } from 'lodash';
 export class AuthMiddleware implements NestMiddleware {
   constructor(private readonly jwtService: JwtService) {}
 
-  use(req: Request & TRequestWithUser, res: Response, next: NextFunction) {
+  use(req: Request & TUser, res: Response, next: NextFunction) {
     const token: string = req.headers.authorization?.replace('Bearer ', '');
 
     if (isString(token)) {

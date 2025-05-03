@@ -1,5 +1,5 @@
 import { FindOptionsWhere, Repository, UpdateResult } from 'typeorm';
-import { Logger, NotFoundException } from '@nestjs/common';
+import { ConflictException, Logger, NotFoundException } from '@nestjs/common';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { BaseEntity } from './base.entity';
 import { PaginationDto } from './pagination.dto';
@@ -75,12 +75,8 @@ export abstract class BaseRepository<T extends BaseEntity> {
 
     const updateResult: UpdateResult = await this.entityRepository.update(where, partialEntity);
 
-    if (!updateResult.affected) {
-      this.logger.warn(`Entity not found with where: ${this.stringify(where)}`, this.entityRepository.target);
-      throw new NotFoundException('Entity not found');
-    } else {
-      return this.findOneBy(where);
-    }
+    if (!updateResult.affected) throw new ConflictException(`Failed to update table ${this.tableName}.`);
+    else return this.findOneBy(where);
   }
 
   /**
