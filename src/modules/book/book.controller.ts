@@ -5,7 +5,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './entities/book.entity';
 import { TPagination } from '@/common/constants/type';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
 @ApiTags('Quản lý sách')
 @Controller('book')

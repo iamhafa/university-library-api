@@ -5,7 +5,6 @@ import { DatabaseModule } from '@/libs/database/database.module';
 import { AuthorModule } from '@/modules/author/author.module';
 import { BookModule } from '@/modules/book/book.module';
 import { GenreModule } from '@/modules/genre/genre.module';
-import { AuthorBookItemsModule } from '@/modules/author-book-items/author-book-items.module';
 import { PublisherModule } from '@/modules/publisher/publisher.module';
 import { BookBorrowingModule } from '@/modules/book-borrowing/book-borrowing.module';
 import { MemberModule } from '@/modules/member/member.module';
@@ -34,7 +33,6 @@ import { JwtModule } from '@nestjs/jwt';
      * list other modules (like table)
      */
     AuthorModule,
-    AuthorBookItemsModule,
     MemberModule,
     GenreModule,
     PublisherModule,

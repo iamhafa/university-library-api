@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
-import { BaseEntity } from '@/libs/database/base.entity';
+import { BaseEntity } from '@/libs/database/entities/base.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
 import { BORROWING_STATUS } from '@/common/constants/enum';

@@ -5,9 +5,10 @@ import { BookController } from './book.controller';
 import { Book } from './entities/book.entity';
 import { BookRepository } from './book.repository';
 import { AuthorModule } from '../author/author.module';
+import { BookAuthorItems } from './entities/book-author-items.entity';
 
 @Module({
-  imports: [DatabaseModule.forFeature([Book]), AuthorModule],
+  imports: [DatabaseModule.forFeature([Book, BookAuthorItems]), AuthorModule],
   controllers: [BookController],
   providers: [BookService, BookRepository],
   exports: [BookService],

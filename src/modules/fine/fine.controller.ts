@@ -5,7 +5,7 @@ import { CreateFineDto } from './dto/create-fine.dto';
 import { UpdateFineDto } from './dto/update-fine.dto';
 import { Fine } from './entities/fine.entity';
 import { TPagination } from '@/common/constants/type';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
 @ApiTags('Quản lý phạt khi sinh viên trễ trả sách')
 @Controller('punish')

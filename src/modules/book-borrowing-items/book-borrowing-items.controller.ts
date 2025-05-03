@@ -5,7 +5,7 @@ import { CreateBookBorrowingItemsDto } from './dto/create-book-borrowing-items.d
 import { UpdateBookBookBorrowingDto } from './dto/update-book-borrowing-items.dto';
 import { BookBorrowingItems } from './entities/book-borrowing-items.entity';
 import { TPagination } from '@/common/constants/type';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
 @ApiTags('Quản lý các cuốn sách cho 1 lần mượn sách')
 @Controller('book-borrowing-items')

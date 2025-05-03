@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, Relation } from 'typeorm';
-import { BaseEntity } from '@/libs/database/base.entity';
+import { BaseEntity } from '@/libs/database/entities/base.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 import { Member } from '@/modules/member/entities/member.entity';
 import { Fine } from '@/modules/fine/entities/fine.entity';

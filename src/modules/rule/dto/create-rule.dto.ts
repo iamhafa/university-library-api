@@ -1,5 +1,5 @@
 import { MEMBER_TYPE } from '@/common/constants/enum';
-import { BaseDto } from '@/libs/database/base.dto';
+import { BaseDto } from '@/libs/database/dto/base.dto';
 import { IsEnum, IsNumber } from 'class-validator';
 
 export class CreateRuleDto extends BaseDto {

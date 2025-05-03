@@ -5,7 +5,7 @@ import { UpdateBookBorrowingDto } from './dto/update-book-borrowing.dto';
 import { BookBorrowing } from './entities/book-borrowing.entity';
 import { BookBorrowingRepository } from './book-borrowing.repository';
 import { TPagination } from '@/common/constants/type';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
 @Injectable()
 export class BookBorrowingService {

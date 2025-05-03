@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, Relation } from 'typeorm';
-import { BaseEntity } from '@/libs/database/base.entity';
+import { BaseEntity } from '@/libs/database/entities/base.entity';
 import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
 import { MEMBER_TYPE } from '@/common/constants/enum';
 

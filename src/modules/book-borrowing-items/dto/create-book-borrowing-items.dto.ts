@@ -1,5 +1,5 @@
 import { BORROWING_STATUS } from '@/common/constants/enum';
-import { BaseDto } from '@/libs/database/base.dto';
+import { BaseDto } from '@/libs/database/dto/base.dto';
 import { IsDate, IsEnum, IsNumber } from 'class-validator';
 
 export class CreateBookBorrowingItemsDto extends BaseDto {

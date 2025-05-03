@@ -6,7 +6,7 @@ import { BookRepository } from './book.repository';
 import { AuthorService } from '../author/author.service';
 import { Book } from './entities/book.entity';
 import { TPagination } from '@/common/constants/type';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
 @Injectable()
 export class BookService {

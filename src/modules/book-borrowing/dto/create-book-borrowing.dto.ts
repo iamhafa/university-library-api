@@ -1,4 +1,4 @@
-import { BaseDto } from '@/libs/database/base.dto';
+import { BaseDto } from '@/libs/database/dto/base.dto';
 import { IsDate } from 'class-validator';
 
 export class CreateBookBorrowingDto extends BaseDto {

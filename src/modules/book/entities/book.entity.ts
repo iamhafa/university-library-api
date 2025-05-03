@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, Relation } from 'typeorm';
-import { BaseEntity } from '@/libs/database/base.entity';
+import { BaseEntity } from '@/libs/database/entities/base.entity';
 import { Author } from '@/modules/author/entities/author.entity';
 import { Genre } from '@/modules/genre/entities/genre.entity';
 import { Publisher } from '@/modules/publisher/entities/publisher.entity';
@@ -44,7 +44,7 @@ export class Book extends BaseEntity {
 
   // Thể hiện quan hệ many to many với Author
   @ManyToMany(() => Author, (author) => author.books)
-  authors?: Relation<Author[]>;
+  authors: Relation<Author[]>;
 
   // Thể hiện quan hệ many to many với BookBorrowing
   @ManyToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books, { cascade: true })

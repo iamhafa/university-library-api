@@ -4,7 +4,7 @@ import { UpdatePublisherDto } from './dto/update-publisher.dto';
 import { PublisherRepository } from './publisher.repository';
 import { Publisher } from './entities/publisher.entity';
 import { TPagination } from '@/common/constants/type';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
 @Injectable()
 export class PublisherService {

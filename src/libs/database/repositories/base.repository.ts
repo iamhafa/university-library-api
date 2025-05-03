@@ -1,8 +1,8 @@
 import { FindOptionsWhere, Repository, UpdateResult } from 'typeorm';
 import { ConflictException, Logger, NotFoundException } from '@nestjs/common';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
-import { BaseEntity } from './base.entity';
-import { PaginationDto } from './pagination.dto';
+import { BaseEntity } from '../entities/base.entity';
+import { PaginationDto } from '../dto/pagination.dto';
 import { TPagination } from '@/common/constants/type';
 
 // Repository layer (define all methods about CRUD for all modules)

@@ -1,5 +1,5 @@
 import { BORROWING_STATUS } from '@/common/constants/enum';
-import { BaseDto } from '@/libs/database/base.dto';
+import { BaseDto } from '@/libs/database/dto/base.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNumber } from 'class-validator';
 

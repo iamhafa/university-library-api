@@ -4,7 +4,7 @@ import { UpdateMemberDto } from './dto/update-customer.dto';
 import { MemberRepository } from './member.repository';
 import { Member } from './entities/member.entity';
 import { TPagination } from '@/common/constants/type';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
 @Injectable()
 export class MemberService {

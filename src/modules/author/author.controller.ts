@@ -4,7 +4,7 @@ import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { Author } from './entities/author.entity';
 import { ApiTags } from '@nestjs/swagger';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { TPagination } from '@/common/constants/type';
 import { Roles } from '@/decorators/roles.decorator';
 import { ROLE } from '@/common/constants/enum';

@@ -5,7 +5,7 @@ import { CreateMemberDto } from './dto/create-customer.dto';
 import { UpdateMemberDto } from './dto/update-customer.dto';
 import { Member } from './entities/member.entity';
 import { TPagination } from '@/common/constants/type';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
 @ApiTags('Quản lý thành viên (sinh viên)')
 @Controller('member')

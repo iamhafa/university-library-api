@@ -4,7 +4,7 @@ import { UpdateGenreDto } from './dto/update-genre.dto';
 import { GenreRepository } from './genre.repository';
 import { Genre } from './entities/genre.entity';
 import { TPagination } from '@/common/constants/type';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
 @Injectable()
 export class GenreService {

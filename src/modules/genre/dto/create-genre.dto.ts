@@ -1,4 +1,4 @@
-import { BaseDto } from '@/libs/database/base.dto';
+import { BaseDto } from '@/libs/database/dto/base.dto';
 import { IsString } from 'class-validator';
 
 export class CreateGenreDto extends BaseDto {

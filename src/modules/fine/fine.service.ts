@@ -8,7 +8,7 @@ import { UpdateFineDto } from './dto/update-fine.dto';
 import { Fine } from './entities/fine.entity';
 import { BookBorrowingService } from '../book-borrowing/book-borrowing.service';
 import { TPagination } from '@/common/constants/type';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { BookBorrowing } from '../book-borrowing/entities/book-borrowing.entity';
 import { BookBorrowingItemsService } from '../book-borrowing-items/book-borrowing-items.service';
 import { BookBorrowingItems } from '../book-borrowing-items/entities/book-borrowing-items.entity';

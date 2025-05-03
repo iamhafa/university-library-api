@@ -7,7 +7,7 @@ import { UpdateBookBookBorrowingDto } from './dto/update-book-borrowing-items.dt
 import { BookBorrowingItems } from './entities/book-borrowing-items.entity';
 import { BookBorrowingItemsRepository } from './book-borrowing-items.repository';
 import { TPagination } from '@/common/constants/type';
-import { PaginationDto } from '@/libs/database/pagination.dto';
+import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { BORROWING_STATUS, JOB_NAME } from '@/common/constants/enum';
 import { BookBorrowingService } from '../book-borrowing/book-borrowing.service';
 import { BookBorrowing } from '../book-borrowing/entities/book-borrowing.entity';

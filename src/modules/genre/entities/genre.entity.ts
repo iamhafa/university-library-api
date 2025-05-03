@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, Relation } from 'typeorm';
-import { BaseEntity } from '@/libs/database/base.entity';
+import { BaseEntity } from '@/libs/database/entities/base.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 
 // Thể loại sách
