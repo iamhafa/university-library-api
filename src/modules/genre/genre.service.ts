@@ -23,10 +23,10 @@ export class GenreService {
   }
 
   updateOne(id: number, updateGenreDto: UpdateGenreDto): Promise<Genre> {
-    return this.genreRepository.updateOne({ id }, updateGenreDto);
+    return this.genreRepository.updateOneBy({ id }, updateGenreDto);
   }
 
   deleteOne(id: number): Promise<Genre> {
-    return this.genreRepository.deleteOne({ id });
+    return this.genreRepository.deleteOneBy({ id });
   }
 }

@@ -21,9 +21,8 @@ export class AuthorService {
   searchByQuery(query: string): Promise<Author[]> {
     return this.authorRepository
       .findByQueryBuilder('a')
-      .where('LOWER(a.first_name) LIKE LOWER(:query)', { query: `%${query}%` })
-      .orWhere('LOWER(a.last_name) LIKE LOWER(:query)', { query: `%${query}%` })
-      .take(10) // Limit results (optional)
+      .where('LOWER(a.name) LIKE LOWER(:query)', { query: `%${query}%` })
+      .take(10)
       .getMany();
   }
 
@@ -32,10 +31,10 @@ export class AuthorService {
   }
 
   updateOne(id: number, updateAuthorDto: UpdateAuthorDto): Promise<Author> {
-    return this.authorRepository.updateOne({ id }, updateAuthorDto);
+    return this.authorRepository.updateOneBy({ id }, updateAuthorDto);
   }
 
   deleteOne(id: number): Promise<Author> {
-    return this.authorRepository.deleteOne({ id });
+    return this.authorRepository.deleteOneBy({ id });
   }
 }

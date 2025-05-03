@@ -41,11 +41,11 @@ export class FineService {
   }
 
   updateOne(id: number, updateFineDto: UpdateFineDto): Promise<Fine> {
-    return this.fineRepository.updateOne({ id }, updateFineDto);
+    return this.fineRepository.updateOneBy({ id }, updateFineDto);
   }
 
   deleteOne(id: number): Promise<Fine> {
-    return this.fineRepository.deleteOne({ id });
+    return this.fineRepository.deleteOneBy({ id });
   }
 
   // tạo thẻ phạt với những hoạt động trả sách trễ hạn

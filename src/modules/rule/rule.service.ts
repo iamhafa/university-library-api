@@ -24,10 +24,10 @@ export class RuleService {
   }
 
   updateOne(id: number, updateRuleDto: UpdateRuleDto): Promise<Rule> {
-    return this.ruleRepository.updateOne({ id }, updateRuleDto);
+    return this.ruleRepository.updateOneBy({ id }, updateRuleDto);
   }
 
   deleteOne(id: number): Promise<Rule> {
-    return this.ruleRepository.deleteOne({ id });
+    return this.ruleRepository.deleteOneBy({ id });
   }
 }

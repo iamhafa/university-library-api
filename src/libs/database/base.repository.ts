@@ -12,24 +12,21 @@ export abstract class BaseRepository<T extends BaseEntity> {
   private readonly logger = new Logger(BaseRepository.name);
   private readonly tableName: string = this.entityRepository.metadata.tableName.toUpperCase();
 
-  private stringify(value: object | any[]): string {
-    return JSON.stringify(value);
-  }
-
   /**
-   * Create new entity based on value
-   * @param entity - values for new entity
-   * @returns new entity
+   * Create a new entity in the database.
+   * @param entity - Data to create the new entity.
+   * @returns The newly created entity.
    */
   async createOne(entity: T): Promise<T> {
     const saved: T = await this.entityRepository.save(entity);
-    this.logger.log(`Create ${this.tableName} successfully: ${this.stringify(entity)}`);
+    this.logger.log(`[${this.tableName}] Created successfully: ${JSON.stringify(saved)}`);
     return saved;
   }
 
   /**
-   * Find all records
-   * @returns all records of this entity
+   * Retrieve a paginated list of all entities.
+   * @param paginationDto - Pagination parameters (page, limit).
+   * @returns A paginated result containing entities and pagination metadata.
    */
   async findAll(paginationDto: PaginationDto): Promise<TPagination<T[]>> {
     const { limit, page } = paginationDto;
@@ -38,7 +35,7 @@ export abstract class BaseRepository<T extends BaseEntity> {
       skip: (page - 1) * limit,
     });
 
-    this.logger.log(`Find all ${this.tableName}`);
+    this.logger.log(`[${this.tableName}] Retrieved ${entities.length} records (Page ${page})`);
 
     return {
       data: entities,
@@ -50,46 +47,55 @@ export abstract class BaseRepository<T extends BaseEntity> {
   }
 
   /**
-   * Find 1 entity with `where` conditions
-   * @param where - must be pass { id } params
+   * Find a single entity by specified conditions.
+   * @param where - Conditions to find the entity (e.g., { id: 1 }).
+   * @returns The found entity.
+   * @throws NotFoundException if no entity is found.
    */
   async findOneBy(where: FindOptionsWhere<T>): Promise<T> {
     const entity: T = await this.entityRepository.findOneBy(where);
 
     if (entity instanceof BaseEntity) {
-      this.logger.log(`Find one ${this.tableName} with where: ${this.stringify(where)}`);
+      this.logger.log(`[${this.tableName}] Found entity with conditions: ${JSON.stringify(where)}`);
       return entity;
     } else {
-      this.logger.error(`Not found for ${this.tableName} with where: ${this.stringify(where)}`);
-      throw new NotFoundException(`Not found for ${this.tableName} where: ${this.stringify(where)}`);
+      this.logger.error(`[${this.tableName}] Entity not found with conditions: ${JSON.stringify(where)}`);
+      throw new NotFoundException(`Entity not found for ${this.tableName} with conditions: ${JSON.stringify(where)}`);
     }
   }
 
   /**
-   * Update entity based on `id`
-   * @param where - must be pass { id } params
-   * @param partialEntity - new value for this entity
+   * Update an existing entity based on specified conditions.
+   * @param where - Conditions to find the entity to update (e.g., { id: 1 }).
+   * @param partialEntity - Data to update the entity with.
+   * @returns The updated entity.
+   * @throws ConflictException if the update fails.
    */
-  async updateOne(where: FindOptionsWhere<T>, partialEntity: QueryDeepPartialEntity<T>): Promise<T> {
+  async updateOneBy(where: FindOptionsWhere<T>, partialEntity: QueryDeepPartialEntity<T>): Promise<T> {
     await this.findOneBy(where);
 
     const updateResult: UpdateResult = await this.entityRepository.update(where, partialEntity);
 
-    if (!updateResult.affected) throw new ConflictException(`Failed to update table ${this.tableName}.`);
-    else return this.findOneBy(where);
+    if (!updateResult.affected) {
+      this.logger.error(`[${this.tableName}] Failed to update entity with conditions: ${JSON.stringify(where)}`);
+      throw new ConflictException(`Failed to update ${this.tableName}.`);
+    }
+
+    this.logger.log(`[${this.tableName}] Updated entity successfully with conditions: ${JSON.stringify(where)}`);
+    return this.findOneBy(where);
   }
 
   /**
-   * Delete entity based on `id` (fill timestamp into `deleted_at` column)
-   * @param where - must be pass { id } params
-   * @returns
+   * Soft delete an entity by specified conditions (sets the deleted_at field).
+   * @param where - Conditions to find the entity to delete (e.g., { id: 1 }).
+   * @returns The soft-deleted entity.
    */
-  async deleteOne(where: FindOptionsWhere<T>): Promise<T> {
+  async deleteOneBy(where: FindOptionsWhere<T>): Promise<T> {
     const entity: T = await this.findOneBy(where);
     const deleted: T = await this.entityRepository.softRemove(entity);
 
     if (deleted instanceof BaseEntity) {
-      this.logger.warn(`Deleted ${this.tableName} with ID ${where.id}`);
+      this.logger.warn(`[${this.tableName}] Soft-deleted entity with conditions: ${JSON.stringify(where)}`);
       return deleted;
     }
   }

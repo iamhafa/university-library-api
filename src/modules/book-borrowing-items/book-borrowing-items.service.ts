@@ -34,11 +34,11 @@ export class BookBorrowingItemsService {
   }
 
   updateOne(id: number, updateBookBorrowingItemsDto: UpdateBookBookBorrowingDto): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsRepository.updateOne({ id }, updateBookBorrowingItemsDto);
+    return this.bookBorrowingItemsRepository.updateOneBy({ id }, updateBookBorrowingItemsDto);
   }
 
   deleteOne(id: number): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsRepository.deleteOne({ id });
+    return this.bookBorrowingItemsRepository.deleteOneBy({ id });
   }
 
   // used for cron job

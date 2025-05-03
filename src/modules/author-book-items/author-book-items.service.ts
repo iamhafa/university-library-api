@@ -23,10 +23,10 @@ export class AuthorBookItemsService {
   }
 
   updateOne(id: number, updateAuthorDto: UpdateAuthorBookItemsDto): Promise<AuthorBookItems> {
-    return this.authorBookItemsRepository.updateOne({ id }, updateAuthorDto);
+    return this.authorBookItemsRepository.updateOneBy({ id }, updateAuthorDto);
   }
 
   deleteOne(id: number): Promise<AuthorBookItems> {
-    return this.authorBookItemsRepository.deleteOne({ id });
+    return this.authorBookItemsRepository.deleteOneBy({ id });
   }
 }

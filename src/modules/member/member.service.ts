@@ -23,10 +23,10 @@ export class MemberService {
   }
 
   updateOne(id: number, updateMemberDto: UpdateMemberDto): Promise<Member> {
-    return this.memberRepository.updateOne({ id }, updateMemberDto);
+    return this.memberRepository.updateOneBy({ id }, updateMemberDto);
   }
 
   deleteOne(id: number): Promise<Member> {
-    return this.memberRepository.deleteOne({ id });
+    return this.memberRepository.deleteOneBy({ id });
   }
 }

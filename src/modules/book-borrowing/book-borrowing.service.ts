@@ -24,11 +24,11 @@ export class BookBorrowingService {
   }
 
   updateOne(id: number, updateBookBorrowingDto: UpdateBookBorrowingDto): Promise<BookBorrowing> {
-    return this.bookBorrowingRepository.updateOne({ id }, updateBookBorrowingDto);
+    return this.bookBorrowingRepository.updateOneBy({ id }, updateBookBorrowingDto);
   }
 
   deleteOne(id: number): Promise<BookBorrowing> {
-    return this.bookBorrowingRepository.deleteOne({ id });
+    return this.bookBorrowingRepository.deleteOneBy({ id });
   }
 
   findAllOverdueBorrowedBooks(): Promise<BookBorrowing[]> {

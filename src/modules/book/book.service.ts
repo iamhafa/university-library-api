@@ -19,7 +19,7 @@ export class BookService {
     return this.bookRepository.findOneBy({ id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Book> | Book[]> {
+  findAll(paginationDto: PaginationDto): Promise<TPagination<Book[]>> {
     return this.bookRepository.findAll(paginationDto);
   }
 
@@ -28,10 +28,10 @@ export class BookService {
   }
 
   updateOne(id: number, updateAuthorDto: UpdateBookDto): Promise<Book> {
-    return this.bookRepository.updateOne({ id }, updateAuthorDto);
+    return this.bookRepository.updateOneBy({ id }, updateAuthorDto);
   }
 
   deleteOne(id: number): Promise<Book> {
-    return this.bookRepository.deleteOne({ id });
+    return this.bookRepository.deleteOneBy({ id });
   }
 }

@@ -23,10 +23,10 @@ export class PublisherService {
   }
 
   updateOne(id: number, updatePublisherDto: UpdatePublisherDto): Promise<Publisher> {
-    return this.publisherRepository.updateOne({ id }, updatePublisherDto);
+    return this.publisherRepository.updateOneBy({ id }, updatePublisherDto);
   }
 
   deleteOne(id: number): Promise<Publisher> {
-    return this.publisherRepository.deleteOne({ id });
+    return this.publisherRepository.deleteOneBy({ id });
   }
 }
