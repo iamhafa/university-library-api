@@ -7,7 +7,7 @@ import { Rule } from './entities/rule.entity';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { TPagination } from '@/common/constants/type';
 
-@ApiTags('Rule')
+@ApiTags('Quản lý Điều khoản mượn sách')
 @Controller('rule')
 export class RuleController {
   constructor(private readonly ruleService: RuleService) {}

@@ -6,8 +6,9 @@ import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './entities/book.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
+import { BookAuthorItems } from './entities/book-author-items.entity';
 
-@ApiTags('Quản lý sách')
+@ApiTags('Quản lý Sách')
 @Controller('book')
 export class BookController {
   constructor(private readonly bookService: BookService) {}
@@ -15,6 +16,11 @@ export class BookController {
   @Get()
   getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Book[]>> {
     return this.bookService.findAll(paginationDto);
+  }
+
+  @Get(':id/authors')
+  getAuthors(@Param('id', ParseIntPipe) id: number): Promise<BookAuthorItems[]> {
+    return this.bookService.getAuthorsByBookId(id);
   }
 
   @Post()

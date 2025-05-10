@@ -7,7 +7,7 @@ import { Fine } from './entities/fine.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
-@ApiTags('Quản lý phạt khi sinh viên trễ trả sách')
+@ApiTags('Quản lý Phạt khi sinh viên trễ trả sách')
 @Controller('punish')
 export class FineController {
   constructor(private readonly fineService: FineService) {}

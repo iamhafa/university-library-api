@@ -9,7 +9,7 @@ import { TPagination } from '@/common/constants/type';
 import { Roles } from '@/decorators/roles.decorator';
 import { ROLE } from '@/common/constants/enum';
 
-@ApiTags('Quản lý tác giả')
+@ApiTags('Quản lý Tác giả')
 @Controller('author')
 export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}

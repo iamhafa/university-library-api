@@ -22,7 +22,7 @@ export class Book extends BaseEntity {
   @Column()
   quantity: number;
 
-  @Column()
+  @Column({ default: null })
   publish_date: Date;
 
   @Column({ nullable: true })
@@ -31,20 +31,22 @@ export class Book extends BaseEntity {
   // FK of Genre
   @Column()
   genre_id: number;
-  @ManyToOne(() => Genre, (genre) => genre.books)
-  @JoinColumn([{ name: 'genre_id' }])
-  genre?: Relation<Genre>;
 
   // FK of Publisher
   @Column()
   publisher_id: number;
-  @ManyToOne(() => Publisher, (publisher) => publisher.book)
-  @JoinColumn([{ name: 'publisher_id' }])
-  publisher?: Relation<Publisher>;
 
   // Thể hiện quan hệ many to many với Author
   @ManyToMany(() => Author, (author) => author.books)
-  authors: Relation<Author[]>;
+  authors?: Relation<Author[]>;
+
+  @ManyToOne(() => Genre, (genre) => genre.books, { eager: true })
+  @JoinColumn([{ name: 'genre_id' }])
+  genre?: Relation<Genre>;
+
+  @ManyToOne(() => Publisher, (publisher) => publisher.books, { eager: true })
+  @JoinColumn([{ name: 'publisher_id' }])
+  publisher?: Relation<Publisher>;
 
   // Thể hiện quan hệ many to many với BookBorrowing
   @ManyToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books, { cascade: true })

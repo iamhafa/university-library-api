@@ -7,7 +7,7 @@ import { Genre } from './entities/genre.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
-@ApiTags('Quản lý thể loại sách')
+@ApiTags('Quản lý Thể loại sách')
 @Controller('genre')
 export class GenreController {
   constructor(private readonly genreService: GenreService) {}

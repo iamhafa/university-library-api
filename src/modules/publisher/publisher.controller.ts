@@ -7,7 +7,7 @@ import { Publisher } from './entities/publisher.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
-@ApiTags('Quản lý nhà xuất bản')
+@ApiTags('Quản lý Nhà xuất bản')
 @Controller('publisher')
 export class PublisherController {
   constructor(private readonly publisherService: PublisherService) {}

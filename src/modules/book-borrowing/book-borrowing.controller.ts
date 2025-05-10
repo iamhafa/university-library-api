@@ -28,10 +28,7 @@ export class BookBorrowingController {
   }
 
   @Put(':id')
-  updateOne(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateBookBorrowingDto: UpdateBookBorrowingDto,
-  ): Promise<BookBorrowing> {
+  updateOne(@Param('id', ParseIntPipe) id: number, @Body() updateBookBorrowingDto: UpdateBookBorrowingDto): Promise<BookBorrowing> {
     return this.bookBorrowingService.updateOne(id, updateBookBorrowingDto);
   }
 

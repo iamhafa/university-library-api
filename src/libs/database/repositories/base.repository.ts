@@ -1,4 +1,4 @@
-import { FindOptionsWhere, Repository, UpdateResult } from 'typeorm';
+import { FindOptionsRelations, FindOptionsWhere, Repository, UpdateResult } from 'typeorm';
 import { ConflictException, Logger, NotFoundException } from '@nestjs/common';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { BaseEntity } from '../entities/base.entity';
@@ -52,10 +52,10 @@ export abstract class BaseRepository<T extends BaseEntity> {
    * @returns The found entity.
    * @throws NotFoundException if no entity is found.
    */
-  async findOneBy(where: FindOptionsWhere<T>): Promise<T> {
-    const entity: T = await this.entityRepository.findOneBy(where);
+  async findOneBy(where: FindOptionsWhere<T>, relations?: FindOptionsRelations<T>): Promise<T> {
+    const entity: T = await this.entityRepository.findOne({ where, relations });
 
-    if (entity instanceof BaseEntity) {
+    if (entity) {
       this.logger.log(`[${this.tableName}] Found entity with conditions: ${JSON.stringify(where)}`);
       return entity;
     } else {

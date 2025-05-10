@@ -1,6 +1,7 @@
 import { BaseDto } from '@/libs/database/dto/base.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsDecimal, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateBookDto extends BaseDto {
   @ApiProperty()
@@ -8,24 +9,27 @@ export class CreateBookDto extends BaseDto {
   title: string;
 
   // FK
-  @ApiProperty()
-  @IsNumber()
-  @IsNotEmpty()
-  author_id: number;
+  @ApiProperty({ type: [Number], example: [1, 2, 3, 4, 5] })
+  @IsOptional()
+  @Type(() => Number)
+  // @IsArray({ each: true })
+  author_ids: number[];
 
   @ApiProperty()
   @IsString()
   ISBN: string;
 
   @ApiProperty()
-  @IsDecimal()
+  @IsInt()
   price: number;
 
   @ApiProperty()
   @IsNumber()
   stock: number;
 
-  @IsDate()
+  @ApiProperty()
+  @IsOptional()
+  @Type(() => Date)
   publish_date: Date;
 
   @ApiProperty()
@@ -41,10 +45,10 @@ export class CreateBookDto extends BaseDto {
   quantity: number;
 
   @ApiProperty()
-  @IsNumber()
+  @IsInt()
   genre_id: number;
 
   @ApiProperty()
-  @IsNumber()
+  @IsInt()
   publisher_id: number;
 }

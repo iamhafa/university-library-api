@@ -1,12 +1,14 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfig } from '@/config/typeorm.config';
 import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
+import { TransactionManager } from './managers/transaction.manager';
 
+@Global()
 @Module({
   imports: [TypeOrmModule.forRootAsync({ useClass: TypeOrmConfig })],
-  providers: [],
-  exports: [],
+  providers: [TransactionManager],
+  exports: [TransactionManager],
 })
 export class DatabaseModule {
   static forFeature(entity: EntityClassOrSchema[]) {

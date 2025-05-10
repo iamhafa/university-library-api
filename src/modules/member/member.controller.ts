@@ -7,7 +7,7 @@ import { Member } from './entities/member.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 
-@ApiTags('Quản lý thành viên (sinh viên)')
+@ApiTags('Quản lý Thành viên')
 @Controller('member')
 export class MemberController {
   constructor(private readonly memberService: MemberService) {}

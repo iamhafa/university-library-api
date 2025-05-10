@@ -20,7 +20,8 @@ export class BookBorrowing extends BaseEntity {
 
   // FK of Member
   @Column()
-  member_id?: number;
+  member_id: number;
+
   @ManyToOne(() => Member, (member) => member.bookBorrowings)
   @JoinColumn([{ name: 'member_id' }])
   member?: Relation<Member>;

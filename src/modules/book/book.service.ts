@@ -1,18 +1,22 @@
-import { DeleteResult } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { EntityManager } from 'typeorm';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
-import { BookRepository } from './book.repository';
-import { AuthorService } from '../author/author.service';
+import { BookRepository } from './repositories/book.repository';
 import { Book } from './entities/book.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
+import { TransactionManager } from '@/libs/database/managers/transaction.manager';
+import { BookAuthorItems } from './entities/book-author-items.entity';
+import { Author } from '../author/entities/author.entity';
+import { BookAuthorItemsRepository } from './repositories/book-author-items.repository';
 
 @Injectable()
 export class BookService {
   constructor(
+    private readonly transactionManager: TransactionManager,
     private readonly bookRepository: BookRepository,
-    private readonly authorService: AuthorService,
+    private readonly bookAuthorItemsRepository: BookAuthorItemsRepository,
   ) {}
 
   findOne(id: number): Promise<Book> {
@@ -23,8 +27,31 @@ export class BookService {
     return this.bookRepository.findAll(paginationDto);
   }
 
-  createOne(createBookDto: CreateBookDto): Promise<Book> {
-    return this.bookRepository.createOne(createBookDto);
+  async createOne(createBookDto: CreateBookDto): Promise<Book> {
+    const { author_ids, ...createDto } = createBookDto;
+
+    const book: Book = await this.transactionManager.execute(Book, async (entityManager: EntityManager) => {
+      const newBook: Book = entityManager.create(Book, createDto);
+      const bookSaved: Book = await entityManager.save(newBook);
+
+      for (const author_id of author_ids) {
+        const existAuthor: boolean = await entityManager.existsBy(Author, { id: author_id });
+
+        if (existAuthor) {
+          const newBookAuthorItems: BookAuthorItems = entityManager.create(BookAuthorItems, {
+            author_id: author_id,
+            book_id: bookSaved.id,
+          });
+
+          await entityManager.save(newBookAuthorItems);
+        } else {
+          throw new NotFoundException(`The Author with ID ${author_id} not found.`);
+        }
+      }
+      return bookSaved;
+    });
+
+    return this.findOne(book.id);
   }
 
   updateOne(id: number, updateAuthorDto: UpdateBookDto): Promise<Book> {
@@ -33,5 +60,9 @@ export class BookService {
 
   deleteOne(id: number): Promise<Book> {
     return this.bookRepository.deleteOneBy({ id });
+  }
+
+  getAuthorsByBookId(bookId: number) {
+    return this.bookAuthorItemsRepository.findByBookId(bookId);
   }
 }
