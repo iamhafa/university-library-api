@@ -1,9 +1,8 @@
-import { BaseDto } from '@/libs/database/dto/base.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class CreateBookDto extends BaseDto {
+export class CreateBookDto {
   @ApiProperty()
   @IsString()
   title: string;

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
-import { AuthorRepository } from './author.repository';
+import { AuthorRepository } from './repositories/author.repository';
 import { Author } from './entities/author.entity';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { TPagination } from '@/common/constants/type';

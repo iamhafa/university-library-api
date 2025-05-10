@@ -1,11 +1,11 @@
 import { EntityManager } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { BaseRepository } from '@/libs/database/repositories/base.repository';
-import { Rule } from './entities/rule.entity';
+import { Publisher } from '../entities/publisher.entity';
 
 @Injectable()
-export class RuleRepository extends BaseRepository<Rule> {
+export class PublisherRepository extends BaseRepository<Publisher> {
   constructor(protected readonly entityManager: EntityManager) {
-    super(Rule, entityManager);
+    super(Publisher, entityManager);
   }
 }

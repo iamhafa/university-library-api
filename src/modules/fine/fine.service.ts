@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { BORROWING_STATUS, JOB_NAME } from '@/common/constants/enum';
-import { FineRepository } from './fine.repository';
+import { FineRepository } from './repositories/fine.repository';
 import { CreateFineDto } from './dto/create-fine.dto';
 import { UpdateFineDto } from './dto/update-fine.dto';
 import { Fine } from './entities/fine.entity';

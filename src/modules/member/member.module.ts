@@ -3,7 +3,7 @@ import { DatabaseModule } from '@/libs/database/database.module';
 import { MemberService } from './member.service';
 import { MemberController } from './member.controller';
 import { Member } from './entities/member.entity';
-import { MemberRepository } from './member.repository';
+import { MemberRepository } from './repositories/member.repository';
 
 @Module({
   imports: [DatabaseModule.forFeature([Member])],

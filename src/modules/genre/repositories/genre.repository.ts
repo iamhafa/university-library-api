@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { EntityManager } from 'typeorm';
+import { Genre } from '../entities/genre.entity';
 import { BaseRepository } from '@/libs/database/repositories/base.repository';
-import { Genre } from './entities/genre.entity';
 
 @Injectable()
 export class GenreRepository extends BaseRepository<Genre> {

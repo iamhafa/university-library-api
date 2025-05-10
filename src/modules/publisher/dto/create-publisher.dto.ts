@@ -1,8 +1,7 @@
-import { BaseDto } from '@/libs/database/dto/base.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 
-export class CreatePublisherDto extends BaseDto {
+export class CreatePublisherDto {
   @ApiProperty()
   @IsString()
   name: string;

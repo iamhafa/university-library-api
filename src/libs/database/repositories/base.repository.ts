@@ -7,27 +7,26 @@ import { TPagination } from '@/common/constants/type';
 
 // Repository layer (define all methods about CRUD for all modules)
 export abstract class BaseRepository<T extends BaseEntity> extends Repository<T> {
+  private readonly logger = new Logger(BaseRepository.name);
+  private readonly tableName: string = this.metadata.tableName.toUpperCase();
+
   constructor(
     protected readonly entity: EntityTarget<T>,
     protected readonly entityManager: EntityManager,
   ) {
     super(entity, entityManager);
-    this.tableName = this.metadata.tableName.toUpperCase();
   }
 
-  private readonly logger = new Logger(BaseRepository.name);
-  private readonly tableName: string = this.metadata.tableName;
-
-  async createOne(data: T): Promise<T> {
+  public async createOne(data: T): Promise<T> {
     const saved: T = await this.save(data);
     this.logger.log(`[${this.tableName}] Created successfully: ${JSON.stringify(saved)}`);
     return saved;
   }
 
-  async findOneById(id: number, relations?: FindOptionsRelations<T>): Promise<T> {
+  public async findOneById(id: number, relations?: FindOptionsRelations<T>): Promise<T> {
     const entity: T = await this.findOne({ where: { id } as FindOptionsWhere<T>, relations });
 
-    if (entity) {
+    if (entity instanceof BaseEntity) {
       this.logger.log(`[${this.tableName}] Found entity with ID ${id}.`);
       return entity;
     } else {
@@ -36,7 +35,7 @@ export abstract class BaseRepository<T extends BaseEntity> extends Repository<T>
     }
   }
 
-  async findAll(paginationDto: PaginationDto, relations?: FindOptionsRelations<T>): Promise<TPagination<T[]>> {
+  public async findAll(paginationDto: PaginationDto, relations?: FindOptionsRelations<T>): Promise<TPagination<T[]>> {
     const { limit, page } = paginationDto;
     const [entities, total] = await this.findAndCount({
       take: limit,
@@ -55,7 +54,7 @@ export abstract class BaseRepository<T extends BaseEntity> extends Repository<T>
     };
   }
 
-  async updateOneById(id: number, partialEntity: QueryDeepPartialEntity<T>): Promise<T> {
+  public async updateOneById(id: number, partialEntity: QueryDeepPartialEntity<T>): Promise<T> {
     await this.findOneById(id);
 
     const updateResult: UpdateResult = await this.update(id, partialEntity);
@@ -69,7 +68,7 @@ export abstract class BaseRepository<T extends BaseEntity> extends Repository<T>
     return this.findOneById(id);
   }
 
-  async deleteOneById(id: number): Promise<T> {
+  public async deleteOneById(id: number): Promise<T> {
     const entity: T = await this.findOneById(id);
     const deleted: T = await this.softRemove(entity);
 

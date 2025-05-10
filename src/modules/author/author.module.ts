@@ -3,7 +3,7 @@ import { DatabaseModule } from '@/libs/database/database.module';
 import { AuthorService } from './author.service';
 import { AuthorController } from './author.controller';
 import { Author } from './entities/author.entity';
-import { AuthorRepository } from './author.repository';
+import { AuthorRepository } from './repositories/author.repository';
 
 @Module({
   imports: [DatabaseModule.forFeature([Author])],

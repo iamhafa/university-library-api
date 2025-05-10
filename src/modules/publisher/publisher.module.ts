@@ -3,7 +3,7 @@ import { DatabaseModule } from '@/libs/database/database.module';
 import { PublisherService } from './publisher.service';
 import { PublisherController } from './publisher.controller';
 import { Publisher } from './entities/publisher.entity';
-import { PublisherRepository } from './publisher.repository';
+import { PublisherRepository } from './repositories/publisher.repository';
 
 @Module({
   imports: [DatabaseModule.forFeature([Publisher])],

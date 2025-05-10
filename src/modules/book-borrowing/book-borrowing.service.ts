@@ -1,9 +1,9 @@
-import { DeleteResult, Equal, LessThan, MoreThan, Or } from 'typeorm';
+import { Equal, LessThan, MoreThan, Or } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { CreateBookBorrowingDto } from './dto/create-book-borrowing.dto';
 import { UpdateBookBorrowingDto } from './dto/update-book-borrowing.dto';
 import { BookBorrowing } from './entities/book-borrowing.entity';
-import { BookBorrowingRepository } from './book-borrowing.repository';
+import { BookBorrowingRepository } from './repositories/book-borrowing.repository';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 

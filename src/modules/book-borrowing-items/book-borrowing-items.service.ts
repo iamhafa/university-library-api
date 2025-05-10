@@ -5,7 +5,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { CreateBookBorrowingItemsDto } from './dto/create-book-borrowing-items.dto';
 import { UpdateBookBookBorrowingDto } from './dto/update-book-borrowing-items.dto';
 import { BookBorrowingItems } from './entities/book-borrowing-items.entity';
-import { BookBorrowingItemsRepository } from './book-borrowing-items.repository';
+import { BookBorrowingItemsRepository } from './repositories/book-borrowing-items.repository';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { BORROWING_STATUS, JOB_NAME } from '@/common/constants/enum';

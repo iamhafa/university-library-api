@@ -1,11 +1,11 @@
 import { EntityManager } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { BookAuthorItems } from '../entities/book-author-items.entity';
 import { BaseRepository } from '@/libs/database/repositories/base.repository';
+import { BookBorrowing } from '../entities/book-borrowing.entity';
 
 @Injectable()
-export class BookAuthorItemsRepository extends BaseRepository<BookAuthorItems> {
+export class BookBorrowingRepository extends BaseRepository<BookBorrowing> {
   constructor(protected readonly entityManager: EntityManager) {
-    super(BookAuthorItems, entityManager);
+    super(BookBorrowing, entityManager);
   }
 }

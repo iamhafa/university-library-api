@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
-import { GenreRepository } from './genre.repository';
+import { GenreRepository } from './repositories/genre.repository';
 import { Genre } from './entities/genre.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';

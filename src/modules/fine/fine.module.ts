@@ -3,7 +3,7 @@ import { DatabaseModule } from '@/libs/database/database.module';
 import { FineService } from './fine.service';
 import { FineController } from './fine.controller';
 import { Fine } from './entities/fine.entity';
-import { FineRepository } from './fine.repository';
+import { FineRepository } from './repositories/fine.repository';
 import { BookBorrowingModule } from '../book-borrowing/book-borrowing.module';
 import { BookBorrowingItemsModule } from '../book-borrowing-items/book-borrowing-items.module';
 

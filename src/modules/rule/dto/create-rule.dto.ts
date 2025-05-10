@@ -1,14 +1,17 @@
 import { MEMBER_TYPE } from '@/common/constants/enum';
-import { BaseDto } from '@/libs/database/dto/base.dto';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNumber } from 'class-validator';
 
-export class CreateRuleDto extends BaseDto {
+export class CreateRuleDto {
   @IsEnum(MEMBER_TYPE)
+  @ApiProperty({ enum: MEMBER_TYPE })
   member_type: MEMBER_TYPE;
 
   @IsNumber()
+  @ApiProperty()
   max_borrowed_book: number;
 
   @IsNumber()
+  @ApiProperty()
   max_borrowed_day: number;
 }

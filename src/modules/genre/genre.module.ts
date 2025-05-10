@@ -3,7 +3,7 @@ import { DatabaseModule } from '@/libs/database/database.module';
 import { GenreService } from './genre.service';
 import { GenreController } from './genre.controller';
 import { Genre } from './entities/genre.entity';
-import { GenreRepository } from './genre.repository';
+import { GenreRepository } from './repositories/genre.repository';
 
 @Module({
   imports: [DatabaseModule.forFeature([Genre])],
