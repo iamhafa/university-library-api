@@ -11,8 +11,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService: ConfigService = app.get(ConfigService);
   const appPort: number = configService.get<number>('APP_PORT');
-  app.enableCors();
 
+  // Enable CORS
+  app.enableCors();
   // Enable for validation (when use DTO)
   app.useGlobalPipes(new ValidationPipe({ transform: true })); // use `true` for class-validator
   // Interceptor to format date in each response
@@ -27,7 +28,7 @@ async function bootstrap() {
     defaultVersion: configService.get<string>('APP_VERSION_API'), // default is "v1"
   });
 
-  const documentFactory = () => SwaggerModule.createDocument(app, swaggerConfig);
+  const documentFactory = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup(configService.get<string>('APP_SWAGGER_PATH'), app, documentFactory);
 
   await app.listen(appPort, () => {

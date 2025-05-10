@@ -24,7 +24,7 @@ export class FineService {
   private readonly logger = new Logger(FineService.name);
 
   findOne(id: number): Promise<Fine> {
-    return this.fineRepository.findOneBy({ id });
+    return this.fineRepository.findOneById(id);
   }
 
   // used for cron job
@@ -41,11 +41,11 @@ export class FineService {
   }
 
   updateOne(id: number, updateFineDto: UpdateFineDto): Promise<Fine> {
-    return this.fineRepository.updateOneBy({ id }, updateFineDto);
+    return this.fineRepository.updateOneById(id, updateFineDto);
   }
 
   deleteOne(id: number): Promise<Fine> {
-    return this.fineRepository.deleteOneBy({ id });
+    return this.fineRepository.deleteOneById(id);
   }
 
   // tạo thẻ phạt với những hoạt động trả sách trễ hạn
@@ -63,7 +63,7 @@ export class FineService {
       const existedFine: Fine = await this.findOneByBookBorrowingId(overdueReturn.book_borrowing_id);
 
       if (isEmpty(existedFine)) {
-        this.createOne({
+        this.fineRepository.createOne({
           amount_money: overdueReturn.total_price,
           book_borrowing_id: overdueReturn.book_borrowing_id,
           return_status: BORROWING_STATUS.OVERDUE,

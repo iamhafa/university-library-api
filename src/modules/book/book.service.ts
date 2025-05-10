@@ -20,11 +20,14 @@ export class BookService {
   ) {}
 
   findOne(id: number): Promise<Book> {
-    return this.bookRepository.findOneBy({ id });
+    return this.bookRepository.findOneById(id, { genre: true, publisher: true });
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Book[]>> {
-    return this.bookRepository.findAll(paginationDto);
+    return this.bookRepository.findAll(paginationDto, {
+      genre: true,
+      publisher: true,
+    });
   }
 
   async createOne(createBookDto: CreateBookDto): Promise<Book> {
@@ -55,14 +58,14 @@ export class BookService {
   }
 
   updateOne(id: number, updateAuthorDto: UpdateBookDto): Promise<Book> {
-    return this.bookRepository.updateOneBy({ id }, updateAuthorDto);
+    return this.bookRepository.updateOneById(id, updateAuthorDto);
   }
 
   deleteOne(id: number): Promise<Book> {
-    return this.bookRepository.deleteOneBy({ id });
+    return this.bookRepository.deleteOneById(id);
   }
 
   getAuthorsByBookId(bookId: number) {
-    return this.bookAuthorItemsRepository.findByBookId(bookId);
+    return this.bookAuthorItemsRepository.findBy({ book_id: bookId });
   }
 }

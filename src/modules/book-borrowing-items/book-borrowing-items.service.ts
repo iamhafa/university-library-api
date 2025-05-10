@@ -22,7 +22,7 @@ export class BookBorrowingItemsService {
   private readonly logger = new Logger(BookBorrowingItemsService.name);
 
   findOne(id: number): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsRepository.findOneBy({ id });
+    return this.bookBorrowingItemsRepository.findOneById(id);
   }
 
   findAll(paginationDto?: PaginationDto): Promise<TPagination<BookBorrowingItems[]>> {
@@ -34,16 +34,16 @@ export class BookBorrowingItemsService {
   }
 
   updateOne(id: number, updateBookBorrowingItemsDto: UpdateBookBookBorrowingDto): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsRepository.updateOneBy({ id }, updateBookBorrowingItemsDto);
+    return this.bookBorrowingItemsRepository.updateOneById(id, updateBookBorrowingItemsDto);
   }
 
   deleteOne(id: number): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsRepository.deleteOneBy({ id });
+    return this.bookBorrowingItemsRepository.deleteOneById(id);
   }
 
   // used for cron job
   findAllOverdueBorrowedBooksNotReturn(bookBorrowingIds: number[]): Promise<BookBorrowingItems[]> {
-    return this.bookBorrowingItemsRepository.findAllBy({
+    return this.bookBorrowingItemsRepository.findBy({
       book_borrowing_id: In(bookBorrowingIds),
       returned_date: IsNull(),
       status: BORROWING_STATUS.OVERDUE,

@@ -11,7 +11,7 @@ export class GenreService {
   constructor(private readonly genreRepository: GenreRepository) {}
 
   findOne(id: number): Promise<Genre> {
-    return this.genreRepository.findOneBy({ id });
+    return this.genreRepository.findOneById(id);
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Genre[]>> {
@@ -23,10 +23,10 @@ export class GenreService {
   }
 
   updateOne(id: number, updateGenreDto: UpdateGenreDto): Promise<Genre> {
-    return this.genreRepository.updateOneBy({ id }, updateGenreDto);
+    return this.genreRepository.updateOneById(id, updateGenreDto);
   }
 
   deleteOne(id: number): Promise<Genre> {
-    return this.genreRepository.deleteOneBy({ id });
+    return this.genreRepository.deleteOneById(id);
   }
 }

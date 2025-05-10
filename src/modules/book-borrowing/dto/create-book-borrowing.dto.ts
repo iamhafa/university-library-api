@@ -1,5 +1,5 @@
 import { BaseDto } from '@/libs/database/dto/base.dto';
-import { IsDate } from 'class-validator';
+import { IsDate, IsNumber } from 'class-validator';
 
 export class CreateBookBorrowingDto extends BaseDto {
   @IsDate()
@@ -7,4 +7,7 @@ export class CreateBookBorrowingDto extends BaseDto {
 
   @IsDate()
   due_date: Date;
+
+  @IsNumber()
+  member_id: number;
 }

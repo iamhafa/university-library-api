@@ -11,7 +11,7 @@ export class AuthorService {
   constructor(private readonly authorRepository: AuthorRepository) {}
 
   findOne(id: number): Promise<Author> {
-    return this.authorRepository.findOneBy({ id });
+    return this.authorRepository.findOneById(id);
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Author[]>> {
@@ -20,7 +20,7 @@ export class AuthorService {
 
   searchByQuery(query: string): Promise<Author[]> {
     return this.authorRepository
-      .findByQueryBuilder('a')
+      .createQueryBuilder('a')
       .where('LOWER(a.name) LIKE LOWER(:query)', { query: `%${query}%` })
       .take(10)
       .getMany();
@@ -31,10 +31,10 @@ export class AuthorService {
   }
 
   updateOne(id: number, updateAuthorDto: UpdateAuthorDto): Promise<Author> {
-    return this.authorRepository.updateOneBy({ id }, updateAuthorDto);
+    return this.authorRepository.updateOneById(id, updateAuthorDto);
   }
 
   deleteOne(id: number): Promise<Author> {
-    return this.authorRepository.deleteOneBy({ id });
+    return this.authorRepository.deleteOneById(id);
   }
 }

@@ -11,5 +11,5 @@ export class Author extends BaseEntity {
   bio: string;
 
   @ManyToMany(() => Book, (book) => book.authors, { cascade: true })
-  books: Relation<Book[]>;
+  books?: Relation<Book[]>;
 }

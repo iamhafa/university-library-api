@@ -40,11 +40,11 @@ export class Book extends BaseEntity {
   @ManyToMany(() => Author, (author) => author.books)
   authors?: Relation<Author[]>;
 
-  @ManyToOne(() => Genre, (genre) => genre.books, { eager: true })
+  @ManyToOne(() => Genre, (genre) => genre.books)
   @JoinColumn([{ name: 'genre_id' }])
   genre?: Relation<Genre>;
 
-  @ManyToOne(() => Publisher, (publisher) => publisher.books, { eager: true })
+  @ManyToOne(() => Publisher, (publisher) => publisher.books)
   @JoinColumn([{ name: 'publisher_id' }])
   publisher?: Relation<Publisher>;
 

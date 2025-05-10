@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { BaseRepository } from '@/libs/database/repositories/base.repository';
 import { Publisher } from './entities/publisher.entity';
+import { EntityManager } from 'typeorm';
 
 @Injectable()
 export class PublisherRepository extends BaseRepository<Publisher> {
-  constructor(@InjectRepository(Publisher) protected readonly publisherRepository: Repository<Publisher>) {
-    super(publisherRepository);
+  constructor(protected readonly entityManager: EntityManager) {
+    super(Publisher, entityManager);
   }
 }

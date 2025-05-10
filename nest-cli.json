@@ -7,7 +7,7 @@
     "baseDir": "src/modules"
   },
   "compilerOptions": {
-    "builder": "swc",
+    "builder": "webpack",
     "deleteOutDir": true,
     "assets": ["mail/templates/**/*"],
     "watchAssets": true

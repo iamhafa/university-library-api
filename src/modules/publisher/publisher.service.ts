@@ -11,7 +11,7 @@ export class PublisherService {
   constructor(private readonly publisherRepository: PublisherRepository) {}
 
   findOne(id: number): Promise<Publisher> {
-    return this.publisherRepository.findOneBy({ id });
+    return this.publisherRepository.findOneById(id);
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Publisher[]>> {
@@ -23,10 +23,10 @@ export class PublisherService {
   }
 
   updateOne(id: number, updatePublisherDto: UpdatePublisherDto): Promise<Publisher> {
-    return this.publisherRepository.updateOneBy({ id }, updatePublisherDto);
+    return this.publisherRepository.updateOneById(id, updatePublisherDto);
   }
 
   deleteOne(id: number): Promise<Publisher> {
-    return this.publisherRepository.deleteOneBy({ id });
+    return this.publisherRepository.deleteOneById(id);
   }
 }
