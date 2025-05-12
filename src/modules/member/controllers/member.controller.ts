@@ -6,6 +6,7 @@ import { UpdateMemberDto } from '../dto/update-customer.dto';
 import { Member } from '../entities/member.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
+import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
 @ApiTags('Quản lý Thành viên')
 @Controller('member')
@@ -13,6 +14,7 @@ export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
   @Get()
+  @ApiPaginationQuery()
   getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Member[]>> {
     return this.memberService.findAll(paginationDto);
   }

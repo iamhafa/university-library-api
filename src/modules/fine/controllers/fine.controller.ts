@@ -6,6 +6,7 @@ import { UpdateFineDto } from '../dto/update-fine.dto';
 import { Fine } from '../entities/fine.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
+import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
 @ApiTags('Quản lý Phạt khi sinh viên trễ trả sách')
 @Controller('punish')
@@ -13,6 +14,7 @@ export class FineController {
   constructor(private readonly fineService: FineService) {}
 
   @Get()
+  @ApiPaginationQuery()
   getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Fine[]>> {
     return this.fineService.findAll(paginationDto);
   }

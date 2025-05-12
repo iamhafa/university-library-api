@@ -6,6 +6,7 @@ import { UpdateRuleDto } from '../dto/update-rule.dto';
 import { Rule } from '../entities/rule.entity';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { TPagination } from '@/common/constants/type';
+import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
 @ApiTags('Quản lý Điều khoản mượn sách')
 @Controller('rule')
@@ -13,6 +14,7 @@ export class RuleController {
   constructor(private readonly ruleService: RuleService) {}
 
   @Get()
+  @ApiPaginationQuery()
   getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Rule[]>> {
     return this.ruleService.findAll(paginationDto);
   }

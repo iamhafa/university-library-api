@@ -10,6 +10,7 @@ import { BookBorrowingItems } from '../entities/book-borrowing-items.entity';
 import { BookBorrowingItemsService } from '../services/book-borrowing-items.service';
 import { CreateBookBorrowingItemsDto } from '../dto/create-book-borrowing-items.dto';
 import { UpdateBookBorrowingItemsDto } from '../dto/update-book-borrowing-items.dto';
+import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
 @ApiTags('Quản lý mỗi lượt mượn sách (có thể gồm nhiều cuốn)')
 @Controller('book-borrowing')
@@ -20,6 +21,7 @@ export class BookBorrowingController {
   ) {}
 
   @Get()
+  @ApiPaginationQuery()
   getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<BookBorrowing[]>> {
     return this.bookBorrowingService.findAll(paginationDto);
   }

@@ -8,6 +8,7 @@ import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { BookAuthorItems } from '../entities/book-author-items.entity';
 import { BookAuthorItemsService } from '../services/book-author-items.service';
+import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
 @ApiTags('Quản lý Sách')
 @Controller('book')
@@ -18,6 +19,7 @@ export class BookController {
   ) {}
 
   @Get()
+  @ApiPaginationQuery()
   getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Book[]>> {
     return this.bookService.findAll(paginationDto);
   }

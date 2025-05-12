@@ -6,6 +6,7 @@ import { UpdateGenreDto } from '../dto/update-genre.dto';
 import { Genre } from '../entities/genre.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
+import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
 @ApiTags('Quản lý Thể loại sách')
 @Controller('genre')
@@ -13,6 +14,7 @@ export class GenreController {
   constructor(private readonly genreService: GenreService) {}
 
   @Get()
+  @ApiPaginationQuery()
   getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Genre[]>> {
     return this.genreService.findAll(paginationDto);
   }

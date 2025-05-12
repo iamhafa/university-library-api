@@ -6,6 +6,7 @@ import { UpdatePublisherDto } from '../dto/update-publisher.dto';
 import { Publisher } from '../entities/publisher.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
+import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
 @ApiTags('Quản lý Nhà xuất bản')
 @Controller('publisher')
@@ -13,6 +14,7 @@ export class PublisherController {
   constructor(private readonly publisherService: PublisherService) {}
 
   @Get()
+  @ApiPaginationQuery()
   getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Publisher[]>> {
     return this.publisherService.findAll(paginationDto);
   }
