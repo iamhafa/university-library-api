@@ -1,22 +1,20 @@
 import { EntityManager } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateBookDto } from './dto/create-book.dto';
-import { UpdateBookDto } from './dto/update-book.dto';
-import { BookRepository } from './repositories/book.repository';
-import { Book } from './entities/book.entity';
+import { CreateBookDto } from '../dto/create-book.dto';
+import { UpdateBookDto } from '../dto/update-book.dto';
+import { BookRepository } from '../repositories/book.repository';
+import { Book } from '../entities/book.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { TransactionManager } from '@/libs/database/managers/transaction.manager';
-import { BookAuthorItems } from './entities/book-author-items.entity';
-import { Author } from '../author/entities/author.entity';
-import { BookAuthorItemsRepository } from './repositories/book-author-items.repository';
+import { BookAuthorItems } from '../entities/book-author-items.entity';
+import { Author } from '@/modules/author/entities/author.entity';
 
 @Injectable()
 export class BookService {
   constructor(
     private readonly transactionManager: TransactionManager,
     private readonly bookRepository: BookRepository,
-    private readonly bookAuthorItemsRepository: BookAuthorItemsRepository,
   ) {}
 
   findOne(id: number): Promise<Book> {
@@ -63,9 +61,5 @@ export class BookService {
 
   deleteOne(id: number): Promise<Book> {
     return this.bookRepository.deleteOneById(id);
-  }
-
-  getAuthorsByBookId(bookId: number) {
-    return this.bookAuthorItemsRepository.findBy({ book_id: bookId });
   }
 }

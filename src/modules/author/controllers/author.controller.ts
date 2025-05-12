@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
-import { AuthorService } from './author.service';
-import { CreateAuthorDto } from './dto/create-author.dto';
-import { UpdateAuthorDto } from './dto/update-author.dto';
-import { Author } from './entities/author.entity';
+import { AuthorService } from '../services/author.service';
+import { CreateAuthorDto } from '../dto/create-author.dto';
+import { UpdateAuthorDto } from '../dto/update-author.dto';
+import { Author } from '../entities/author.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { TPagination } from '@/common/constants/type';

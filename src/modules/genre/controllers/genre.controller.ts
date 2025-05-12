@@ -1,9 +1,9 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
-import { GenreService } from './genre.service';
-import { CreateGenreDto } from './dto/create-genre.dto';
-import { UpdateGenreDto } from './dto/update-genre.dto';
-import { Genre } from './entities/genre.entity';
+import { GenreService } from '../services/genre.service';
+import { CreateGenreDto } from '../dto/create-genre.dto';
+import { UpdateGenreDto } from '../dto/update-genre.dto';
+import { Genre } from '../entities/genre.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 

@@ -1,9 +1,9 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
-import { RuleService } from './rule.service';
-import { CreateRuleDto } from './dto/create-rule.dto';
-import { UpdateRuleDto } from './dto/update-rule.dto';
-import { Rule } from './entities/rule.entity';
+import { RuleService } from '../services/rule.service';
+import { CreateRuleDto } from '../dto/create-rule.dto';
+import { UpdateRuleDto } from '../dto/update-rule.dto';
+import { Rule } from '../entities/rule.entity';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { TPagination } from '@/common/constants/type';
 

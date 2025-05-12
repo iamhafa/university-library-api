@@ -1,17 +1,21 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
-import { BookService } from './book.service';
-import { CreateBookDto } from './dto/create-book.dto';
-import { UpdateBookDto } from './dto/update-book.dto';
-import { Book } from './entities/book.entity';
+import { BookService } from '../services/book.service';
+import { CreateBookDto } from '../dto/create-book.dto';
+import { UpdateBookDto } from '../dto/update-book.dto';
+import { Book } from '../entities/book.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
-import { BookAuthorItems } from './entities/book-author-items.entity';
+import { BookAuthorItems } from '../entities/book-author-items.entity';
+import { BookAuthorItemsService } from '../services/book-author-items.service';
 
 @ApiTags('Quản lý Sách')
 @Controller('book')
 export class BookController {
-  constructor(private readonly bookService: BookService) {}
+  constructor(
+    private readonly bookService: BookService,
+    private readonly bookAuthorItemsService: BookAuthorItemsService,
+  ) {}
 
   @Get()
   getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Book[]>> {
@@ -19,8 +23,8 @@ export class BookController {
   }
 
   @Get(':id/authors')
-  getAuthors(@Param('id', ParseIntPipe) id: number): Promise<BookAuthorItems[]> {
-    return this.bookService.getAuthorsByBookId(id);
+  getAuthors(@Param('id', ParseIntPipe) bookId: number): Promise<BookAuthorItems[]> {
+    return this.bookAuthorItemsService.getByBookId(bookId);
   }
 
   @Post()

@@ -8,7 +8,6 @@ import { GenreModule } from '@/modules/genre/genre.module';
 import { PublisherModule } from '@/modules/publisher/publisher.module';
 import { BookBorrowingModule } from '@/modules/book-borrowing/book-borrowing.module';
 import { MemberModule } from '@/modules/member/member.module';
-import { BookBorrowingItemsModule } from '@/modules/book-borrowing-items/book-borrowing-items.module';
 import { FineModule } from '@/modules/fine/fine.module';
 import { RuleModule } from '@/modules/rule/rule.module';
 import { MailModule } from '@/mail/mail.module';
@@ -38,7 +37,6 @@ import { JwtModule } from '@nestjs/jwt';
     PublisherModule,
     BookModule,
     BookBorrowingModule,
-    BookBorrowingItemsModule,
     FineModule,
     RuleModule,
   ],

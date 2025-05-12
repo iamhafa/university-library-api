@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRuleDto } from './dto/create-rule.dto';
-import { UpdateRuleDto } from './dto/update-rule.dto';
-import { RuleRepository } from './repositories/rule.repository';
-import { Rule } from './entities/rule.entity';
+import { CreateRuleDto } from '../dto/create-rule.dto';
+import { UpdateRuleDto } from '../dto/update-rule.dto';
+import { RuleRepository } from '../repositories/rule.repository';
+import { Rule } from '../entities/rule.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 

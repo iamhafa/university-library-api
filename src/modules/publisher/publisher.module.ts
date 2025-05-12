@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '@/libs/database/database.module';
-import { PublisherService } from './publisher.service';
-import { PublisherController } from './publisher.controller';
+import { PublisherService } from './services/publisher.service';
+import { PublisherController } from './controllers/publisher.controller';
 import { Publisher } from './entities/publisher.entity';
 import { PublisherRepository } from './repositories/publisher.repository';
 

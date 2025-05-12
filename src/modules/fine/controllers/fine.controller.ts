@@ -1,9 +1,9 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
-import { FineService } from './fine.service';
-import { CreateFineDto } from './dto/create-fine.dto';
-import { UpdateFineDto } from './dto/update-fine.dto';
-import { Fine } from './entities/fine.entity';
+import { FineService } from '../services/fine.service';
+import { CreateFineDto } from '../dto/create-fine.dto';
+import { UpdateFineDto } from '../dto/update-fine.dto';
+import { Fine } from '../entities/fine.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 

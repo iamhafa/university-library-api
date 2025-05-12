@@ -2,16 +2,16 @@ import { isEmpty } from 'lodash';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { BORROWING_STATUS, JOB_NAME } from '@/common/constants/enum';
-import { FineRepository } from './repositories/fine.repository';
-import { CreateFineDto } from './dto/create-fine.dto';
-import { UpdateFineDto } from './dto/update-fine.dto';
-import { Fine } from './entities/fine.entity';
-import { BookBorrowingService } from '../book-borrowing/book-borrowing.service';
+import { FineRepository } from '../repositories/fine.repository';
+import { CreateFineDto } from '../dto/create-fine.dto';
+import { UpdateFineDto } from '../dto/update-fine.dto';
+import { Fine } from '../entities/fine.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
-import { BookBorrowing } from '../book-borrowing/entities/book-borrowing.entity';
-import { BookBorrowingItemsService } from '../book-borrowing-items/book-borrowing-items.service';
-import { BookBorrowingItems } from '../book-borrowing-items/entities/book-borrowing-items.entity';
+import { BookBorrowingService } from '@/modules/book-borrowing/services/book-borrowing.service';
+import { BookBorrowingItemsService } from '@/modules/book-borrowing/services/book-borrowing-items.service';
+import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
+import { BookBorrowingItems } from '@/modules/book-borrowing/entities/book-borrowing-items.entity';
 
 @Injectable()
 export class FineService {
@@ -51,7 +51,7 @@ export class FineService {
   // tạo thẻ phạt với những hoạt động trả sách trễ hạn
   @Cron(CronExpression.EVERY_10_SECONDS, { name: JOB_NAME.FINE })
   async cronFineBooksLateReturn(): Promise<void> {
-    this.logger.fatal('[JOB] Auto create fine ticket');
+    this.logger.fatal('[JOB] Auto create fine ticket if book borrowing was not returned.');
 
     const overdueBorrowedBooks: BookBorrowing[] = await this.bookBorrowingService.findAllOverdueBorrowedBooks();
     const overdueBorrowedBooksIds: number[] = overdueBorrowedBooks.map(({ id }) => id);

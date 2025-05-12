@@ -1,9 +1,9 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
-import { PublisherService } from './publisher.service';
-import { CreatePublisherDto } from './dto/create-publisher.dto';
-import { UpdatePublisherDto } from './dto/update-publisher.dto';
-import { Publisher } from './entities/publisher.entity';
+import { PublisherService } from '../services/publisher.service';
+import { CreatePublisherDto } from '../dto/create-publisher.dto';
+import { UpdatePublisherDto } from '../dto/update-publisher.dto';
+import { Publisher } from '../entities/publisher.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 

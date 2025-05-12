@@ -1,16 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsNumber } from 'class-validator';
+import { IsDateString, IsNumber } from 'class-validator';
 
 export class CreateBookBorrowingDto {
-  @IsDate()
-  @ApiProperty()
+  @IsNumber()
+  @ApiProperty({ example: 1 })
+  member_id: number;
+
+  @IsDateString()
+  @ApiProperty({ example: '2025-05-01' })
   borrowing_date: Date;
 
-  @IsDate()
-  @ApiProperty()
+  @IsDateString()
+  @ApiProperty({ example: '2025-05-12' })
   due_date: Date;
-
-  @IsNumber()
-  @ApiProperty()
-  member_id: number;
 }

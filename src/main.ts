@@ -10,7 +10,7 @@ import { ResponseInterceptor } from '@/core/interceptors/response.interceptor';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService: ConfigService = app.get(ConfigService);
-  const appPort: number = configService.get<number>('APP_PORT');
+  const appPort: number = configService.get<number>('APP_PORT', 4000);
 
   // Enable CORS
   app.enableCors();

@@ -1,16 +1,16 @@
-import { isArray, isNull } from 'lodash';
+import { isEmpty, isNull } from 'lodash';
 import { In, IsNull } from 'typeorm';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { CreateBookBorrowingItemsDto } from './dto/create-book-borrowing-items.dto';
-import { UpdateBookBookBorrowingDto } from './dto/update-book-borrowing-items.dto';
-import { BookBorrowingItems } from './entities/book-borrowing-items.entity';
-import { BookBorrowingItemsRepository } from './repositories/book-borrowing-items.repository';
+import { CreateBookBorrowingItemsDto } from '../dto/create-book-borrowing-items.dto';
+import { UpdateBookBorrowingItemsDto } from '../dto/update-book-borrowing-items.dto';
+import { BookBorrowingItems } from '../entities/book-borrowing-items.entity';
+import { BookBorrowingItemsRepository } from '../repositories/book-borrowing-items.repository';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { BORROWING_STATUS, JOB_NAME } from '@/common/constants/enum';
-import { BookBorrowingService } from '../book-borrowing/book-borrowing.service';
-import { BookBorrowing } from '../book-borrowing/entities/book-borrowing.entity';
+import { BookBorrowing } from '../entities/book-borrowing.entity';
+import { BookBorrowingService } from './book-borrowing.service';
 
 @Injectable()
 export class BookBorrowingItemsService {
@@ -33,7 +33,7 @@ export class BookBorrowingItemsService {
     return this.bookBorrowingItemsRepository.createOne(createBookBorrowingItemsDto);
   }
 
-  updateOne(id: number, updateBookBorrowingItemsDto: UpdateBookBookBorrowingDto): Promise<BookBorrowingItems> {
+  updateOne(id: number, updateBookBorrowingItemsDto: UpdateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
     return this.bookBorrowingItemsRepository.updateOneById(id, updateBookBorrowingItemsDto);
   }
 
@@ -55,9 +55,9 @@ export class BookBorrowingItemsService {
     this.logger.fatal('[JOB] Sync up status');
 
     // list all items borrowing
-    const listBookBorrowingItems = await this.findAll();
+    const listBookBorrowingItems: BookBorrowingItems[] = await this.bookBorrowingItemsRepository.find();
 
-    if (isArray(listBookBorrowingItems)) {
+    if (!isEmpty(listBookBorrowingItems)) {
       for (const item of listBookBorrowingItems) {
         const currentDate = new Date();
 

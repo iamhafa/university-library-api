@@ -29,13 +29,13 @@ export class BookBorrowingItems extends BaseEntity {
   @PrimaryColumn()
   book_id: number;
 
-  @ManyToOne(() => Book, (book) => book.bookBorrowings)
-  @JoinColumn([{ name: 'book_borrowing_id' }])
-  book?: Relation<Book>;
-
   // PK for BookBorrowing (many to many with Book)
   @PrimaryColumn()
   book_borrowing_id: number;
+
+  @ManyToOne(() => Book, (book) => book.bookBorrowings)
+  @JoinColumn([{ name: 'book_borrowing_id' }])
+  book?: Relation<Book>;
 
   @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books)
   @JoinColumn([{ name: 'book_id' }])

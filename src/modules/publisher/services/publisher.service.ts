@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePublisherDto } from './dto/create-publisher.dto';
-import { UpdatePublisherDto } from './dto/update-publisher.dto';
-import { PublisherRepository } from './repositories/publisher.repository';
-import { Publisher } from './entities/publisher.entity';
+import { CreatePublisherDto } from '../dto/create-publisher.dto';
+import { UpdatePublisherDto } from '../dto/update-publisher.dto';
+import { PublisherRepository } from '../repositories/publisher.repository';
+import { Publisher } from '../entities/publisher.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 

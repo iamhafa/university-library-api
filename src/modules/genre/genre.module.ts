@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '@/libs/database/database.module';
-import { GenreService } from './genre.service';
-import { GenreController } from './genre.controller';
+import { GenreService } from './services/genre.service';
+import { GenreController } from './controllers/genre.controller';
 import { Genre } from './entities/genre.entity';
 import { GenreRepository } from './repositories/genre.repository';
 
