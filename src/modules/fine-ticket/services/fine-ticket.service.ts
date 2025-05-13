@@ -2,10 +2,10 @@ import { isEmpty } from 'lodash';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { BORROWING_STATUS, JOB_NAME } from '@/common/constants/enum';
-import { FineRepository } from '../repositories/fine.repository';
-import { CreateFineDto } from '../dto/create-fine.dto';
-import { UpdateFineDto } from '../dto/update-fine.dto';
-import { Fine } from '../entities/fine.entity';
+import { FineTicketRepository } from '../repositories/fine-ticket.repository';
+import { CreateFineTicketDto } from '../dto/create-fine-ticket.dto';
+import { UpdateFineTicketDto } from '../dto/update-fine-ticket.dto';
+import { FineTicket } from '../entities/fine-ticket.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { BookBorrowingService } from '@/modules/book-borrowing/services/book-borrowing.service';
@@ -14,38 +14,38 @@ import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.
 import { BookBorrowingItems } from '@/modules/book-borrowing/entities/book-borrowing-items.entity';
 
 @Injectable()
-export class FineService {
+export class FineTicketService {
   constructor(
-    private readonly fineRepository: FineRepository,
+    private readonly fineTicketRepository: FineTicketRepository,
     private readonly bookBorrowingService: BookBorrowingService,
     private readonly bookBorrowingItemsService: BookBorrowingItemsService,
   ) {}
 
-  private readonly logger = new Logger(FineService.name);
+  private readonly logger = new Logger(FineTicketService.name);
 
-  findOne(id: number): Promise<Fine> {
-    return this.fineRepository.findOneById(id);
+  findOne(id: number): Promise<FineTicket> {
+    return this.fineTicketRepository.findOneById(id);
   }
 
   // used for cron job
-  findOneByBookBorrowingId(book_borrowing_id: number): Promise<Fine> {
-    return this.fineRepository.findOneBy({ book_borrowing_id });
+  findOneByBookBorrowingId(book_borrowing_id: number): Promise<FineTicket> {
+    return this.fineTicketRepository.findOneBy({ book_borrowing_id });
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Fine[]>> {
-    return this.fineRepository.findAll(paginationDto);
+  findAll(paginationDto: PaginationDto): Promise<TPagination<FineTicket[]>> {
+    return this.fineTicketRepository.findAll(paginationDto);
   }
 
-  createOne(createFineDto: CreateFineDto): Promise<Fine> {
-    return this.fineRepository.createOne(createFineDto);
+  createOne(createFineTicketDto: CreateFineTicketDto): Promise<FineTicket> {
+    return this.fineTicketRepository.createOne(createFineTicketDto);
   }
 
-  updateOne(id: number, updateFineDto: UpdateFineDto): Promise<Fine> {
-    return this.fineRepository.updateOneById(id, updateFineDto);
+  updateOne(id: number, updateFineTicketDto: UpdateFineTicketDto): Promise<FineTicket> {
+    return this.fineTicketRepository.updateOneById(id, updateFineTicketDto);
   }
 
-  deleteOne(id: number): Promise<Fine> {
-    return this.fineRepository.deleteOneById(id);
+  deleteOne(id: number): Promise<FineTicket> {
+    return this.fineTicketRepository.deleteOneById(id);
   }
 
   // tạo thẻ phạt với những hoạt động trả sách trễ hạn
@@ -60,10 +60,10 @@ export class FineService {
       await this.bookBorrowingItemsService.findAllOverdueBorrowedBooksNotReturn(overdueBorrowedBooksIds);
 
     for (const overdueReturn of overdueBorrowedBooksNotReturn) {
-      const existedFine: Fine = await this.findOneByBookBorrowingId(overdueReturn.book_borrowing_id);
+      const existedFine: FineTicket = await this.findOneByBookBorrowingId(overdueReturn.book_borrowing_id);
 
       if (isEmpty(existedFine)) {
-        this.fineRepository.createOne({
+        this.fineTicketRepository.createOne({
           amount_money: overdueReturn.total_price,
           book_borrowing_id: overdueReturn.book_borrowing_id,
           return_status: BORROWING_STATUS.OVERDUE,

@@ -9,15 +9,15 @@ export enum STATUS_CODE {
 }
 
 export enum BORROWING_STATUS {
-  BORROWING = 'borrowing', // đang mượn
-  RETURNED = 'returned', // đã trả sách
-  OVERDUE = 'overdue', // quá hạn
+  BORROWING = 'BORROWING', // đang mượn
+  RETURNED = 'RETURNED', // đã trả sách
+  OVERDUE = 'OVERDUE', // quá hạn
 }
 
 export enum MEMBER_TYPE {
-  LECTURER = 'lecturer', // giảng viên
-  UNDERGRADUATE_STUDENT = 'undergraduate_student', // sinh viên đang còn học
-  GRADUATE_STUDENT = 'graduate_student', // sinh viên đã tốt nghiệp
+  LECTURER = 'LECTURER', // giảng viên
+  UNDERGRADUATE_STUDENT = 'UNDERGRADUATE_STUDENT', // sinh viên đang còn học
+  GRADUATED_STUDENT = 'GRADUATED_STUDENT', // sinh viên đã tốt nghiệp
 }
 
 export enum JOB_NAME {
@@ -27,7 +27,7 @@ export enum JOB_NAME {
 }
 
 export enum ROLE {
-  ADMIN = 'admin',
-  MODERATOR = 'morderator',
-  USER = 'user',
+  ADMIN = 'ADMIN',
+  MODERATOR = 'MODERATOR',
+  USER = 'USER',
 }

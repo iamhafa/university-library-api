@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, On
 import { BaseEntity } from '@/libs/database/entities/base.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 import { Member } from '@/modules/member/entities/member.entity';
-import { Fine } from '@/modules/fine/entities/fine.entity';
+import { FineTicket } from '@/modules/fine-ticket/entities/fine-ticket.entity';
 
 // Ghi dấu việc mượn sách của sinh viên
 @Entity()
@@ -31,6 +31,6 @@ export class BookBorrowing extends BaseEntity {
   books?: Relation<Book[]>;
 
   // 1 lần mượn sách (có thể gồm nhiều sách) thì có thể có nhiều vé phạt nếu trễ hạn trả
-  @OneToMany(() => Fine, (fine) => fine.bookBorrowing)
-  fines?: Relation<Fine[]>;
+  @OneToMany(() => FineTicket, (fineTicket) => fineTicket.bookBorrowing)
+  fineTickets?: Relation<FineTicket[]>;
 }

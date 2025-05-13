@@ -8,7 +8,7 @@ import { GenreModule } from '@/modules/genre/genre.module';
 import { PublisherModule } from '@/modules/publisher/publisher.module';
 import { BookBorrowingModule } from '@/modules/book-borrowing/book-borrowing.module';
 import { MemberModule } from '@/modules/member/member.module';
-import { FineModule } from '@/modules/fine/fine.module';
+import { FineTicketModule } from '@/modules/fine-ticket/fine-ticket.module';
 import { RuleModule } from '@/modules/rule/rule.module';
 import { MailModule } from '@/mail/mail.module';
 import { APP_GUARD } from '@nestjs/core';
@@ -37,10 +37,9 @@ import { JwtModule } from '@nestjs/jwt';
     PublisherModule,
     BookModule,
     BookBorrowingModule,
-    FineModule,
+    FineTicketModule,
     RuleModule,
   ],
-  controllers: [],
   providers: [
     // {
     //   provide: APP_GUARD, // auto inject reflector
