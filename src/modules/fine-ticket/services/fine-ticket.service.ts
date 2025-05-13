@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { BORROWING_STATUS, JOB_NAME } from '@/common/constants/enum';
+import { FINE_TICKET_STATUS, JOB_NAME } from '@/common/constants/enum';
 import { FineTicketRepository } from '../repositories/fine-ticket.repository';
 import { CreateFineTicketDto } from '../dto/create-fine-ticket.dto';
 import { UpdateFineTicketDto } from '../dto/update-fine-ticket.dto';
@@ -49,7 +49,7 @@ export class FineTicketService {
   }
 
   // tạo thẻ phạt với những hoạt động trả sách trễ hạn
-  @Cron(CronExpression.EVERY_10_SECONDS, { name: JOB_NAME.FINE })
+  @Cron(CronExpression.EVERY_10_SECONDS, { name: JOB_NAME.FINE_TICKET })
   async cronFineBooksLateReturn(): Promise<void> {
     this.logger.fatal('[JOB] Auto create fine ticket if book borrowing was not returned.');
 
@@ -66,10 +66,10 @@ export class FineTicketService {
         this.fineTicketRepository.createOne({
           amount_money: overdueReturn.total_price,
           book_borrowing_id: overdueReturn.book_borrowing_id,
-          return_status: BORROWING_STATUS.OVERDUE,
+          return_status: FINE_TICKET_STATUS.UNPAID,
         });
       } else {
-        this.updateOne(existedFine.id, { return_status: BORROWING_STATUS.RETURNED });
+        this.updateOne(existedFine.id, { return_status: FINE_TICKET_STATUS.PAID });
       }
     }
   }

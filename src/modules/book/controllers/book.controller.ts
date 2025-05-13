@@ -10,7 +10,7 @@ import { BookAuthorItems } from '../entities/book-author-items.entity';
 import { BookAuthorItemsService } from '../services/book-author-items.service';
 import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
-@ApiTags('Quản lý Sách')
+@ApiTags('Sách')
 @Controller('book')
 export class BookController {
   constructor(

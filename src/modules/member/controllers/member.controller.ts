@@ -8,7 +8,7 @@ import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
-@ApiTags('Quản lý Thành viên')
+@ApiTags('Thành viên')
 @Controller('member')
 export class MemberController {
   constructor(private readonly memberService: MemberService) {}

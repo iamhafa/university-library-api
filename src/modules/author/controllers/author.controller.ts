@@ -10,7 +10,7 @@ import { Roles } from '@/decorators/roles.decorator';
 import { ROLE } from '@/common/constants/enum';
 import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
-@ApiTags('Quản lý Tác giả')
+@ApiTags('Tác giả')
 @Controller('author')
 export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}

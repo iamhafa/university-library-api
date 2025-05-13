@@ -18,13 +18,6 @@ export class BookBorrowingItems extends BaseEntity {
   @Column({ nullable: true })
   returned_date: Date;
 
-  @Column({
-    type: 'enum',
-    enum: BORROWING_STATUS,
-    default: BORROWING_STATUS.BORROWING,
-  })
-  status: BORROWING_STATUS;
-
   // PK for Book (many to many with Borrow Borrowing)
   @PrimaryColumn()
   book_id: number;

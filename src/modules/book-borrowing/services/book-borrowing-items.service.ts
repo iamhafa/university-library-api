@@ -46,7 +46,7 @@ export class BookBorrowingItemsService {
     return this.bookBorrowingItemsRepository.findBy({
       book_borrowing_id: In(bookBorrowingIds),
       returned_date: IsNull(),
-      status: BORROWING_STATUS.OVERDUE,
+      // status: BORROWING_STATUS.OVERDUE,
     });
   }
 

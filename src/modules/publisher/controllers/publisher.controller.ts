@@ -8,7 +8,7 @@ import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
-@ApiTags('Quản lý Nhà xuất bản')
+@ApiTags('Nhà xuất bản')
 @Controller('publisher')
 export class PublisherController {
   constructor(private readonly publisherService: PublisherService) {}

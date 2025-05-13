@@ -8,7 +8,7 @@ import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
-@ApiTags('Quản lý Thể loại sách')
+@ApiTags('Thể loại sách')
 @Controller('genre')
 export class GenreController {
   constructor(private readonly genreService: GenreService) {}

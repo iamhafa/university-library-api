@@ -3,10 +3,22 @@ import { BaseEntity } from '@/libs/database/entities/base.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 import { Member } from '@/modules/member/entities/member.entity';
 import { FineTicket } from '@/modules/fine-ticket/entities/fine-ticket.entity';
+import { BORROWING_STATUS } from '@/common/constants/enum';
 
 // Ghi dấu việc mượn sách của sinh viên
 @Entity()
 export class BookBorrowing extends BaseEntity {
+  // FK of Member
+  @Column()
+  member_id: number;
+
+  @Column({
+    type: 'enum',
+    enum: BORROWING_STATUS,
+    default: BORROWING_STATUS.BORROWING,
+  })
+  status: BORROWING_STATUS;
+
   // ngày mượn sách mặc định là thời điểm khởi tạo record
   @CreateDateColumn()
   borrowing_date: Date;
@@ -18,9 +30,8 @@ export class BookBorrowing extends BaseEntity {
   })
   due_date: Date;
 
-  // FK of Member
-  @Column()
-  member_id: number;
+  @Column({ default: null })
+  returned_date: Date;
 
   @ManyToOne(() => Member, (member) => member.bookBorrowings)
   @JoinColumn([{ name: 'member_id' }])

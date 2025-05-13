@@ -12,7 +12,7 @@ import { CreateBookBorrowingItemsDto } from '../dto/create-book-borrowing-items.
 import { UpdateBookBorrowingItemsDto } from '../dto/update-book-borrowing-items.dto';
 import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
-@ApiTags('Quản lý mỗi lượt mượn sách (có thể gồm nhiều cuốn)')
+@ApiTags('Lượt mượn sách')
 @Controller('book-borrowing')
 export class BookBorrowingController {
   constructor(

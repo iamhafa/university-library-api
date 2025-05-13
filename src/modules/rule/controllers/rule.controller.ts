@@ -8,7 +8,7 @@ import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { TPagination } from '@/common/constants/type';
 import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
 
-@ApiTags('Quản lý Điều khoản mượn sách')
+@ApiTags('Điều khoản mượn sách')
 @Controller('rule')
 export class RuleController {
   constructor(private readonly ruleService: RuleService) {}

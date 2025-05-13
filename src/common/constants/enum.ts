@@ -12,6 +12,14 @@ export enum BORROWING_STATUS {
   BORROWING = 'BORROWING', // đang mượn
   RETURNED = 'RETURNED', // đã trả sách
   OVERDUE = 'OVERDUE', // quá hạn
+  CANCELLED = 'CANCELLED',
+  PENDING = 'PENDING',
+  LOST = 'LOST',
+}
+
+export enum FINE_TICKET_STATUS {
+  PAID = 'PAID',
+  UNPAID = 'UNPAID',
 }
 
 export enum MEMBER_TYPE {
@@ -21,7 +29,7 @@ export enum MEMBER_TYPE {
 }
 
 export enum JOB_NAME {
-  FINE = 'job-fine',
+  FINE_TICKET = 'job-fine_ticket',
   BOOK_BORROWING = 'job-book_borrowing',
   BOOK_BORROWING_ITEMS = 'job-book_borrowing_items',
 }
