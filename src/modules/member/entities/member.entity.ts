@@ -41,5 +41,5 @@ export class Member extends BaseEntity {
   enrollment_date: Date;
 
   @OneToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.member)
-  bookBorrowings?: Relation<BookBorrowing[]>;
+  readonly bookBorrowings?: Relation<BookBorrowing[]>;
 }

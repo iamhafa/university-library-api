@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, Relation } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
 import { Author } from '@/modules/author/entities/author.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 import { BaseEntity } from '@/libs/database/entities/base.entity';
@@ -9,17 +9,17 @@ export class BookAuthorItems extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @PrimaryColumn()
+  @Column()
   book_id: number;
 
-  @PrimaryColumn()
+  @Column()
   author_id: number;
 
   @ManyToOne(() => Book, (book) => book.authors, { eager: true })
   @JoinColumn({ name: 'book_id' })
-  book?: Relation<Book>;
+  readonly book?: Relation<Book>;
 
   @ManyToOne(() => Author, (author) => author.books, { eager: true })
   @JoinColumn({ name: 'author_id' })
-  author?: Relation<Author>;
+  readonly author?: Relation<Author>;
 }

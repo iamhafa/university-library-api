@@ -16,7 +16,7 @@ export class CreateBookBorrowingItemsDto {
   @IsOptional()
   returned_date: Date;
 
-  @ApiProperty({ example: BORROWING_STATUS.BORROWING })
+  @ApiProperty({ enum: BORROWING_STATUS })
   @IsEnum(BORROWING_STATUS)
   status: BORROWING_STATUS;
 

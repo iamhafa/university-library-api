@@ -1,8 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, Relation } from 'typeorm';
 import { BaseEntity } from '@/libs/database/entities/base.entity';
 import { Book } from '@/modules/book/entities/book.entity';
 import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
-import { BORROWING_STATUS } from '@/common/constants/enum';
 
 // Ghi dấu từng cuốn sách cho mỗi lần mượn sách của sinh viên
 // Bảng trung gian của Book và BookBorrowing (many to many)
@@ -19,18 +18,18 @@ export class BookBorrowingItems extends BaseEntity {
   returned_date: Date;
 
   // PK for Book (many to many with Borrow Borrowing)
-  @PrimaryColumn()
+  @Column()
   book_id: number;
 
   // PK for BookBorrowing (many to many with Book)
-  @PrimaryColumn()
+  @Column()
   book_borrowing_id: number;
 
-  @ManyToOne(() => Book, (book) => book.bookBorrowings)
-  @JoinColumn([{ name: 'book_borrowing_id' }])
-  book?: Relation<Book>;
+  @ManyToOne(() => Book, (book) => book.bookBorrowings, { eager: true })
+  @JoinColumn({ name: 'book_id' }) // mapping với @Column() book_id
+  readonly book?: Relation<Book>;
 
-  @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books)
-  @JoinColumn([{ name: 'book_id' }])
-  bookBorrowing?: Relation<BookBorrowing>;
+  @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books, { eager: true })
+  @JoinColumn({ name: 'book_borrowing_id' }) // mapping với @Column() book_borrowing_id
+  readonly bookBorrowing?: Relation<BookBorrowing>;
 }

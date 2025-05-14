@@ -1,8 +1,8 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
 import { MemberService } from '../services/member.service';
-import { CreateMemberDto } from '../dto/create-customer.dto';
-import { UpdateMemberDto } from '../dto/update-customer.dto';
+import { CreateMemberDto } from '../dto/create-member.dto';
+import { UpdateMemberDto } from '../dto/update-member.dto';
 import { Member } from '../entities/member.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';

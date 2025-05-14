@@ -1,27 +1,25 @@
-import { IsEmail, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
+import { IsDateString, IsEmail, IsPhoneNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { MEMBER_TYPE } from '@/common/constants/enum';
 
 export class CreateMemberDto {
-  @ApiProperty()
+  @ApiProperty({ default: 'Nguyen Van' })
   @IsString()
   first_name: string;
 
-  @ApiProperty()
+  @ApiProperty({ default: 'A' })
   @IsString()
   last_name: string;
 
-  @ApiProperty()
+  @ApiProperty({ default: 'nguyenvana@student.humg.edu.vn' })
   @IsEmail()
   email: string;
 
-  @ApiProperty({ nullable: true })
+  @ApiProperty({ default: '12345' })
   @IsString()
-  @IsOptional()
   password: string;
 
-  @ApiProperty()
-  @IsString()
+  @ApiProperty({ default: '+84366287444' })
   @IsPhoneNumber('VN')
   phone_number: string;
 
@@ -31,10 +29,11 @@ export class CreateMemberDto {
   })
   member_type: string;
 
-  @ApiProperty({ nullable: true })
+  @ApiProperty({ default: 'Ha Noi' })
   @IsString()
   address: string;
 
-  @ApiProperty()
+  @ApiProperty({ default: '2025-05-05' })
+  @IsDateString()
   enrollment_date: Date;
 }

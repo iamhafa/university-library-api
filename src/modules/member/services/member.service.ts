@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMemberDto } from '../dto/create-customer.dto';
-import { UpdateMemberDto } from '../dto/update-customer.dto';
+import { CreateMemberDto } from '../dto/create-member.dto';
+import { UpdateMemberDto } from '../dto/update-member.dto';
 import { MemberRepository } from '../repositories/member.repository';
 import { Member } from '../entities/member.entity';
 import { TPagination } from '@/common/constants/type';

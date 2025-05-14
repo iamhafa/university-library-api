@@ -22,5 +22,5 @@ export class FineTicket extends BaseEntity {
 
   @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.fineTickets)
   @JoinColumn({ name: 'book_borrowing_id' }) // naming for join table
-  bookBorrowing?: Relation<BookBorrowing>;
+  readonly bookBorrowing?: Relation<BookBorrowing>;
 }
