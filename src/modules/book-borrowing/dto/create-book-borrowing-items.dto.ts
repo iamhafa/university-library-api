@@ -1,6 +1,5 @@
-import { BORROWING_STATUS } from '@/common/constants/enum';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsEnum, IsNumber, IsOptional } from 'class-validator';
+import { IsDateString, IsInt, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateBookBorrowingItemsDto {
   @ApiProperty({ example: 5 })
@@ -8,17 +7,13 @@ export class CreateBookBorrowingItemsDto {
   quantity: number;
 
   @ApiProperty({ example: 1000 })
-  @IsNumber()
-  total_price: number;
+  @IsInt()
+  price: number;
 
   @ApiProperty({ example: null, nullable: true })
   @IsDateString()
   @IsOptional()
   returned_date: Date;
-
-  @ApiProperty({ enum: BORROWING_STATUS })
-  @IsEnum(BORROWING_STATUS)
-  status: BORROWING_STATUS;
 
   @ApiProperty({ example: 1 })
   @IsNumber()

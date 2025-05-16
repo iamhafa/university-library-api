@@ -15,6 +15,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { RoleGuard } from './core/guards/role.guard';
 import { AuthMiddleware } from './core/middlewares/auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
+import { TasksModule } from './modules/tasks/tasks.module';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { JwtModule } from '@nestjs/jwt';
       isGlobal: true,
       envFilePath: '.env.development', // Chỉ định tệp .env.development ở root scope
     }),
-    ScheduleModule.forRoot({ cronJobs: process.env.CRON_JOBS === 'true' }),
+    ScheduleModule.forRoot({ cronJobs: true }),
     JwtModule,
     // MailModule,
     /* custom database module */
@@ -39,6 +40,7 @@ import { JwtModule } from '@nestjs/jwt';
     BookBorrowingModule,
     FineTicketModule,
     RuleModule,
+    TasksModule,
   ],
   providers: [
     // {

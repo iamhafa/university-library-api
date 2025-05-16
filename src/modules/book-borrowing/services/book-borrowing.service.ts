@@ -1,4 +1,3 @@
-import { Equal, LessThan, MoreThan, Or } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { CreateBookBorrowingDto } from '../dto/create-book-borrowing.dto';
 import { UpdateBookBorrowingDto } from '../dto/update-book-borrowing.dto';
@@ -29,15 +28,5 @@ export class BookBorrowingService {
 
   deleteOne(id: number): Promise<BookBorrowing> {
     return this.bookBorrowingRepository.deleteOneById(id);
-  }
-
-  findAllOverdueBorrowedBooks(): Promise<BookBorrowing[]> {
-    const currentDate = new Date();
-    return this.bookBorrowingRepository.findBy({ due_date: LessThan(currentDate) });
-  }
-
-  findAllDueDateBorrowedBooks() {
-    const currentDate = new Date();
-    return this.bookBorrowingRepository.findBy({ due_date: Or(Equal(currentDate), MoreThan(currentDate)) });
   }
 }

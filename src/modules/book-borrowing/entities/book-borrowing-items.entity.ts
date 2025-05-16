@@ -12,7 +12,7 @@ export class BookBorrowingItems extends BaseEntity {
   quantity: number;
 
   @Column()
-  total_price: number; // tổng giá trị của 1 cuốn sách = số lượng * giá 1 cuốn
+  price: number; // số tiền của mỗi cuốn sách
 
   @Column({ nullable: true })
   returned_date: Date;
@@ -25,11 +25,11 @@ export class BookBorrowingItems extends BaseEntity {
   @Column()
   book_borrowing_id: number;
 
-  @ManyToOne(() => Book, (book) => book.bookBorrowings, { eager: true })
+  @ManyToOne(() => Book, (book) => book.bookBorrowings)
   @JoinColumn({ name: 'book_id' }) // mapping với @Column() book_id
   readonly book?: Relation<Book>;
 
-  @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books, { eager: true })
+  @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books)
   @JoinColumn({ name: 'book_borrowing_id' }) // mapping với @Column() book_borrowing_id
   readonly bookBorrowing?: Relation<BookBorrowing>;
 }

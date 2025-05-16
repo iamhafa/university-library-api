@@ -5,11 +5,11 @@ import { IsEnum, IsNumber } from 'class-validator';
 export class CreateFineTicketDto {
   @IsNumber()
   @ApiProperty()
-  amount_money: number;
+  total_fine_amount: number;
 
   @IsEnum(FINE_TICKET_STATUS)
   @ApiProperty({ enum: FINE_TICKET_STATUS, default: FINE_TICKET_STATUS.UNPAID })
-  return_status: FINE_TICKET_STATUS;
+  status: FINE_TICKET_STATUS;
 
   @IsNumber({ allowNaN: false, allowInfinity: false })
   @ApiProperty()

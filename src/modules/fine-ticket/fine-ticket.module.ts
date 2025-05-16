@@ -10,5 +10,6 @@ import { BookBorrowingModule } from '../book-borrowing/book-borrowing.module';
   imports: [DatabaseModule.forFeature([FineTicket]), BookBorrowingModule],
   controllers: [FineTicketController],
   providers: [FineTicketService, FineTicketRepository],
+  exports: [FineTicketRepository],
 })
 export class FineTicketModule {}
