@@ -24,7 +24,7 @@ import { TasksModule } from './modules/tasks/tasks.module';
       isGlobal: true,
       envFilePath: '.env.development', // Chỉ định tệp .env.development ở root scope
     }),
-    ScheduleModule.forRoot({ cronJobs: true }),
+    ScheduleModule.forRoot({ cronJobs: false }),
     JwtModule,
     // MailModule,
     /* custom database module */
@@ -51,6 +51,6 @@ import { TasksModule } from './modules/tasks/tasks.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('*');
+    consumer.apply(AuthMiddleware).forRoutes('*path');
   }
 }

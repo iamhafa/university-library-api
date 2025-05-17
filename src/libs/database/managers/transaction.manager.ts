@@ -1,5 +1,5 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { DataSource, EntityManager, EntityTarget } from 'typeorm';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 
 @Injectable()
 export class TransactionManager {
@@ -21,7 +21,7 @@ export class TransactionManager {
       return result;
     } catch (error) {
       this.logger.error(`Transaction failed on table ${tableName}: ${error?.message || JSON.stringify(error)}`);
-      throw new InternalServerErrorException('Error during transaction');
+      throw new InternalServerErrorException('Error during transaction.');
     }
   }
 }

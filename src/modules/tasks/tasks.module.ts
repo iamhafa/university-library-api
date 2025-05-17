@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module, OnApplicationBootstrap } from '@nestjs/common';
+import { SchedulerRegistry } from '@nestjs/schedule';
 import { TasksService } from './tasks.service';
 import { BookBorrowingModule } from '../book-borrowing/book-borrowing.module';
 import { FineTicketModule } from '../fine-ticket/fine-ticket.module';
@@ -7,4 +8,14 @@ import { FineTicketModule } from '../fine-ticket/fine-ticket.module';
   imports: [BookBorrowingModule, FineTicketModule],
   providers: [TasksService],
 })
-export class TasksModule {}
+export class TasksModule implements OnApplicationBootstrap {
+  constructor(private readonly schedulerRegistry: SchedulerRegistry) {}
+  private readonly logger = new Logger(TasksModule.name);
+
+  onApplicationBootstrap(): void {
+    const cronJobs = this.schedulerRegistry.getCronJobs(); // return Map()
+    const jobs: string[] = Array.from(cronJobs.keys());
+
+    this.logger.verbose(`List of cron jobs was register: ${JSON.stringify(jobs)}.`);
+  }
+}

@@ -3,15 +3,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNumber } from 'class-validator';
 
 export class CreateRuleDto {
+  @ApiProperty({ enum: MEMBER_TYPE, default: MEMBER_TYPE.UNDERGRADUATE_STUDENT })
   @IsEnum(MEMBER_TYPE)
-  @ApiProperty({ enum: MEMBER_TYPE })
   member_type: MEMBER_TYPE;
 
-  @IsNumber()
   @ApiProperty()
+  @IsNumber()
   max_borrowed_book: number;
 
-  @IsNumber()
   @ApiProperty()
+  @IsNumber()
   max_borrowed_day: number;
 }

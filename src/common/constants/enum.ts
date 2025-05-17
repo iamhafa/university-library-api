@@ -16,11 +16,17 @@ export enum BORROWING_STATUS {
   PENDING = 'PENDING',
   LOST = 'LOST', // sách đã mất,
   COMPENSATED = 'COMPENSATED', // đã bồi thường do bị phạt do trả trễ sách
+  PAID_FINE = 'PAID_FINE',
 }
 
 export enum FINE_TICKET_STATUS {
   PAID = 'PAID',
   UNPAID = 'UNPAID',
+}
+
+export enum FINE_TICKET_PAYMENT_METHOD {
+  CASH = 'CASH',
+  BANKING = 'BANKING',
 }
 
 export enum MEMBER_TYPE {

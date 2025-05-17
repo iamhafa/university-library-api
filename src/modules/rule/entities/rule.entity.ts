@@ -8,12 +8,13 @@ export class Rule extends BaseEntity {
   @Column({
     type: 'enum',
     enum: MEMBER_TYPE,
+    default: MEMBER_TYPE.UNDERGRADUATE_STUDENT,
   })
   member_type: MEMBER_TYPE;
 
-  @Column({ type: 'integer' })
+  @Column()
   max_borrowed_book: number;
 
-  @Column({ type: 'integer' })
+  @Column()
   max_borrowed_day: number;
 }

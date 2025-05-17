@@ -49,8 +49,8 @@ export abstract class BaseRepository<T extends BaseEntity> extends Repository<T>
       data: entities,
       current_page: page,
       limit,
-      total_items: total,
       total_pages: Math.ceil(total / limit),
+      total_items: total,
     };
   }
 
