@@ -1,3 +1,4 @@
+import { JwtModule } from '@nestjs/jwt';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -12,10 +13,10 @@ import { FineTicketModule } from '@/modules/fine-ticket/fine-ticket.module';
 import { RuleModule } from '@/modules/rule/rule.module';
 import { MailModule } from '@/mail/mail.module';
 import { APP_GUARD } from '@nestjs/core';
-import { RoleGuard } from './core/guards/role.guard';
-import { AuthMiddleware } from './core/middlewares/auth.middleware';
-import { JwtModule } from '@nestjs/jwt';
-import { TasksModule } from './modules/tasks/tasks.module';
+import { RoleGuard } from '@/core/guards/role.guard';
+import { AuthMiddleware } from '@/core/middlewares/auth.middleware';
+import { TasksModule } from '@/tasks/tasks.module';
+import { ReportModule } from '@/report/report.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { TasksModule } from './modules/tasks/tasks.module';
     FineTicketModule,
     RuleModule,
     TasksModule,
+    ReportModule,
   ],
   providers: [
     // {

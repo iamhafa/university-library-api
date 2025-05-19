@@ -1,7 +1,7 @@
 import { Reflector } from '@nestjs/core';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { ROLE } from '@/common/constants/enum';
-import { Roles } from '@/decorators/roles.decorator';
+import { Roles } from '@/common/decorators/roles.decorator';
 import { TUser } from '@/common/constants/type';
 import { Request } from 'express';
 

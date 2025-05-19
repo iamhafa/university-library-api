@@ -8,7 +8,7 @@ import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { BookAuthorItems } from '../entities/book-author-items.entity';
 import { BookAuthorItemsService } from '../services/book-author-items.service';
-import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
+import { ApiPaginationQuery } from '@/common/decorators/api-pagination-query.decorator';
 
 @ApiTags('Sách')
 @Controller('book')

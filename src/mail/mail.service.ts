@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { TSentMessageInfo } from '@/common/constants/type';
-import { HandleMailerError } from '@/decorators/handle-mailer-error.decorator';
+import { HandleMailerError } from '@/common/decorators/handle-mailer-error.decorator';
 
 @Injectable()
 export class MailService {

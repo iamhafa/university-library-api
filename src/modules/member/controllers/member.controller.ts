@@ -6,7 +6,7 @@ import { UpdateMemberDto } from '../dto/update-member.dto';
 import { Member } from '../entities/member.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
-import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
+import { ApiPaginationQuery } from '@/common/decorators/api-pagination-query.decorator';
 
 @ApiTags('Thành viên')
 @Controller('member')

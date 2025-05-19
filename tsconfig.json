@@ -25,8 +25,10 @@
       "@/modules/*": ["src/modules/*"],
       "@/common/*": ["src/common/*"],
       "@/core/*": ["src/core/*"],
-      "@/decorators/*": ["src/decorators/*"],
-      "@/mail/*": ["src/mail/*"]
+      "@/decorators/*": ["src/common/decorators/*"],
+      "@/mail/*": ["src/mail/*"],
+      "@/tasks/*": ["src/tasks/*"],
+      "@/report/*": ["src/report/*"]
     }
   }
 }

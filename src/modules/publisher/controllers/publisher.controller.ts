@@ -6,7 +6,7 @@ import { UpdatePublisherDto } from '../dto/update-publisher.dto';
 import { Publisher } from '../entities/publisher.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
-import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
+import { ApiPaginationQuery } from '@/common/decorators/api-pagination-query.decorator';
 
 @ApiTags('Nhà xuất bản')
 @Controller('publisher')

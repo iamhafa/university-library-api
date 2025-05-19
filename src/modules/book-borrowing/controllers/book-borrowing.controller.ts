@@ -10,7 +10,7 @@ import { BookBorrowingItems } from '../entities/book-borrowing-items.entity';
 import { BookBorrowingItemsService } from '../services/book-borrowing-items.service';
 import { CreateBookBorrowingItemsDto } from '../dto/create-book-borrowing-items.dto';
 import { UpdateBookBorrowingItemsDto } from '../dto/update-book-borrowing-items.dto';
-import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
+import { ApiPaginationQuery } from '@/common/decorators/api-pagination-query.decorator';
 
 @ApiTags('Lượt mượn sách')
 @Controller('book-borrowing')

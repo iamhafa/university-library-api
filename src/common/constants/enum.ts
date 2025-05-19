@@ -36,9 +36,9 @@ export enum MEMBER_TYPE {
 }
 
 export enum JOB_NAME {
-  FINE_TICKET = 'job-fine_ticket',
-  BOOK_BORROWING = 'job-book_borrowing',
-  BOOK_BORROWING_ITEMS = 'job-book_borrowing_items',
+  SYNC_OVERDUE_BORROWING_STATUS = 'cron:sync-overdue-borrowing-status',
+  GENERATE_FINE_OVERDUE_BORROWING = 'cron:generate-fine-overdue-borrowing',
+  SYNC_BORROWING_STATUS_AFTER_FINE = 'cron:sync-borrowing-status-after-fine',
 }
 
 export enum ROLE {

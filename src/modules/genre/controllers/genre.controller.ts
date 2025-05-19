@@ -6,7 +6,7 @@ import { UpdateGenreDto } from '../dto/update-genre.dto';
 import { Genre } from '../entities/genre.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
-import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
+import { ApiPaginationQuery } from '@/common/decorators/api-pagination-query.decorator';
 
 @ApiTags('Thể loại sách')
 @Controller('genre')

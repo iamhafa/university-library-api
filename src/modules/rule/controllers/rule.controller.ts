@@ -6,7 +6,7 @@ import { UpdateRuleDto } from '../dto/update-rule.dto';
 import { Rule } from '../entities/rule.entity';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { TPagination } from '@/common/constants/type';
-import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
+import { ApiPaginationQuery } from '@/common/decorators/api-pagination-query.decorator';
 
 @ApiTags('Điều khoản mượn sách')
 @Controller('rule')

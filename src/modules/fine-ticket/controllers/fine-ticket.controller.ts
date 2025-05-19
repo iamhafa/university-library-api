@@ -6,7 +6,7 @@ import { UpdateFineTicketDto } from '../dto/update-fine-ticket.dto';
 import { FineTicket } from '../entities/fine-ticket.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
-import { ApiPaginationQuery } from '@/decorators/api-pagination-query.decorator';
+import { ApiPaginationQuery } from '@/common/decorators/api-pagination-query.decorator';
 
 @ApiTags('Vé phạt')
 @Controller('fine-ticket')

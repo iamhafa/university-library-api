@@ -3,13 +3,13 @@ import { IsNull, LessThan } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { BORROWING_STATUS, FINE_TICKET_STATUS } from '@/common/constants/enum';
-import { BookBorrowingItemsRepository } from '../book-borrowing/repositories/book-borrowing-items.repository';
-import { BookBorrowingRepository } from '../book-borrowing/repositories/book-borrowing.repository';
-import { BookBorrowing } from '../book-borrowing/entities/book-borrowing.entity';
-import { BookBorrowingItems } from '../book-borrowing/entities/book-borrowing-items.entity';
-import { FineTicketRepository } from '../fine-ticket/repositories/fine-ticket.repository';
-import { FineTicket } from '../fine-ticket/entities/fine-ticket.entity';
+import { BORROWING_STATUS, FINE_TICKET_STATUS, JOB_NAME } from '@/common/constants/enum';
+import { BookBorrowingItemsRepository } from '@/modules/book-borrowing/repositories/book-borrowing-items.repository';
+import { BookBorrowingRepository } from '@/modules/book-borrowing/repositories/book-borrowing.repository';
+import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
+import { BookBorrowingItems } from '@/modules/book-borrowing/entities/book-borrowing-items.entity';
+import { FineTicketRepository } from '@/modules/fine-ticket/repositories/fine-ticket.repository';
+import { FineTicket } from '@/modules/fine-ticket/entities/fine-ticket.entity';
 
 @Injectable()
 export class TasksService {
@@ -23,9 +23,9 @@ export class TasksService {
   private readonly logger = new Logger(TasksService.name);
 
   // Đồng bộ trạng thái của lượt mượn sách nếu quá hạn.
-  @Cron(CronExpression.EVERY_10_SECONDS, { name: 'syncOverdueBorrowingStatus' })
+  @Cron(CronExpression.EVERY_10_SECONDS, { name: JOB_NAME.SYNC_OVERDUE_BORROWING_STATUS })
   async syncOverdueBorrowingStatus(): Promise<void> {
-    this.logger.debug('Sync OVERDUE status for book borrowing if overdue...');
+    this.logger.debug(JOB_NAME.SYNC_OVERDUE_BORROWING_STATUS);
 
     const currentDate = new Date();
     const dueDateBorrowings: BookBorrowing[] = await this.bookBorrowingRepository.findBy({
@@ -43,15 +43,13 @@ export class TasksService {
       this.logger.warn(
         `Updated status from BORROWING to OVERDUE successfully for ${JSON.stringify(dueDateBorrowingIds)}: ${JSON.stringify(updated)}`,
       );
-    } else {
-      this.logger.debug(`No overdue book borrwowing.`);
     }
   }
 
   // Xử lý các lượt mượn sách bị quá hạn và tạo vé phạt nếu cần.
-  @Cron(CronExpression.EVERY_10_SECONDS, { name: 'generateFineForOverdueBorrowings' })
-  async generateFineForOverdueBorrowings(): Promise<void> {
-    this.logger.debug('Generate fine ticket when a book borrowing is overdue return...');
+  @Cron(CronExpression.EVERY_10_SECONDS, { name: JOB_NAME.GENERATE_FINE_OVERDUE_BORROWING })
+  async generateFineForOverdueBorrowing(): Promise<void> {
+    this.logger.debug(JOB_NAME.GENERATE_FINE_OVERDUE_BORROWING);
 
     // 1. Lấy ra danh sách các lượt mượn sách mà có trạng thái OVERDUE (quá hạn)
     const overdueBorrowings: BookBorrowing[] = await this.bookBorrowingRepository.findBy({
@@ -101,9 +99,9 @@ export class TasksService {
     }
   }
 
-  @Cron(CronExpression.EVERY_10_SECONDS, { name: 'syncBookBorrowingStatusAfterPaidFine' })
+  @Cron(CronExpression.EVERY_10_SECONDS, { name: JOB_NAME.SYNC_BORROWING_STATUS_AFTER_FINE })
   async syncBookBorrowingStatusAfterPaidFine(): Promise<void> {
-    this.logger.debug('Syncing Book borrowing status after paid the fine...');
+    this.logger.debug(JOB_NAME.SYNC_BORROWING_STATUS_AFTER_FINE);
 
     // 1. Liệt kê danh sách vé phạt nào đã được trả
     const paidFines: FineTicket[] = await this.fineTicketRepository.findBy({

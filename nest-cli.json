@@ -4,13 +4,14 @@
   "sourceRoot": "src",
   "generateOptions": {
     "spec": false,
-    "baseDir": "src/modules"
+    "baseDir": "modules"
   },
   "compilerOptions": {
     "builder": "swc",
     "typeCheck": true,
     "deleteOutDir": true,
     "assets": ["mail/templates/**/*"],
-    "watchAssets": true
+    "watchAssets": true,
+    "manualRestart": true
   }
 }
