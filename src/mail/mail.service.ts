@@ -23,4 +23,19 @@ export class MailService {
       this.logger.error(`Error when send welcome email to ${to}`);
     }
   }
+
+  async sendFineTicketMail(to: string, name: string) {
+    const message: TSentMessageInfo = await this.mailerService.sendMail({
+      to,
+      subject: 'Fine ticket for book overdue return!',
+      template: './send-fine-ticket',
+      context: { name },
+    });
+
+    if (message.accepted.includes(to)) {
+      this.logger.log(`Send fine ticket notification success to ${to}`, this.sendFineTicketMail.name);
+    } else {
+      this.logger.error(`Error when send fine ticket notification to ${to}`);
+    }
+  }
 }

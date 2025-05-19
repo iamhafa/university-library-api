@@ -12,26 +12,29 @@ export class MailFactoryConfig implements MailerOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
 
   async createMailerOptions(): Promise<MailerOptions> {
-    const oAuth2Client: OAuth2Client = new google.auth.OAuth2(
-      this.configService.get<string>('MAIL_CLIENT_ID'),
-      this.configService.get<string>('MAIL_CLIENT_SECRET'),
-      this.configService.get<string>('MAIL_REDIRECT_URI'),
-    );
-    oAuth2Client.setCredentials({ refresh_token: this.configService.get<string>('MAIL_REFRESH_TOKEN') });
+    const clientId: string = this.configService.get<string>('OAUTH_MAIL_CLIENT_ID');
+    const clientScret: string = this.configService.get<string>('OAUTH_MAIL_CLIENT_SECRET');
+    const refreshToken: string = this.configService.get<string>('OAUTH_MAIL_REFRESH_TOKEN');
+    const redirectUri: string = this.configService.get<string>('OAUTH_MAIL_REDIRECT_URI');
+    const userTest: string = this.configService.get<string>('OAUTH_MAIL_USER_TEST', 'sangkenjii@gmail.com');
+
+    const oAuth2Client: OAuth2Client = new google.auth.OAuth2(clientId, clientScret, redirectUri);
+    oAuth2Client.setCredentials({ refresh_token: refreshToken });
 
     const accessToken: GetAccessTokenResponse = await oAuth2Client.getAccessToken();
-    this.logger.verbose('Connected to send mail service via Gmail (OAuth2)');
+    this.logger.verbose('Connected to send mail service via Gmail (OAuth2) successfully.');
+    this.logger.debug(accessToken.res);
 
     return {
       transport: {
         service: 'gmail',
         auth: {
           type: 'OAuth2',
-          user: this.configService.get<string>('MAIL_USER_TEST'),
-          clientId: this.configService.get<string>('MAIL_CLIENT_ID'),
-          clientSecret: this.configService.get<string>('MAIL_CLIENT_SECRET'),
-          refreshToken: this.configService.get<string>('MAIL_REFRESH_TOKEN'),
-          accessToken: accessToken as string,
+          user: userTest,
+          clientId: clientId,
+          clientSecret: clientScret,
+          refreshToken: refreshToken,
+          accessToken: accessToken.token,
         },
       },
       defaults: {

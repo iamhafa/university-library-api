@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta charset='UTF-8' />
+    <title>Thông báo vi phạm mượn sách</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+      .container {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        max-width: 600px;
+        margin: auto;
+      }
+      h2 {
+        color: #d32f2f;
+      }
+      .details {
+        margin-top: 20px;
+        background-color: #fff3f3;
+        padding: 15px;
+        border-left: 4px solid #d32f2f;
+      }
+      .footer {
+        margin-top: 30px;
+        font-size: 0.9em;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='container'>
+      <h2>📚 Thông báo ghi nhận vé phạt</h2>
+      <p>Xin chào <strong>{{studentName}}</strong>,</p>
+
+      <p>Hệ thống quản lý thư viện xin thông báo bạn đã <strong>trả sách quá hạn</strong> theo quy định. Dưới đây là thông tin chi tiết:</p>
+
+      <div class='details'>
+        <p><strong>Tên sách:</strong> {{bookTitle}}</p>
+        <p><strong>Mã sách:</strong> {{bookCode}}</p>
+        <p><strong>Ngày mượn:</strong> {{borrowDate}}</p>
+        <p><strong>Hạn trả:</strong> {{dueDate}}</p>
+        <p><strong>Ngày trả:</strong> {{returnDate}}</p>
+        <p><strong>Số ngày quá hạn:</strong> {{overdueDays}} ngày</p>
+        <p><strong>Tiền phạt:</strong> {{penaltyAmount}} VND</p>
+        <p><strong>Mã vé phạt:</strong> {{penaltyTicketCode}}</p>
+      </div>
+
+      <p>Vui lòng đến thư viện để hoàn tất việc nộp phạt và tránh ảnh hưởng đến quyền mượn sách trong tương lai.</p>
+
+      <div class='footer'>
+        <p>Trân trọng,</p>
+        <p><strong>Ban quản lý Thư viện Đại học</strong></p>
+      </div>
+    </div>
+  </body>
+</html>

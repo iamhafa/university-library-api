@@ -3,9 +3,9 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
 @Injectable()
-export class TypeOrmConfig implements TypeOrmOptionsFactory {
+export class TypeOrmFactoryConfig implements TypeOrmOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
-  private readonly logger = new Logger(TypeOrmConfig.name);
+  private readonly logger = new Logger(TypeOrmFactoryConfig.name);
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
     const database: string = this.configService.get<string>('DB_DATABASE');

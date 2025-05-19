@@ -19,7 +19,7 @@ export class Book extends BaseEntity {
   @Column({ nullable: true })
   total_page: number;
 
-  @Column()
+  @Column({ default: 0 })
   quantity: number;
 
   @Column({ default: null })

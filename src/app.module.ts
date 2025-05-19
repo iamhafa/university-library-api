@@ -17,6 +17,7 @@ import { RoleGuard } from '@/core/guards/role.guard';
 import { AuthMiddleware } from '@/core/middlewares/auth.middleware';
 import { TasksModule } from '@/tasks/tasks.module';
 import { ReportModule } from '@/report/report.module';
+import { JwtFactoryConfig } from '@/config/jwt-factory.config';
 
 @Module({
   imports: [
@@ -26,8 +27,8 @@ import { ReportModule } from '@/report/report.module';
       envFilePath: '.env.development', // Chỉ định tệp .env.development ở root scope
     }),
     ScheduleModule.forRoot({ cronJobs: false }),
-    JwtModule,
-    // MailModule,
+    JwtModule.registerAsync({ useClass: JwtFactoryConfig }),
+    MailModule,
     /* custom database module */
     DatabaseModule,
     /**
