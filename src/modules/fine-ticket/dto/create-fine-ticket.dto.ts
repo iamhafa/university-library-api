@@ -1,6 +1,7 @@
 import { FINE_TICKET_PAYMENT_METHOD, FINE_TICKET_STATUS } from '@/common/constants/enum';
-import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsEnum, IsNumber, IsOptional } from 'class-validator';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
+import { Allow, IsDateString, IsEnum, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateFineTicketDto {
   @IsNumber({ allowNaN: false, allowInfinity: false })
@@ -24,4 +25,10 @@ export class CreateFineTicketDto {
   @IsDateString()
   @IsOptional()
   payment_date: Date;
+
+  @ApiHideProperty()
+  created_by: string;
+
+  @ApiHideProperty()
+  updated_by: string;
 }

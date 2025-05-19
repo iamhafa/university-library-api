@@ -30,6 +30,12 @@ export class FineTicket extends BaseEntity {
   @Column({ type: 'date', default: null })
   payment_date: Date;
 
+  @Column({ default: null })
+  created_by: string;
+
+  @Column({ default: null })
+  updated_by: string;
+
   @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.fineTickets)
   @JoinColumn({ name: 'book_borrowing_id' }) // naming for join table
   readonly bookBorrowing?: Relation<BookBorrowing>;

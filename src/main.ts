@@ -15,7 +15,12 @@ async function bootstrap() {
   // Enable CORS
   app.enableCors();
   // Enable for validation (when use DTO)
-  app.useGlobalPipes(new ValidationPipe({ transform: true })); // use `true` for class-validator
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true, // bỏ qua validate & không accept giá trị nhận được từ request trong DTO
+    }),
+  );
   // Interceptor to format date in each response
   app.useGlobalInterceptors(new ResponseInterceptor());
   // Filter to format error response

@@ -33,6 +33,12 @@ export class BookBorrowing extends BaseEntity {
   @Column({ default: null })
   returned_date: Date;
 
+  @Column({ default: null })
+  created_by: string;
+
+  @Column({ default: null })
+  updated_by: string;
+
   @ManyToOne(() => Member, (member) => member.bookBorrowings)
   @JoinColumn({ name: 'member_id' })
   readonly member?: Relation<Member>;

@@ -1,5 +1,5 @@
 import { BORROWING_STATUS } from '@/common/constants/enum';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsEnum, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateBookBorrowingDto {
@@ -23,4 +23,10 @@ export class CreateBookBorrowingDto {
   @IsDateString()
   @IsOptional()
   returned_date: Date;
+
+  @ApiHideProperty()
+  created_by: string;
+
+  @ApiHideProperty()
+  updated_by: string;
 }
