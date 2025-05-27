@@ -15,14 +15,14 @@ pipeline {
     stage('Install dependencies') {
       steps {
         sh 'node -v'
-        sh 'npm -v'
-        sh 'npm ci'
+        sh 'yarn -v'
+        sh 'yarn install --frozen-lockfile'  // tương đương với npm ci
       }
     }
 
     stage('Build') {
       steps {
-        sh 'npm run build'
+        sh 'yarn build'
       }
     }
   }
