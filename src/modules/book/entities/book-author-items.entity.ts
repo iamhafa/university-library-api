@@ -15,7 +15,7 @@ export class BookAuthorItems extends BaseEntity {
   @Column()
   author_id: number;
 
-  @ManyToOne(() => Book, (book) => book.authors, { eager: true })
+  @ManyToOne(() => Book, (book) => book.authors)
   @JoinColumn({ name: 'book_id' })
   readonly book?: Relation<Book>;
 

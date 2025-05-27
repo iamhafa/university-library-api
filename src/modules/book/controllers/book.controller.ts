@@ -6,32 +6,22 @@ import { UpdateBookDto } from '../dto/update-book.dto';
 import { Book } from '../entities/book.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
-import { BookAuthorItems } from '../entities/book-author-items.entity';
-import { BookAuthorItemsService } from '../services/book-author-items.service';
 import { ApiPaginationQuery } from '@/common/decorators/api-pagination-query.decorator';
 
 @ApiTags('Sách')
 @Controller('book')
 export class BookController {
-  constructor(
-    private readonly bookService: BookService,
-    private readonly bookAuthorItemsService: BookAuthorItemsService,
-  ) {}
+  constructor(private readonly bookService: BookService) {}
+
+  @Post()
+  createOne(@Body() createBookDto: CreateBookDto): Promise<Book> {
+    return this.bookService.createOne(createBookDto);
+  }
 
   @Get()
   @ApiPaginationQuery()
   getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Book[]>> {
     return this.bookService.findAll(paginationDto);
-  }
-
-  @Get(':id/authors')
-  getAuthors(@Param('id', ParseIntPipe) bookId: number): Promise<BookAuthorItems[]> {
-    return this.bookAuthorItemsService.getByBookId(bookId);
-  }
-
-  @Post()
-  createOne(@Body() createBookDto: CreateBookDto): Promise<Book> {
-    return this.bookService.createOne(createBookDto);
   }
 
   @Get(':id')

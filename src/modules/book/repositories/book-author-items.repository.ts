@@ -8,4 +8,8 @@ export class BookAuthorItemsRepository extends BaseRepository<BookAuthorItems> {
   constructor(protected readonly entityManager: EntityManager) {
     super(BookAuthorItems, entityManager);
   }
+
+  getAuthorsByBookId(bookId: number): Promise<BookAuthorItems[]> {
+    return this.findBy({ book_id: bookId });
+  }
 }
