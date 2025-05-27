@@ -18,7 +18,7 @@ export class MailService {
     });
 
     if (message.accepted.includes(to)) {
-      this.logger.log(`Send welcome email success to ${to}`, this.sendWelcomeMail.name);
+      this.logger.log(`Send welcome email success to ${to}`);
     } else {
       this.logger.error(`Error when send welcome email to ${to}`);
     }

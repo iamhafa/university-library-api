@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateBookDto {
   @ApiProperty()
@@ -14,17 +14,20 @@ export class CreateBookDto {
   // @IsArray({ each: true })
   author_ids: number[];
 
+  // @ApiProperty()
+  // @IsNumber()
+  // author_id: number;
+
   @ApiProperty()
   @IsString()
   ISBN: string;
 
+  @ApiProperty({ default: 'https://covers.openlibrary.org/b/id/10592539-L.jpg' })
+  image_url: string;
+
   @ApiProperty()
   @IsInt()
   price: number;
-
-  @ApiProperty()
-  @IsNumber()
-  stock: number;
 
   @ApiProperty()
   @IsOptional()

@@ -4,9 +4,14 @@ import { SchedulerRegistry } from '@nestjs/schedule';
 import { TasksService } from './tasks.service';
 import { BookBorrowingModule } from '@/modules/book-borrowing/book-borrowing.module';
 import { FineTicketModule } from '@/modules/fine-ticket/fine-ticket.module';
+import { MailModule } from '@/mail/mail.module';
 
 @Module({
-  imports: [BookBorrowingModule, FineTicketModule],
+  imports: [
+    BookBorrowingModule,
+    FineTicketModule,
+    //  MailModule
+  ],
   providers: [TasksService],
 })
 export class TasksModule implements OnApplicationBootstrap {

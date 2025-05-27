@@ -23,7 +23,7 @@ export class MailFactoryConfig implements MailerOptionsFactory {
 
     const accessToken: GetAccessTokenResponse = await oAuth2Client.getAccessToken();
     this.logger.verbose('Connected to send mail service via Gmail (OAuth2) successfully.');
-    this.logger.debug(accessToken.res);
+    // this.logger.debug(accessToken.res);
 
     return {
       transport: {
@@ -38,7 +38,7 @@ export class MailFactoryConfig implements MailerOptionsFactory {
         },
       },
       defaults: {
-        from: '"No Reply" <noreply@example.com>',
+        from: '"Thư viện Trường Đại học Mỏ - Địa chất" <noreply@example.com>',
       },
       template: {
         dir: join(__dirname, '..', 'mail', 'templates'), // Resolves correctly to /mail/templates

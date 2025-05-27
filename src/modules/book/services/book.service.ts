@@ -29,6 +29,7 @@ export class BookService {
   }
 
   async createOne(createBookDto: CreateBookDto): Promise<Book> {
+    // return this.bookRepository.createOne(createBookDto);
     const { author_ids, ...createDto } = createBookDto;
 
     const book: Book = await this.transactionManager.execute(Book, async (entityManager: EntityManager) => {

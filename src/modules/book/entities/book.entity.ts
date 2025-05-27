@@ -13,6 +13,9 @@ export class Book extends BaseEntity {
   @Column({ nullable: true })
   ISBN: string; // International Standard Book Number
 
+  @Column({ type: 'text', default: null })
+  image_url: string;
+
   @Column()
   price: number;
 

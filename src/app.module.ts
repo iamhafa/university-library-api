@@ -28,7 +28,7 @@ import { JwtFactoryConfig } from '@/config/jwt-factory.config';
     }),
     ScheduleModule.forRoot({ cronJobs: false }),
     JwtModule.registerAsync({ useClass: JwtFactoryConfig }),
-    MailModule,
+    // MailModule,
     /* custom database module */
     DatabaseModule,
     /**
