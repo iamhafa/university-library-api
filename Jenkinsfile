@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:20'
-      args '-u root' // Chạy với quyền root trong container, giúp tránh lỗi permission
-    }
-  }
+  agent any // 👉 Chạy trực tiếp trên agent hiện tại (không cần docker)
 
   environment {
     NODE_VERSION = '20'
@@ -13,7 +8,6 @@ pipeline {
   stages {
     stage('Clone') {
       steps {
-        // Nếu dùng GitHub, GitLab,...
         git url: 'https://github.com/iamhafa/university-library-api.git', branch: 'main'
       }
     }
