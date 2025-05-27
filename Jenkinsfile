@@ -1,12 +1,12 @@
 pipeline {
-  agent any // 👉 Chạy trực tiếp trên agent hiện tại (không cần docker)
+  agent any
 
-  environment {
-    NODE_VERSION = '20'
+  tools {
+    nodejs 'NodeJS_20'  // Tên NodeJS bạn cấu hình trong Jenkins Tools
   }
 
   stages {
-    stage('Clone') {
+    stage('Checkout') {
       steps {
         git url: 'https://github.com/iamhafa/university-library-api.git', branch: 'main'
       }
@@ -29,10 +29,10 @@ pipeline {
 
   post {
     success {
-      echo '✅ Build và test thành công!'
+      echo '✅ Build thành công!'
     }
     failure {
-      echo '❌ Có lỗi xảy ra!'
+      echo '❌ Build thất bại!'
     }
   }
 }
