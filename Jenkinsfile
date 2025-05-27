@@ -12,10 +12,15 @@ pipeline {
       }
     }
 
+    stage('Setup Yarn') {
+      steps {
+        sh 'npm install -g yarn'  // cài yarn toàn cục
+        sh 'yarn -v'
+      }
+    }
+
     stage('Install dependencies') {
       steps {
-        sh 'node -v'
-        sh 'yarn -v'
         sh 'yarn install --frozen-lockfile'  // tương đương với npm ci
       }
     }
