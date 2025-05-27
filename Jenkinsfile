@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:20'
+      args '-u root' // Chạy với quyền root trong container, giúp tránh lỗi permission
+    }
+  }
 
   environment {
     NODE_VERSION = '20'
@@ -26,17 +31,15 @@ pipeline {
       }
     }
 
-    stage('Install Dependencies') {
+    stages {
+    stage('Install & Build') {
       steps {
-        sh 'npm install'
-      }
-    }
-
-    stage('Build') {
-      steps {
+        sh 'node -v'
+        sh 'npm ci'
         sh 'npm run build'
       }
     }
+  }
   }
 
   post {
