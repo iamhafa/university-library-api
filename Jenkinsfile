@@ -18,28 +18,19 @@ pipeline {
       }
     }
 
-    stage('Install Node.js') {
+    stage('Install dependencies') {
       steps {
-        script {
-          // Sử dụng NodeJS plugin (nếu đã cài trên Jenkins) hoặc cài thủ công
-          // Hoặc dùng nvm, hoặc container agent có sẵn Node.js
-          sh "curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -"
-          sh "apt-get install -y nodejs"
-          sh "node -v"
-          sh "npm -v"
-        }
+        sh 'node -v'
+        sh 'npm -v'
+        sh 'npm ci'
       }
     }
 
-    stages {
-    stage('Install & Build') {
+    stage('Build') {
       steps {
-        sh 'node -v'
-        sh 'npm ci'
         sh 'npm run build'
       }
     }
-  }
   }
 
   post {
