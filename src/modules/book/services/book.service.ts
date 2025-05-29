@@ -21,20 +21,33 @@ export class BookService {
   ) {}
 
   async findOne(id: number): Promise<Book> {
-    const book: Book = await this.bookRepository.findOneById(id, { genre: true, publisher: true });
+    const book: Book = await this.bookRepository.findOneById(id, {
+      genre: true,
+      publisher: true,
+    });
 
     const bookAuthors: BookAuthorItems[] = await this.bookAuthorItemsRepository.getAuthorsByBookId(id);
     // Append the authors related to that book
-    Object.assign(book, { authors: bookAuthors });
+    Object.assign(book, { book_author_items: bookAuthors });
 
     return book;
   }
 
-  findAll(paginationDto: PaginationDto): Promise<TPagination<Book[]>> {
-    return this.bookRepository.findAll(paginationDto, {
+  async findAll(paginationDto: PaginationDto): Promise<TPagination<Book[]>> {
+    const booksPaginated: TPagination<Book[]> = await this.bookRepository.findAll(paginationDto, {
       genre: true,
       publisher: true,
     });
+
+    const { data: books } = booksPaginated;
+    // Lặp từng cuốn sách
+    for (const book of books) {
+      const bookAuthors: BookAuthorItems[] = await this.bookAuthorItemsRepository.getAuthorsByBookId(book.id);
+      // Append the authors related to single book
+      Object.assign(book, { book_author_items: bookAuthors });
+    }
+
+    return booksPaginated;
   }
 
   async createOne(createBookDto: CreateBookDto): Promise<Book> {
