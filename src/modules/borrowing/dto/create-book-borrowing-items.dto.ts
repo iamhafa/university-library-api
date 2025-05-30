@@ -21,5 +21,5 @@ export class CreateBookBorrowingItemsDto {
 
   @ApiProperty({ example: 1 })
   @IsNumber()
-  book_borrowing_id: number;
+  borrowing_id: number;
 }

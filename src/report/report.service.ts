@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BookBorrowingItemsRepository } from '@/modules/book-borrowing/repositories/book-borrowing-items.repository';
+import { BookBorrowingItemsRepository } from '@/modules/borrowing/repositories/book-borrowing-items.repository';
 
 @Injectable()
 export class ReportService {

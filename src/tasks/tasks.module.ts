@@ -2,13 +2,13 @@ import { CronJob } from 'cron';
 import { Logger, Module, OnApplicationBootstrap } from '@nestjs/common';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { TasksService } from './tasks.service';
-import { BookBorrowingModule } from '@/modules/book-borrowing/book-borrowing.module';
+import { BorrowingModule } from '@/modules/borrowing/borrowing.module';
 import { FineTicketModule } from '@/modules/fine-ticket/fine-ticket.module';
 import { MailModule } from '@/mail/mail.module';
 
 @Module({
   imports: [
-    BookBorrowingModule,
+    BorrowingModule,
     FineTicketModule,
     //  MailModule
   ],

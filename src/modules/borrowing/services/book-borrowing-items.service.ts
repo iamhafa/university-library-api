@@ -5,14 +5,10 @@ import { BookBorrowingItems } from '../entities/book-borrowing-items.entity';
 import { BookBorrowingItemsRepository } from '../repositories/book-borrowing-items.repository';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
-import { BookBorrowingService } from './book-borrowing.service';
 
 @Injectable()
 export class BookBorrowingItemsService {
-  constructor(
-    private readonly bookBorrowingItemsRepository: BookBorrowingItemsRepository,
-    private readonly bookBorrowingService: BookBorrowingService,
-  ) {}
+  constructor(private readonly bookBorrowingItemsRepository: BookBorrowingItemsRepository) {}
 
   private readonly logger = new Logger(BookBorrowingItemsService.name);
 

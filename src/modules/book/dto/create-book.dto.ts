@@ -1,6 +1,7 @@
+import { parse } from 'date-fns';
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsArray, IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateBookDto {
   @ApiProperty()
@@ -31,7 +32,12 @@ export class CreateBookDto {
 
   @ApiProperty()
   @IsOptional()
-  @Type(() => Date)
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      return parse(value, 'dd-MM-yyyy', new Date());
+    }
+    return value;
+  })
   publish_date: Date;
 
   @ApiProperty()

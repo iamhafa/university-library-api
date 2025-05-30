@@ -6,7 +6,7 @@ import { Allow, IsDateString, IsEnum, IsNumber, IsOptional } from 'class-validat
 export class CreateFineTicketDto {
   @IsNumber({ allowNaN: false, allowInfinity: false })
   @ApiProperty()
-  book_borrowing_id: number;
+  borrowing_id: number;
 
   @IsEnum(FINE_TICKET_STATUS)
   @ApiProperty({ enum: FINE_TICKET_STATUS, default: FINE_TICKET_STATUS.UNPAID })

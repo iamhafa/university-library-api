@@ -7,7 +7,7 @@ import { BORROWING_STATUS } from '@/common/constants/enum';
 
 // Ghi dấu việc mượn sách của sinh viên
 @Entity()
-export class BookBorrowing extends BaseEntity {
+export class Borrowing extends BaseEntity {
   // FK of Member
   @Column()
   member_id: number;
@@ -39,15 +39,15 @@ export class BookBorrowing extends BaseEntity {
   @Column({ default: null })
   updated_by: string;
 
-  @ManyToOne(() => Member, (member) => member.bookBorrowings)
+  @ManyToOne(() => Member, (member) => member.borrowings)
   @JoinColumn({ name: 'member_id' })
   readonly member?: Relation<Member>;
 
   // Thể hiện quan hệ many to many với Book
-  @OneToMany(() => Book, (book) => book.bookBorrowings)
+  @OneToMany(() => Book, (book) => book.borrowings)
   readonly books?: Relation<Book[]>;
 
   // 1 lần mượn sách (có thể gồm nhiều sách) thì có thể có nhiều vé phạt nếu trễ hạn trả
-  @OneToMany(() => FineTicket, (fineTicket) => fineTicket.bookBorrowing)
+  @OneToMany(() => FineTicket, (fineTicket) => fineTicket.borrowing)
   readonly fineTickets?: Relation<FineTicket[]>;
 }

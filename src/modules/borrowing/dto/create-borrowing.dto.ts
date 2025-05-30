@@ -2,7 +2,7 @@ import { BORROWING_STATUS } from '@/common/constants/enum';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsEnum, IsNumber, IsOptional } from 'class-validator';
 
-export class CreateBookBorrowingDto {
+export class CreateBorrowingDto {
   @ApiProperty({ default: 1 })
   @IsNumber()
   member_id: number;

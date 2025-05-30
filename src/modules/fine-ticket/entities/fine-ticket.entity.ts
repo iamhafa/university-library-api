@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, Relation } from 'typeorm';
 import { BaseEntity } from '@/libs/database/entities/base.entity';
-import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
+import { Borrowing } from '@/modules/borrowing/entities/borrowing.entity';
 import { FINE_TICKET_PAYMENT_METHOD, FINE_TICKET_STATUS } from '@/common/constants/enum';
 
 // Quản lý các khoản phạt nếu sách không được trả đúng hạn.
@@ -8,7 +8,7 @@ import { FINE_TICKET_PAYMENT_METHOD, FINE_TICKET_STATUS } from '@/common/constan
 export class FineTicket extends BaseEntity {
   // FK of Book Borrowing
   @Column()
-  book_borrowing_id: number;
+  borrowing_id: number;
 
   @Column({
     type: 'enum',
@@ -36,7 +36,7 @@ export class FineTicket extends BaseEntity {
   @Column({ default: null })
   updated_by: string;
 
-  @ManyToOne(() => BookBorrowing, (bookBorrowing) => bookBorrowing.fineTickets)
-  @JoinColumn({ name: 'book_borrowing_id' }) // naming for join table
-  readonly bookBorrowing?: Relation<BookBorrowing>;
+  @ManyToOne(() => Borrowing, (borrowing) => borrowing.fineTickets)
+  @JoinColumn({ name: 'borrowing_id' }) // naming for join table
+  readonly borrowing?: Relation<Borrowing>;
 }

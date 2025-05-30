@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, Relation } from 'typeorm';
 import { BaseEntity } from '@/libs/database/entities/base.entity';
-import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
+import { Borrowing } from '@/modules/borrowing/entities/borrowing.entity';
 import { MEMBER_TYPE } from '@/common/constants/enum';
 
 // Thành viên của thư viện (sinh viên của trường có thể mượn sách)
@@ -40,6 +40,6 @@ export class Member extends BaseEntity {
   @CreateDateColumn()
   enrollment_date: Date;
 
-  @OneToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.member)
-  readonly bookBorrowings?: Relation<BookBorrowing[]>;
+  @OneToMany(() => Borrowing, (borrowing) => borrowing.member)
+  readonly borrowings?: Relation<Borrowing[]>;
 }

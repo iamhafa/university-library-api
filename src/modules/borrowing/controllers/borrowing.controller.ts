@@ -1,9 +1,9 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
-import { BookBorrowingService } from '../services/book-borrowing.service';
-import { CreateBookBorrowingDto } from '../dto/create-book-borrowing.dto';
-import { UpdateBookBorrowingDto } from '../dto/update-book-borrowing.dto';
-import { BookBorrowing } from '../entities/book-borrowing.entity';
+import { BorrowingService } from '../services/borrowing.service';
+import { CreateBorrowingDto } from '../dto/create-borrowing.dto';
+import { UpdateBorrowingDto } from '../dto/update-book-borrowing.dto';
+import { Borrowing } from '../entities/borrowing.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
 import { BookBorrowingItems } from '../entities/book-borrowing-items.entity';
@@ -13,17 +13,17 @@ import { UpdateBookBorrowingItemsDto } from '../dto/update-book-borrowing-items.
 import { ApiPaginationQuery } from '@/common/decorators/api-pagination-query.decorator';
 
 @ApiTags('Lượt mượn sách')
-@Controller('book-borrowing')
-export class BookBorrowingController {
+@Controller('borrowing')
+export class BorrowingController {
   constructor(
-    private readonly bookBorrowingService: BookBorrowingService,
+    private readonly borrowingService: BorrowingService,
     private readonly bookBorrowingItemsService: BookBorrowingItemsService,
   ) {}
 
   @Get()
   @ApiPaginationQuery()
-  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<BookBorrowing[]>> {
-    return this.bookBorrowingService.findAll(paginationDto);
+  getAll(@Query() paginationDto: PaginationDto): Promise<TPagination<Borrowing[]>> {
+    return this.borrowingService.findAll(paginationDto);
   }
 
   @Get('items')
@@ -32,18 +32,18 @@ export class BookBorrowingController {
   }
 
   @Post()
-  createOne(@Body() createBookBorrowingDto: CreateBookBorrowingDto): Promise<BookBorrowing> {
-    return this.bookBorrowingService.createOne(createBookBorrowingDto);
+  createOne(@Body() createBookBorrowingDto: CreateBorrowingDto): Promise<Borrowing> {
+    return this.borrowingService.createOne(createBookBorrowingDto);
   }
 
   @Post('items')
-  createOneItems(@Body() createBookBorrowingDto: CreateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsService.createOne(createBookBorrowingDto);
+  createOneItems(@Body() createBookBorrowingItemsDto: CreateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
+    return this.bookBorrowingItemsService.createOne(createBookBorrowingItemsDto);
   }
 
   @Get(':id')
-  getOne(@Param('id', ParseIntPipe) id: number): Promise<BookBorrowing> {
-    return this.bookBorrowingService.findOne(id);
+  getOne(@Param('id', ParseIntPipe) id: number): Promise<Borrowing> {
+    return this.borrowingService.findOne(id);
   }
 
   @Get('items/:id')
@@ -52,8 +52,8 @@ export class BookBorrowingController {
   }
 
   @Put(':id')
-  updateOne(@Param('id', ParseIntPipe) id: number, @Body() updateBookBorrowingDto: UpdateBookBorrowingDto): Promise<BookBorrowing> {
-    return this.bookBorrowingService.updateOne(id, updateBookBorrowingDto);
+  updateOne(@Param('id', ParseIntPipe) id: number, @Body() updateBorrowingDto: UpdateBorrowingDto): Promise<Borrowing> {
+    return this.borrowingService.updateOne(id, updateBorrowingDto);
   }
 
   @Put('items/:id')
@@ -66,7 +66,7 @@ export class BookBorrowingController {
 
   @Delete(':id')
   deleteOne(@Param('id', ParseIntPipe) id: number) {
-    return this.bookBorrowingService.deleteOne(id);
+    return this.borrowingService.deleteOne(id);
   }
 
   @Delete('items/:id')

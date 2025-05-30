@@ -4,10 +4,10 @@ import { ConfigService } from '@nestjs/config';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { BORROWING_STATUS, FINE_TICKET_STATUS, JOB_NAME } from '@/common/constants/enum';
-import { BookBorrowingItemsRepository } from '@/modules/book-borrowing/repositories/book-borrowing-items.repository';
-import { BookBorrowingRepository } from '@/modules/book-borrowing/repositories/book-borrowing.repository';
-import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
-import { BookBorrowingItems } from '@/modules/book-borrowing/entities/book-borrowing-items.entity';
+import { BookBorrowingItemsRepository } from '@/modules/borrowing/repositories/book-borrowing-items.repository';
+import { BorrowingRepository } from '@/modules/borrowing/repositories/borrowing.repository';
+import { Borrowing } from '@/modules/borrowing/entities/borrowing.entity';
+import { BookBorrowingItems } from '@/modules/borrowing/entities/book-borrowing-items.entity';
 import { FineTicketRepository } from '@/modules/fine-ticket/repositories/fine-ticket.repository';
 import { FineTicket } from '@/modules/fine-ticket/entities/fine-ticket.entity';
 
@@ -16,7 +16,7 @@ export class TasksService {
   constructor(
     private readonly configService: ConfigService,
     private readonly fineTicketRepository: FineTicketRepository,
-    private readonly bookBorrowingRepository: BookBorrowingRepository,
+    private readonly borrowingRepository: BorrowingRepository,
     private readonly bookBorrowingItemsRepository: BookBorrowingItemsRepository,
   ) {}
 
@@ -28,7 +28,7 @@ export class TasksService {
     this.logger.debug(JOB_NAME.SYNC_OVERDUE_BORROWING_STATUS);
 
     const currentDate = new Date();
-    const dueDateBorrowings: BookBorrowing[] = await this.bookBorrowingRepository.findBy({
+    const dueDateBorrowings: Borrowing[] = await this.borrowingRepository.findBy({
       due_date: LessThan(currentDate),
       returned_date: IsNull(),
       status: BORROWING_STATUS.BORROWING,
@@ -36,7 +36,7 @@ export class TasksService {
 
     if (!isEmpty(dueDateBorrowings)) {
       const dueDateBorrowingIds: number[] = dueDateBorrowings.map((borrowing) => borrowing.id);
-      const updated: BookBorrowing[] = await this.bookBorrowingRepository.updateManyByIds(dueDateBorrowingIds, {
+      const updated: Borrowing[] = await this.borrowingRepository.updateManyByIds(dueDateBorrowingIds, {
         status: BORROWING_STATUS.OVERDUE,
       });
 
@@ -52,7 +52,7 @@ export class TasksService {
     this.logger.debug(JOB_NAME.GENERATE_FINE_OVERDUE_BORROWING);
 
     // 1. Lấy ra danh sách các lượt mượn sách mà có trạng thái OVERDUE (quá hạn)
-    const overdueBorrowings: BookBorrowing[] = await this.bookBorrowingRepository.findBy({
+    const overdueBorrowings: Borrowing[] = await this.borrowingRepository.findBy({
       returned_date: IsNull(),
       status: BORROWING_STATUS.OVERDUE,
     });
@@ -62,7 +62,7 @@ export class TasksService {
       for (const overdueBorrowing of overdueBorrowings) {
         // 3. Liệt kê danh sách từng cuốn sách cho lượt mượn sách đó
         const overdueBorrowingItems: BookBorrowingItems[] = await this.bookBorrowingItemsRepository.findBy({
-          book_borrowing_id: overdueBorrowing.id,
+          borrowing_id: overdueBorrowing.id,
           returned_date: IsNull(),
         });
 
@@ -70,7 +70,7 @@ export class TasksService {
         if (!isEmpty(overdueBorrowingItems)) {
           // 5. Kiểm tra đã tồn tại vé phạt cho lượt mượn sách chưa trả đó chưa (với trạng thái đã bồi thường)
           const fineTicketBorrowing: FineTicket = await this.fineTicketRepository.findOneBy({
-            book_borrowing_id: overdueBorrowing.id,
+            borrowing_id: overdueBorrowing.id,
           });
 
           // 6. Trường hợp chưa có vé phạt cho lượt mượn sách mà đã quá hạn
@@ -86,12 +86,12 @@ export class TasksService {
             // 8. Tạo vé phạt cho lượt mượn sách mà trả trễ hạn
             const fineOverdueBorrowing: FineTicket = await this.fineTicketRepository.save({
               total_fine_amount: totalPriceForAllItems * fineRatio, // Tổng giá * Tỉ lệ
-              book_borrowing_id: overdueBorrowing.id,
+              borrowing_id: overdueBorrowing.id,
               status: FINE_TICKET_STATUS.UNPAID, // Chưa trả tiền phạt
             });
 
             this.logger.warn(
-              `Create fine ticket for Overdue book_borrowing_id ${overdueBorrowing.id} successfully: ${JSON.stringify(fineOverdueBorrowing)}`,
+              `Create fine ticket for Overdue borrowing_id ${overdueBorrowing.id} successfully: ${JSON.stringify(fineOverdueBorrowing)}`,
             );
           }
         }
@@ -112,15 +112,15 @@ export class TasksService {
     if (!isEmpty(paidFines)) {
       for (const paidFine of paidFines) {
         // 3. Lấy ra lượt mượn sách mà đã được trả vé phạt
-        const currentBookBorrowing: BookBorrowing = await this.bookBorrowingRepository.findOneBy({
-          id: paidFine.book_borrowing_id,
+        const currentBookBorrowing: Borrowing = await this.borrowingRepository.findOneBy({
+          id: paidFine.borrowing_id,
         });
 
         // 4. Trường hợp status của lượt mượn sách đó là PAID_FINE (chưa trả)
         //  - Cập nhật thành status PAID_FINE
         //  - Cập nhật returned_date (ngày trả) là ngày đã thanh toán vé phạt
         if (currentBookBorrowing.status !== BORROWING_STATUS.PAID_FINE) {
-          const bookBorrowingUpdated: BookBorrowing = await this.bookBorrowingRepository.updateOneById(paidFine.book_borrowing_id, {
+          const bookBorrowingUpdated: Borrowing = await this.borrowingRepository.updateOneById(paidFine.borrowing_id, {
             status: BORROWING_STATUS.PAID_FINE,
             returned_date: paidFine.payment_date,
           });

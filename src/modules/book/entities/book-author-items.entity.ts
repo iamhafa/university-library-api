@@ -4,7 +4,7 @@ import { Book } from '@/modules/book/entities/book.entity';
 import { BaseEntity } from '@/libs/database/entities/base.entity';
 
 // Bảng trung gian của Author và Book (many to many)
-@Entity('book_author_items')
+@Entity()
 export class BookAuthorItems extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;

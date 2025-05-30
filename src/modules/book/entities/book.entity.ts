@@ -3,7 +3,7 @@ import { BaseEntity } from '@/libs/database/entities/base.entity';
 import { Author } from '@/modules/author/entities/author.entity';
 import { Genre } from '@/modules/genre/entities/genre.entity';
 import { Publisher } from '@/modules/publisher/entities/publisher.entity';
-import { BookBorrowing } from '@/modules/book-borrowing/entities/book-borrowing.entity';
+import { Borrowing } from '@/modules/borrowing/entities/borrowing.entity';
 
 @Entity()
 export class Book extends BaseEntity {
@@ -51,7 +51,7 @@ export class Book extends BaseEntity {
   @JoinColumn({ name: 'publisher_id' })
   readonly publisher?: Relation<Publisher>;
 
-  // Thể hiện quan hệ many to many với BookBorrowing
-  @OneToMany(() => BookBorrowing, (bookBorrowing) => bookBorrowing.books)
-  readonly bookBorrowings?: Relation<BookBorrowing[]>;
+  // Thể hiện quan hệ many to many với Borrowing
+  @OneToMany(() => Borrowing, (borrowing) => borrowing.books)
+  readonly borrowings?: Relation<Borrowing[]>;
 }
