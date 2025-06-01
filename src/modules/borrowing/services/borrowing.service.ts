@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBorrowingDto } from '../dto/create-borrowing.dto';
-import { UpdateBorrowingDto } from '../dto/update-book-borrowing.dto';
+import { UpdateBorrowingDto } from '../dto/update-borrowing.dto';
 import { Borrowing } from '../entities/borrowing.entity';
 import { BorrowingRepository } from '../repositories/borrowing.repository';
 import { TPagination } from '@/common/constants/type';
@@ -15,7 +15,9 @@ export class BorrowingService {
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Borrowing[]>> {
-    return this.borrowingRepository.findAll(paginationDto);
+    return this.borrowingRepository.findAll(paginationDto, {
+      member: true,
+    });
   }
 
   createOne(createBookBorrowingDto: CreateBorrowingDto): Promise<Borrowing> {

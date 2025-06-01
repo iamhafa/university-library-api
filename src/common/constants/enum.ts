@@ -30,9 +30,36 @@ export enum FINE_TICKET_PAYMENT_METHOD {
 }
 
 export enum MEMBER_TYPE {
-  LECTURER = 'LECTURER', // giảng viên
-  UNDERGRADUATE_STUDENT = 'UNDERGRADUATE_STUDENT', // sinh viên đang còn học
-  GRADUATED_STUDENT = 'GRADUATED_STUDENT', // sinh viên đã tốt nghiệp
+  /**
+   * Giảng viên của trường, có quyền mượn sách và sử dụng các tài nguyên hỗ trợ giảng dạy.
+   */
+  LECTURER = 'LECTURER',
+
+  /**
+   * Sinh viên đại học đang theo học chính quy, có quyền mượn sách và tài liệu phục vụ học tập.
+   */
+  UNDERGRADUATE_STUDENT = 'UNDERGRADUATE_STUDENT',
+
+  /**
+   * Sinh viên đã tốt nghiệp, có thể vẫn được mượn sách (nếu thư viện cho phép),
+   * hoặc sử dụng các tài liệu nghiên cứu.
+   */
+  GRADUATED_STUDENT = 'GRADUATED_STUDENT',
+
+  /**
+   * Sinh viên cao học (thạc sĩ, tiến sĩ) đang học tập và nghiên cứu.
+   */
+  POSTGRADUATE_STUDENT = 'POSTGRADUATE_STUDENT',
+
+  /**
+   * Nhân viên thư viện: quản lý, thủ thư, admin... Họ có quyền quản lý sách và tài khoản thành viên.
+   */
+  LIBRARY_STAFF = 'LIBRARY_STAFF',
+
+  /**
+   * Độc giả bên ngoài (cựu sinh viên, khách, hoặc người dùng đặc biệt được phép sử dụng thư viện).
+   */
+  GUEST_READER = 'GUEST_READER',
 }
 
 export enum JOB_NAME {

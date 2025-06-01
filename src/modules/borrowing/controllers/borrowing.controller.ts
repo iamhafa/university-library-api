@@ -2,7 +2,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
 import { BorrowingService } from '../services/borrowing.service';
 import { CreateBorrowingDto } from '../dto/create-borrowing.dto';
-import { UpdateBorrowingDto } from '../dto/update-book-borrowing.dto';
+import { UpdateBorrowingDto } from '../dto/update-borrowing.dto';
 import { Borrowing } from '../entities/borrowing.entity';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';

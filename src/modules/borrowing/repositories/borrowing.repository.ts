@@ -2,7 +2,7 @@ import { EntityManager, In, UpdateResult } from 'typeorm';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { BaseRepository } from '@/libs/database/repositories/base.repository';
 import { Borrowing } from '../entities/borrowing.entity';
-import { UpdateBorrowingDto } from '../dto/update-book-borrowing.dto';
+import { UpdateBorrowingDto } from '../dto/update-borrowing.dto';
 
 @Injectable()
 export class BorrowingRepository extends BaseRepository<Borrowing> {
