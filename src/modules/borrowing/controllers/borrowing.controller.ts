@@ -1,5 +1,5 @@
 import { ApiTags } from '@nestjs/swagger';
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query, Patch } from '@nestjs/common';
 import { BorrowingService } from '../services/borrowing.service';
 import { CreateBorrowingDto } from '../dto/create-borrowing.dto';
 import { UpdateBorrowingDto } from '../dto/update-borrowing.dto';
@@ -65,12 +65,17 @@ export class BorrowingController {
   }
 
   @Delete(':id')
-  deleteOne(@Param('id', ParseIntPipe) id: number) {
+  deleteOne(@Param('id', ParseIntPipe) id: number): Promise<Borrowing> {
     return this.borrowingService.deleteOne(id);
   }
 
   @Delete('items/:id')
-  deleteOneItems(@Param('id', ParseIntPipe) id: number) {
+  deleteOneItems(@Param('id', ParseIntPipe) id: number): Promise<BookBorrowingItems> {
     return this.bookBorrowingItemsService.deleteOne(id);
+  }
+
+  @Patch(':id/return')
+  returnBook(@Param('id', ParseIntPipe) id: number): Promise<Borrowing> {
+    return this.borrowingService.returnBook(id);
   }
 }

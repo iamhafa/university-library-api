@@ -5,6 +5,7 @@ import { Borrowing } from '../entities/borrowing.entity';
 import { BorrowingRepository } from '../repositories/borrowing.repository';
 import { TPagination } from '@/common/constants/type';
 import { PaginationDto } from '@/libs/database/dto/pagination.dto';
+import { BORROWING_STATUS } from '@/common/constants/enum';
 
 @Injectable()
 export class BorrowingService {
@@ -30,5 +31,14 @@ export class BorrowingService {
 
   deleteOne(id: number): Promise<Borrowing> {
     return this.borrowingRepository.deleteOneById(id);
+  }
+
+  returnBook(id: number): Promise<Borrowing> {
+    const currentDate = new Date();
+
+    return this.borrowingRepository.updateOneById(id, {
+      status: BORROWING_STATUS.RETURNED,
+      returned_date: currentDate,
+    });
   }
 }

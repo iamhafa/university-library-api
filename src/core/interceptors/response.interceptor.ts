@@ -25,7 +25,7 @@ export class ResponseInterceptor implements NestInterceptor {
       Object.keys(response).forEach((key: string) => {
         // nếu property nào của 1 object thuộc kiểu Date
         if (response[key] instanceof Date) {
-          response[key] = format(response[key], 'dd-MM-yyyy'); // Desired format
+          response[key] = format(response[key], 'yyyy-MM-dd'); // Desired format
           // nếu property vẫn là object thì tiếp tục run format
         } else if (isObject(response[key])) {
           response[key] = this.formatDates(response[key]);
