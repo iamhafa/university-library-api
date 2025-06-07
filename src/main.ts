@@ -19,6 +19,7 @@ async function bootstrap() {
     new ValidationPipe({
       transform: true,
       whitelist: true, // bỏ qua validate & không accept giá trị nhận được từ request trong DTO
+      forbidNonWhitelisted: true,
     }),
   );
   // Interceptor to format date in each response

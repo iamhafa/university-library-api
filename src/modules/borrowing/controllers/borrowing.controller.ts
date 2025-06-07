@@ -14,7 +14,7 @@ import { ApiPaginationQuery } from '@/common/decorators/api-pagination-query.dec
 import { BulkCreateBookBorrowingItemsDto } from '../dto/bulk-create-book-borrowing-items.dto';
 import { BulkUpdateBookBorrowingItemsDto } from '../dto/bulk-update-book-borrowing-items.dto';
 
-@ApiTags('Lượt mượn sách')
+@ApiTags('Mượn sách')
 @Controller('borrowing')
 export class BorrowingController {
   constructor(
@@ -33,8 +33,8 @@ export class BorrowingController {
     return this.bookBorrowingItemsService.findAll(paginationDto);
   }
 
-  @Get('items/:borrowing_id')
-  getByBorrowingId(@Param('borrowing_id', ParseIntPipe) borrowingId: number): Promise<BookBorrowingItems[]> {
+  @Get(':id/items')
+  getByBorrowingId(@Param('id', ParseIntPipe) borrowingId: number): Promise<BookBorrowingItems[]> {
     return this.bookBorrowingItemsService.getByBorrowingId(borrowingId);
   }
 
@@ -68,9 +68,12 @@ export class BorrowingController {
     return this.borrowingService.updateOne(id, updateBorrowingDto);
   }
 
-  @Put('items/bulk-update')
-  updateManyItems(@Body() bulkUpdateBookBorrowingItemsDto: BulkUpdateBookBorrowingItemsDto): Promise<BookBorrowingItems[]> {
-    return this.bookBorrowingItemsService.updateMany(bulkUpdateBookBorrowingItemsDto);
+  @Put(':id/items/bulk-update')
+  updateManyItems(
+    @Param('id', ParseIntPipe) borrowingId: number,
+    @Body() bulkUpdateBookBorrowingItemsDto: BulkUpdateBookBorrowingItemsDto,
+  ): Promise<BookBorrowingItems[]> {
+    return this.bookBorrowingItemsService.updateMany(borrowingId, bulkUpdateBookBorrowingItemsDto);
   }
 
   @Put('items/:id')

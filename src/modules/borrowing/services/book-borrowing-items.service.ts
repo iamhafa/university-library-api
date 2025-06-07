@@ -32,8 +32,8 @@ export class BookBorrowingItemsService {
     return this.bookBorrowingItemsRepository.updateOneById(id, updateBookBorrowingItemsDto);
   }
 
-  updateMany({ items }: BulkUpdateBookBorrowingItemsDto): Promise<BookBorrowingItems[]> {
-    return this.bookBorrowingItemsRepository.bulkUpdate(items);
+  updateMany(borrowingId: number, { items }: BulkUpdateBookBorrowingItemsDto): Promise<BookBorrowingItems[]> {
+    return this.bookBorrowingItemsRepository.bulkUpdate(borrowingId, items);
   }
 
   deleteOne(id: number): Promise<BookBorrowingItems> {

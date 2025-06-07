@@ -1,9 +1,9 @@
 import { Type } from 'class-transformer';
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { IsArray, IsNumber, ValidateNested } from 'class-validator';
 import { CreateBookBorrowingItemsDto } from './create-book-borrowing-items.dto';
 
-class UpdateItemsWithIdDto extends PartialType(CreateBookBorrowingItemsDto) {
+class UpdateItemsWithIdDto extends OmitType(PartialType(CreateBookBorrowingItemsDto), ['borrowing_id']) {
   @ApiProperty({ default: 1 })
   @IsNumber()
   id: number;
