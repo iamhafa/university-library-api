@@ -19,7 +19,6 @@ export class TasksService {
     private readonly borrowingRepository: BorrowingRepository,
     private readonly bookBorrowingItemsRepository: BookBorrowingItemsRepository,
   ) {}
-
   private readonly logger = new Logger(TasksService.name);
 
   // Đồng bộ trạng thái của lượt mượn sách nếu quá hạn.

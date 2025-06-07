@@ -11,6 +11,8 @@ import { BookBorrowingItemsService } from '../services/book-borrowing-items.serv
 import { CreateBookBorrowingItemsDto } from '../dto/create-book-borrowing-items.dto';
 import { UpdateBookBorrowingItemsDto } from '../dto/update-book-borrowing-items.dto';
 import { ApiPaginationQuery } from '@/common/decorators/api-pagination-query.decorator';
+import { BulkCreateBookBorrowingItemsDto } from '../dto/bulk-create-book-borrowing-items.dto';
+import { BulkUpdateBookBorrowingItemsDto } from '../dto/bulk-update-book-borrowing-items.dto';
 
 @ApiTags('Lượt mượn sách')
 @Controller('borrowing')
@@ -31,6 +33,11 @@ export class BorrowingController {
     return this.bookBorrowingItemsService.findAll(paginationDto);
   }
 
+  @Get('items/:borrowing_id')
+  getByBorrowingId(@Param('borrowing_id', ParseIntPipe) borrowingId: number): Promise<BookBorrowingItems[]> {
+    return this.bookBorrowingItemsService.getByBorrowingId(borrowingId);
+  }
+
   @Post()
   createOne(@Body() createBookBorrowingDto: CreateBorrowingDto): Promise<Borrowing> {
     return this.borrowingService.createOne(createBookBorrowingDto);
@@ -39,6 +46,11 @@ export class BorrowingController {
   @Post('items')
   createOneItems(@Body() createBookBorrowingItemsDto: CreateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
     return this.bookBorrowingItemsService.createOne(createBookBorrowingItemsDto);
+  }
+
+  @Post('items/bulk-create')
+  createManyItems(@Body() bulkCreateBookBorrowingItemsDto: BulkCreateBookBorrowingItemsDto): Promise<BookBorrowingItems[]> {
+    return this.bookBorrowingItemsService.createMany(bulkCreateBookBorrowingItemsDto);
   }
 
   @Get(':id')
@@ -54,6 +66,11 @@ export class BorrowingController {
   @Put(':id')
   updateOne(@Param('id', ParseIntPipe) id: number, @Body() updateBorrowingDto: UpdateBorrowingDto): Promise<Borrowing> {
     return this.borrowingService.updateOne(id, updateBorrowingDto);
+  }
+
+  @Put('items/bulk-update')
+  updateManyItems(@Body() bulkUpdateBookBorrowingItemsDto: BulkUpdateBookBorrowingItemsDto): Promise<BookBorrowingItems[]> {
+    return this.bookBorrowingItemsService.updateMany(bulkUpdateBookBorrowingItemsDto);
   }
 
   @Put('items/:id')
