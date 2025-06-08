@@ -15,7 +15,7 @@ export class GenreService {
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Genre[]>> {
-    return this.genreRepository.findAll(paginationDto);
+    return this.genreRepository.findAll({ paginationDto });
   }
 
   createOne(createGenreDto: CreateGenreDto): Promise<Genre> {

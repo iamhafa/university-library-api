@@ -15,7 +15,7 @@ export class PublisherService {
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Publisher[]>> {
-    return this.publisherRepository.findAll(paginationDto);
+    return this.publisherRepository.findAll({ paginationDto });
   }
 
   createOne(createPublisherDto: CreatePublisherDto): Promise<Publisher> {

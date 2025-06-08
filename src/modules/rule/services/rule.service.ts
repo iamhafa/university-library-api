@@ -15,7 +15,7 @@ export class RuleService {
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Rule[]>> {
-    return this.ruleRepository.findAll(paginationDto);
+    return this.ruleRepository.findAll({ paginationDto });
   }
 
   createOne(createRuleDto: CreateRuleDto): Promise<Rule> {

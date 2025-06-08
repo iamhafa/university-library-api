@@ -22,8 +22,10 @@ export class BookService {
 
   async findOne(id: number): Promise<Book> {
     const book: Book = await this.bookRepository.findOneById(id, {
-      genre: true,
-      publisher: true,
+      relations: {
+        genre: true,
+        publisher: true,
+      },
     });
 
     const bookAuthors: BookAuthorItems[] = await this.bookAuthorItemsRepository.getAuthorsByBookId(id);
@@ -34,9 +36,12 @@ export class BookService {
   }
 
   async findAll(paginationDto: PaginationDto): Promise<TPagination<Book[]>> {
-    const booksPaginated: TPagination<Book[]> = await this.bookRepository.findAll(paginationDto, {
-      genre: true,
-      publisher: true,
+    const booksPaginated: TPagination<Book[]> = await this.bookRepository.findAll({
+      paginationDto,
+      relations: {
+        genre: true,
+        publisher: true,
+      },
     });
 
     const { data: books } = booksPaginated;

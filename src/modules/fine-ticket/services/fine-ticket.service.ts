@@ -15,7 +15,7 @@ export class FineTicketService {
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<FineTicket[]>> {
-    return this.fineTicketRepository.findAll(paginationDto);
+    return this.fineTicketRepository.findAll({ paginationDto });
   }
 
   createOne(createFineTicketDto: CreateFineTicketDto): Promise<FineTicket> {

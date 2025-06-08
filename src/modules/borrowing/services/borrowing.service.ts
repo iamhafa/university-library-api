@@ -16,8 +16,14 @@ export class BorrowingService {
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Borrowing[]>> {
-    return this.borrowingRepository.findAll(paginationDto, {
-      member: true,
+    return this.borrowingRepository.findAll({
+      paginationDto,
+      relations: {
+        member: true,
+      },
+      order: {
+        id: 'ASC',
+      },
     });
   }
 

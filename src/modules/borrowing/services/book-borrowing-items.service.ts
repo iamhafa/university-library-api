@@ -17,7 +17,7 @@ export class BookBorrowingItemsService {
   }
 
   findAll(paginationDto?: PaginationDto): Promise<TPagination<BookBorrowingItems[]>> {
-    return this.bookBorrowingItemsRepository.findAll(paginationDto);
+    return this.bookBorrowingItemsRepository.findAll({ paginationDto });
   }
 
   createOne(createBookBorrowingItemsDto: CreateBookBorrowingItemsDto): Promise<BookBorrowingItems> {

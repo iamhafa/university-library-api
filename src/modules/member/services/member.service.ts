@@ -15,7 +15,7 @@ export class MemberService {
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<Member[]>> {
-    return this.memberRepository.findAll(paginationDto);
+    return this.memberRepository.findAll({ paginationDto });
   }
 
   createOne(createMemberDto: CreateMemberDto): Promise<Member> {
