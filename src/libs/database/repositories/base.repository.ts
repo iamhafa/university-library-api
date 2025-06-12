@@ -25,7 +25,10 @@ export abstract class BaseRepository<T extends BaseEntity> extends Repository<T>
   }
 
   public async findOneById(id: number, options?: IFindOneByIdOptions<T>): Promise<T> {
-    const entity: T = await this.findOne({ where: { id } as FindOptionsWhere<T>, relations: options.relations });
+    const entity: T = await this.findOne({
+      where: { id } as FindOptionsWhere<T>,
+      relations: options?.relations,
+    });
 
     if (entity instanceof BaseEntity) {
       this.logger.log(`[${this.tableName}] Found entity with ID ${id}.`);
