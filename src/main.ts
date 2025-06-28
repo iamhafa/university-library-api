@@ -38,7 +38,7 @@ async function bootstrap() {
   SwaggerModule.setup(configService.get<string>('APP_SWAGGER_PATH'), app, documentFactory);
 
   await app.listen(appPort, () => {
-    const logger: Logger = new Logger('Bootstrap');
+    const logger: Logger = new Logger(bootstrap.name);
     logger.verbose(`The app running on [http://localhost:${appPort}]`);
   });
 }

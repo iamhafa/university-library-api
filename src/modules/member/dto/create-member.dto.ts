@@ -1,15 +1,11 @@
-import { IsDateString, IsEmail, IsPhoneNumber, IsString } from 'class-validator';
+import { IsDateString, IsEmail, IsEnum, IsPhoneNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { MEMBER_TYPE } from '@/common/constants/enum';
 
 export class CreateMemberDto {
-  @ApiProperty({ default: 'Nguyen Van' })
+  @ApiProperty({ default: 'Nguyen Van A' })
   @IsString()
-  first_name: string;
-
-  @ApiProperty({ default: 'A' })
-  @IsString()
-  last_name: string;
+  name: string;
 
   @ApiProperty({ default: 'nguyenvana@student.humg.edu.vn' })
   @IsEmail()
@@ -27,6 +23,7 @@ export class CreateMemberDto {
     enum: MEMBER_TYPE,
     default: MEMBER_TYPE.UNDERGRADUATE_STUDENT,
   })
+  @IsEnum(MEMBER_TYPE, { message: 'Invalid member type' })
   member_type: string;
 
   @ApiProperty({ default: 'Ha Noi' })

@@ -23,6 +23,7 @@ export class CreateBorrowingDto {
   due_date: Date;
 
   @ApiProperty({ default: null, nullable: true })
+  @IsOptional()
   @IsDateString()
   @Transform(({ value }) => (value === '' ? null : value))
   returned_date: Date;

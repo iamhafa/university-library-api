@@ -12,8 +12,7 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    // không cho phép re-export module tại 1 file khác
-    "isolatedModules": true,
+    "isolatedModules": true, // không cho phép re-export module tại 1 file khác
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
@@ -30,5 +29,6 @@
       "@/tasks/*": ["src/tasks/*"],
       "@/report/*": ["src/report/*"]
     }
-  }
+  },
+  "exclude": ["node_modules", "dist", "build", "test", "**/*.spec.ts"]
 }

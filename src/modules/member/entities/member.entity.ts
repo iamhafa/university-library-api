@@ -6,11 +6,8 @@ import { MEMBER_TYPE } from '@/common/constants/enum';
 // Thành viên của thư viện (sinh viên của trường có thể mượn sách)
 @Entity()
 export class Member extends BaseEntity {
-  @Column()
-  first_name: string;
-
-  @Column()
-  last_name: string;
+  @Column({ default: null })
+  name: string;
 
   @Column({ unique: true })
   email: string;
