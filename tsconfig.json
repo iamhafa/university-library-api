@@ -27,7 +27,8 @@
       "@/decorators/*": ["src/common/decorators/*"],
       "@/mail/*": ["src/mail/*"],
       "@/tasks/*": ["src/tasks/*"],
-      "@/report/*": ["src/report/*"]
+      "@/report/*": ["src/report/*"],
+      "@/utils/*": ["src/utils/*"]
     }
   },
   "exclude": ["node_modules", "dist", "build", "test", "**/*.spec.ts"]

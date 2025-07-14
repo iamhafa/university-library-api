@@ -10,6 +10,7 @@ import { Borrowing } from '@/modules/borrowing/entities/borrowing.entity';
 import { BookBorrowingItems } from '@/modules/borrowing/entities/book-borrowing-items.entity';
 import { FineTicketRepository } from '@/modules/fine-ticket/repositories/fine-ticket.repository';
 import { FineTicket } from '@/modules/fine-ticket/entities/fine-ticket.entity';
+import { calculatePercentage } from '@/utils/util';
 
 @Injectable()
 export class TasksService {
@@ -75,7 +76,7 @@ export class TasksService {
           // 6. Trường hợp chưa có vé phạt cho lượt mượn sách mà đã quá hạn
           if (!fineTicketBorrowing) {
             // Tỉ lệ phạt (10%)
-            const fineRatio: number = this.configService.get<number>('FINE_RATE');
+            const fineRatio: string = this.configService.get<string>('FINE_RATE');
 
             // 7. Tính tổng giá trị của các cuốn sách = giá * số lượng
             const totalPriceForAllItems: number = overdueBorrowingItems.reduce((sum: number, book: BookBorrowingItems) => {
@@ -84,7 +85,7 @@ export class TasksService {
 
             // 8. Tạo vé phạt cho lượt mượn sách mà trả trễ hạn
             const fineOverdueBorrowing: FineTicket = await this.fineTicketRepository.save({
-              total_fine_amount: totalPriceForAllItems * fineRatio, // Tổng giá * Tỉ lệ
+              total_fine_amount: calculatePercentage(totalPriceForAllItems, parseFloat(fineRatio)), // Tổng giá * Tỉ lệ
               borrowing_id: overdueBorrowing.id,
               status: FINE_TICKET_STATUS.UNPAID, // Chưa trả tiền phạt
             });

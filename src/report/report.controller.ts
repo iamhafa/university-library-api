@@ -14,4 +14,10 @@ export class ReportController {
   borrowingMonthlyStatistics(@StartDateQuery() startDate: string, @EndDateQuery() endDate: string) {
     return this.reportService.borrowingMonthlyStatistics(startDate, endDate);
   }
+
+  @Get('top-10-most-borrowed-books')
+  @ApiDateRangeQuery()
+  getTop10MostBorrowedBooks(@StartDateQuery() startDate: string, @EndDateQuery() endDate: string) {
+    return this.reportService.getTop10MostBorrowedBooks(startDate, endDate);
+  }
 }

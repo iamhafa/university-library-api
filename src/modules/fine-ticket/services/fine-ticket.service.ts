@@ -15,7 +15,14 @@ export class FineTicketService {
   }
 
   findAll(paginationDto: PaginationDto): Promise<TPagination<FineTicket[]>> {
-    return this.fineTicketRepository.findAll({ paginationDto });
+    return this.fineTicketRepository.findAll({
+      paginationDto,
+      relations: {
+        borrowing: {
+          member: true,
+        },
+      },
+    });
   }
 
   createOne(createFineTicketDto: CreateFineTicketDto): Promise<FineTicket> {

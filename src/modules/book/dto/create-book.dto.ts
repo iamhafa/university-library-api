@@ -1,7 +1,6 @@
-import { parse } from 'date-fns';
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
-import { IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDateString, IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateBookDto {
   @ApiProperty()
@@ -24,6 +23,8 @@ export class CreateBookDto {
   ISBN: string;
 
   @ApiProperty({ default: 'https://covers.openlibrary.org/b/id/10592539-L.jpg' })
+  @IsString()
+  @IsOptional()
   image_url: string;
 
   @ApiProperty()
@@ -32,12 +33,13 @@ export class CreateBookDto {
 
   @ApiProperty()
   @IsOptional()
-  @Transform(({ value }) => {
-    if (typeof value === 'string') {
-      return parse(value, 'dd-MM-yyyy', new Date());
-    }
-    return value;
-  })
+  @IsDateString()
+  // @Transform(({ value }) => {
+  //   if (typeof value === 'string') {
+  //     return parse(value, 'dd-MM-yyyy', new Date());
+  //   }
+  //   return value;
+  // })
   publish_date: Date;
 
   @ApiProperty()

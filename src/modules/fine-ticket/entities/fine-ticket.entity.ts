@@ -17,7 +17,7 @@ export class FineTicket extends BaseEntity {
   })
   status: FINE_TICKET_STATUS;
 
-  @Column()
+  @Column({ type: 'decimal' })
   total_fine_amount: number;
 
   @Column({
