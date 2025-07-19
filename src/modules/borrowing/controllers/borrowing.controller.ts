@@ -1,4 +1,4 @@
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Query, Patch } from '@nestjs/common';
 import { BorrowingService } from '../services/borrowing.service';
 import { CreateBorrowingDto } from '../dto/create-borrowing.dto';
@@ -43,14 +43,24 @@ export class BorrowingController {
     return this.borrowingService.createOne(createBookBorrowingDto);
   }
 
-  @Post('items')
-  createOneItems(@Body() createBookBorrowingItemsDto: CreateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsService.createOne(createBookBorrowingItemsDto);
-  }
+  // @Post(':id/items')
+  // @ApiParam({ name: 'id', description: 'Borrowing ID', example: 1 })
+  // @ApiOperation({ summary: 'Tạo các items cho lượt mượn sách' })
+  // createOneItems(
+  //   @Param('id', ParseIntPipe) borrowingId: number,
+  //   @Body() createBookBorrowingItemsDto: CreateBookBorrowingItemsDto,
+  // ): Promise<BookBorrowingItems> {
+  //   return this.bookBorrowingItemsService.createOne(borrowingId, createBookBorrowingItemsDto);
+  // }
 
-  @Post('items/bulk-create')
-  createManyItems(@Body() bulkCreateBookBorrowingItemsDto: BulkCreateBookBorrowingItemsDto): Promise<BookBorrowingItems[]> {
-    return this.bookBorrowingItemsService.createMany(bulkCreateBookBorrowingItemsDto);
+  @Post(':id/items/bulk-create')
+  @ApiParam({ name: 'id', description: 'Borrowing ID', example: 1 })
+  @ApiOperation({ summary: 'Create multiple book borrowing items for a specific borrowing record' })
+  createManyItems(
+    @Param('id', ParseIntPipe) borrowingId: number,
+    @Body() bulkCreateBookBorrowingItemsDto: BulkCreateBookBorrowingItemsDto,
+  ): Promise<BookBorrowingItems[]> {
+    return this.bookBorrowingItemsService.createMany(borrowingId, bulkCreateBookBorrowingItemsDto);
   }
 
   @Get(':id')

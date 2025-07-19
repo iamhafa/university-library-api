@@ -11,11 +11,15 @@ export class BookBorrowingItemsRepository extends BaseRepository<BookBorrowingIt
 
   /**
    * Tạo nhiều bản ghi BookBorrowingItems cùng lúc.
-   * @param multipleItems - Danh sách dữ liệu các item cần tạo.
+   * @param borrowingId - ID của lượt mượn sách.
+   * @param items - Danh sách dữ liệu các item cần tạo.
    * @returns Danh sách các bản ghi đã được lưu vào DB.
    */
-  bulkCreate(multipleItems: DeepPartial<BookBorrowingItems[]>): Promise<BookBorrowingItems[]> {
-    const createMultiple: BookBorrowingItems[] = this.create(multipleItems);
+  bulkCreate(borrowingId: number, items: DeepPartial<BookBorrowingItems[]>): Promise<BookBorrowingItems[]> {
+    // Gán tất cả các cuốn sách (items) có chung 1 ID lượt mượn sách.
+    items.forEach((item: BookBorrowingItems) => (item.borrowing_id = borrowingId));
+
+    const createMultiple: BookBorrowingItems[] = this.create(items);
     return this.save(createMultiple);
   }
 

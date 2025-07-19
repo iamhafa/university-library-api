@@ -20,12 +20,15 @@ export class BookBorrowingItemsService {
     return this.bookBorrowingItemsRepository.findAll({ paginationDto });
   }
 
-  createOne(createBookBorrowingItemsDto: CreateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
-    return this.bookBorrowingItemsRepository.createOne(createBookBorrowingItemsDto);
-  }
+  // createOne(borrowingId: number, createBookBorrowingItemsDto: CreateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
+  //   return this.bookBorrowingItemsRepository.createOne({
+  //     borrowing_id: borrowingId,
+  //     ...createBookBorrowingItemsDto,
+  //   });
+  // }
 
-  createMany({ items }: BulkCreateBookBorrowingItemsDto): Promise<BookBorrowingItems[]> {
-    return this.bookBorrowingItemsRepository.bulkCreate(items);
+  createMany(borrowingId: number, { items }: BulkCreateBookBorrowingItemsDto): Promise<BookBorrowingItems[]> {
+    return this.bookBorrowingItemsRepository.bulkCreate(borrowingId, items);
   }
 
   updateOne(id: number, updateBookBorrowingItemsDto: UpdateBookBorrowingItemsDto): Promise<BookBorrowingItems> {
